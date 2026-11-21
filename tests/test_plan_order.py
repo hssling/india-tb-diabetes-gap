@@ -1,6 +1,7 @@
 """Tests of verification/check_plan_order.py on synthetic temporary git repositories
 (never the real repository), adapted from hssling/india-tb-priority-tool
-tests/test_plan_order.py (MIT): the guarded paths are src/dmgap/ and outputs/."""
+tests/test_plan_order.py (MIT): the guarded paths are src/dmgap/, data/extracted/ and
+outputs/, and the registration record must name a full 40-character SHA."""
 import json
 import subprocess
 
@@ -38,8 +39,8 @@ def repo(tmp_path):
     return tmp_path
 
 
-def test_guarded_paths_are_dmgap_and_outputs_with_no_allow_list():
-    assert check_plan_order.GUARDED == ("outputs", "src/dmgap")
+def test_guarded_paths_are_dmgap_extracted_and_outputs_with_no_allow_list():
+    assert check_plan_order.GUARDED == ("outputs", "data/extracted", "src/dmgap")
     assert check_plan_order.ALLOWED == ()
 
 
@@ -84,6 +85,34 @@ def test_registration_event_that_is_not_json_fails(repo, capsys):
     assert "is not valid JSON" in capsys.readouterr().out
 
 
+@pytest.mark.parametrize("named", ["abc1234", "ABCDEF" + "0" * 34, "0" * 39, "0" * 41,
+                                   "HEAD", "g" * 40])
+def test_registration_record_must_name_a_full_lowercase_sha(repo, capsys, named):
+    commit(repo, {"docs/analysis_plan.md": PLAN,
+                  "docs/registration_event.json": json.dumps({"registered_commit": named})},
+           "plan")
+    assert check_plan_order.main(repo) == 1
+    assert "not a full 40-character hexadecimal commit SHA" in capsys.readouterr().out
+
+
+def test_abbreviated_sha_in_an_earlier_record_is_flagged(repo):
+    """The anchor comparison is exact: an earlier committed record that named the same
+    commit by an abbreviation does not count as naming it."""
+    reg = commit(repo, {"docs/analysis_plan.md": PLAN}, "plan")
+    commit(repo, {"docs/registration_event.json": event(reg[:7])}, "short record")
+    commit(repo, {"docs/registration_event.json": event(reg)}, "full record")
+    bad = check_plan_order.problems(repo, reg)
+    assert len(bad) == 1 and "the anchor must never move" in bad[0]
+
+
+def test_full_sha_record_passes_main(repo, capsys):
+    reg = commit(repo, {"docs/analysis_plan.md": PLAN}, "plan")
+    commit(repo, {"docs/registration_event.json": event(reg)}, "registration event")
+    assert len(reg) == 40
+    assert check_plan_order.main(repo) == 0
+    assert capsys.readouterr().out.startswith("OK:")
+
+
 def test_unknown_registration_commit_fails(repo, capsys):
     commit(repo, {"docs/analysis_plan.md": PLAN,
                   "docs/registration_event.json": event("0" * 40)}, "plan")
@@ -116,20 +145,36 @@ def test_dmgap_module_in_registration_commit_is_flagged(repo):
     assert len(check_plan_order.problems(repo, reg)) == 1
 
 
-def test_extraction_code_and_data_before_registration_pass(repo):
-    """Only src/dmgap/ and outputs/ are guarded: extraction code, extracted data and the
-    verification scripts may precede registration."""
-    commit(repo, {"src/extract/itr_dm.py": "y = 1\n", "data/extracted/dm_panel.csv": "u\n",
+def test_extraction_code_before_registration_passes(repo):
+    """Extraction code, the source manifest and the verification scripts may precede
+    registration; only src/dmgap/, data/extracted/ and outputs/ are guarded."""
+    commit(repo, {"src/extract/itr_dm.py": "y = 1\n", "data/source_manifest.csv": "p\n",
                   "verification/check_plan_order.py": "z = 1\n",
-                  "src/run_all.py": "w = 1\n"}, "extraction first")
+                  "src/run_all.py": "w = 1\n"}, "extraction code first")
     reg = commit(repo, {"docs/analysis_plan.md": PLAN}, "plan")
+    assert check_plan_order.problems(repo, reg) == []
+
+
+@pytest.mark.parametrize("name", ["dm_panel.csv", "nfhs_dm.csv", "tb_sex_2022.csv"])
+def test_extracted_data_before_registration_is_flagged(repo, name):
+    commit(repo, {f"data/extracted/{name}": "u\n"}, "extracted data first")
+    reg = commit(repo, {"docs/analysis_plan.md": PLAN}, "plan")
+    bad = check_plan_order.problems(repo, reg)
+    assert len(bad) == 1 and "data/extracted/" in bad[0] and "not a descendant" in bad[0]
+
+
+def test_extracted_data_after_registration_passes(repo):
+    reg = commit(repo, {"docs/analysis_plan.md": PLAN}, "plan")
+    commit(repo, {"docs/registration_event.json": event(reg)}, "registration event")
+    commit(repo, {"data/extracted/dm_panel.csv": "u\n"}, "extraction")
     assert check_plan_order.problems(repo, reg) == []
 
 
 def test_similarly_named_paths_are_not_guarded(repo):
     """A pathspec matches a directory, not a name prefix: src/dmgap_notes.md and
     outputs_old.txt are outside the guarded directories."""
-    commit(repo, {"src/dmgap_notes.md": "n\n", "outputs_old.txt": "o\n"}, "near misses")
+    commit(repo, {"src/dmgap_notes.md": "n\n", "outputs_old.txt": "o\n",
+                  "data/extracted_notes.txt": "e\n"}, "near misses")
     reg = commit(repo, {"docs/analysis_plan.md": PLAN}, "plan")
     assert check_plan_order.problems(repo, reg) == []
 

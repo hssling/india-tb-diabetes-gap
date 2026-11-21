@@ -1,7 +1,8 @@
 # Adapted from hssling/india-tb-priority-tool v1.0.1 (MIT), verification/check_plan_order.py,
 # itself adapted from hssling/india-tb-acf-campaign and hssling/india-state-tb-score.
-# Changes: the guarded paths are src/dmgap/ (the analysis package of this study) and
-# outputs/; the allow-list is empty. Otherwise unchanged: the frozen text ends at
+# Changes: the guarded paths are src/dmgap/ (the analysis package of this study),
+# data/extracted/ and outputs/; the allow-list is empty; the registration record must name a
+# full 40-character hexadecimal SHA, and the anchor comparison is exact. Otherwise unchanged: the frozen text ends at
 # "## 12. Deviations (dated)"; a missing docs/registration_event.json is a FAIL ("NOT
 # REGISTERED YET"); the anchor is pinned (every committed version of that file must name the
 # same commit); the guard reads the full history with --diff-merges=separate; later commits
@@ -15,11 +16,14 @@ Assertions:
 1. docs/registration_event.json exists. Before the controller records the public push it
    does not, and the check FAILS with "NOT REGISTERED YET": a missing registration record
    never switches the other checks off.
+   It must name the registration commit as a full 40-character hexadecimal SHA.
 2. Every committed version of docs/registration_event.json (full history, deletions
-   included) names the same commit as the working-tree file, so the anchor cannot be moved.
+   included) names exactly the same SHA as the working-tree file, so the anchor cannot be
+   moved.
 3. The registration commit named in that file is an ancestor of HEAD.
-4. No commit that is not a strict descendant of the registration commit touches outputs/
-   (any file) or src/dmgap/ (any file except the explicit allow-list ALLOWED, empty).
+4. No commit that is not a strict descendant of the registration commit touches outputs/,
+   data/extracted/ (any file) or src/dmgap/ (any file except the explicit allow-list
+   ALLOWED, empty).
    Full history, deletions and renames included (--no-renames lists a rename as a
    deletion and an addition), and merges listed against each parent
    (--diff-merges=separate), so a commit on a merged side branch is found even when the
@@ -36,12 +40,15 @@ In a copy without .git (a release archive) the history cannot be checked: this p
 "SKIPPED: not a git checkout ..." and exits 0.
 """
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-GUARDED = ("outputs", "src/dmgap")
+GUARDED = ("outputs", "data/extracted", "src/dmgap")
+GUARDED_TEXT = "outputs/, data/extracted/ or src/dmgap/"
+FULL_SHA = re.compile(r"[0-9a-f]{40}")
 # Loader modules that may be committed before registration (repository paths, e.g.
 # "src/dmgap/panel.py"). Empty: none is allowed.
 ALLOWED: tuple[str, ...] = ()
@@ -119,6 +126,9 @@ def registered_commit(repo: Path) -> str:
     if named is None:
         raise ValueError(f"{EVENT.as_posix()} names no registration commit (expected the key "
                          f"{COMMIT_KEYS[0]!r})")
+    if not FULL_SHA.fullmatch(named):
+        raise ValueError(f"{EVENT.as_posix()} names {named!r}, which is not a full "
+                         f"40-character hexadecimal commit SHA")
     return named
 
 
@@ -134,7 +144,8 @@ def event_versions(repo: Path) -> list[tuple[str, str | None]]:
 
 
 def same_commit(a: str, b: str) -> bool:
-    return a.startswith(b) or b.startswith(a)
+    """Exact equality: the anchor is a full SHA, so an abbreviation never matches it."""
+    return a == b
 
 
 def guarded_commits(repo: Path, guarded: tuple[str, ...] = GUARDED,
@@ -178,7 +189,7 @@ def problems(repo: Path = ROOT, registration: str | None = None,
         return out + [f"registration commit {registration[:7]} is not an ancestor of HEAD"]
     for c in guarded_commits(repo, guarded, allowed):
         if c == reg or not is_ancestor(repo, reg, c):
-            out.append(f"commit {c[:7]} touches outputs/ or src/dmgap/ (outside the "
+            out.append(f"commit {c[:7]} touches {GUARDED_TEXT} (outside the "
                        f"allow-list) but is not a descendant of the registration commit "
                        f"{registration[:7]}")
     try:
@@ -225,7 +236,7 @@ def main(root: Path = ROOT) -> int:
         return 1
     n = len(later_commits(root, reg))
     print(f"OK: registration commit {reg[:7]} is an ancestor of HEAD; every committed "
-          f"{EVENT.as_posix()} names it; no commit touching outputs/ or src/dmgap/ precedes "
+          f"{EVENT.as_posix()} names it; no commit touching {GUARDED_TEXT} precedes "
           f"it; the plan text above section 12 is byte-identical across {n} later commits")
     return 0
 

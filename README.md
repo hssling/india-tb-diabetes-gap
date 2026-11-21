@@ -4,7 +4,7 @@ Work in progress (Task 1 of the implementation plan): scaffold, source manifest
 and a structure-only data inventory. No estimate has been computed.
 
 A pre-registered, reproducible State-level analysis of India's diabetes-TB
-screening and detection gaps (data years 2018, 2021 and 2022), from the India TB
+screening and detection gaps (data years 2018, 2019, 2021, 2022 and 2023), from the India TB
 Report diabetes tables and the NFHS-5 State fact sheets. The analysis plan,
 `docs/analysis_plan.md`, will be pushed to the public repository before any
 estimate is made.
