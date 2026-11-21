@@ -676,3 +676,29 @@ This section lists everything seen before this plan was registered. **No estimat
 ---
 
 ## 12. Deviations (dated)
+
+**12.1 (21 November 2026): a deviation decided before any estimate was computed. The C1 (screening coverage) denominator for data years 2021–2023 now uses the basis of the diabetes tables' own percentages.**
+
+**What was registered.** §3–§5 registered Annexure 1.2 (notified, diagnosing-PHI basis) as the N of C1 and E1 for 2021–2023.
+
+**What the extraction review found.** The implied-denominator check (§3.4) showed that each year's TB–diabetes table prints known-status percentages whose denominators match a different printed count. The number of the 37 printed rows matching within the rounding interval:
+
+| Year | A1.2 total (registered) | Best printed count |
+|---|---|---|
+| 2021 (TBAR 2022) | 2 | A1.4 "Net TB Patients Notified", current PHI: **37** |
+| 2022 (ITR 2023; this edition has no A1.4) | 2 | A1.6 male + female + transgender sum: **28** (all 9 misses within 10 patients, 8 within 4) |
+| 2023 (ITR 2024) | 2 | A1.4 net notified, current PHI, Total: **37** |
+
+Mixing the two bases makes known status exceed N for Himachal Pradesh and Tripura in 2021–2023 (6 NA cells), and it distorts C1 elsewhere.
+
+**Deviation.**
+- **Main N:**
+  - 2021: TBAR 2022 A1.4 net notified;
+  - 2022: ITR 2023 A1.6 male + female + transgender;
+  - 2023: ITR 2024 A1.4 net notified Total.
+- **2018 and 2019 are unchanged.** Their registered bases already match the printed percentages: 35 of 37 in 2018 and 37 of 37 in 2019.
+- **Sensitivities:** the registered A1.2 basis, with every C1- and E1-dependent result reported on both bases; and, for 2022, N back-calculated from the printed % (flagged `derived_from_percent`).
+
+**Reason.** The numerator and denominator must share a basis, as in tb_priority_tool's §12.2.
+
+**Timing.** Decided on 21 November 2026 from the Task 3 extraction review. At that point src/dmgap/ and outputs/ did not exist, and no ratio, gap, priority, trend or correlation had been computed. The matching itself compares printed counts with printed percentages; it is structural.
