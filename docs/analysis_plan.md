@@ -709,3 +709,10 @@ Mixing the two bases makes known status exceed N for Himachal Pradesh and Tripur
 - `plan_12.1_sensitivity`: the 2022 N derived from the printed percentage.
 
 Analyses read these names.
+
+**12.3 (21 November 2026), consequential notes on implementing §12.1, with no new analysis.**
+1. §3.4, §5.3, §7.3 and §8.6 name a "2022 A1.6 sensitivity". After §12.1, A1.6 is the main 2022 N. These sensitivity slots are therefore filled by §12.1's own sensitivities: the A1.2 basis for 2021–2023 (with its own draw sets) and the 2022 N derived from the printed percentage. They run through every C1- and E1-dependent result, as §12.1 requires.
+2. The seed is reset per §5.3 draw set. Priorities consume the shared draw sets.
+3. The decomposition share S is summarised over draws with E1 + E2 > 0. In the data, every draw met this.
+4. The cumulative C1·C2·C3 is not formed for 2018, whose C3 definition differs.
+5. Outputs label the detection-led class "identification-led", following the §1.3 wording.
