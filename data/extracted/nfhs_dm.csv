@@ -1,0 +1,75 @@
+unit,sex,prevalence_pct,population,source_file,pdf_page,flag
+India,women,13.5,14075.37,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-II.pdf,9,national_sheet_not_used_for_p_u;population_lakhs:ITR2023_A1.1
+India,men,15.6,14075.37,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-II.pdf,9,national_sheet_not_used_for_p_u;population_lakhs:ITR2023_A1.1
+Andaman and Nicobar Islands,women,17.5,3.92,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,13,sheet_name:Andaman & Nicobar Islands;population_lakhs:ITR2023_A1.1
+Andaman and Nicobar Islands,men,17.9,3.92,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,13,sheet_name:Andaman & Nicobar Islands;population_lakhs:ITR2023_A1.1
+Andhra Pradesh,women,19.5,528.95,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,19,population_lakhs:ITR2023_A1.1
+Andhra Pradesh,men,21.8,528.95,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,19,population_lakhs:ITR2023_A1.1
+Arunachal Pradesh,women,8.4,16.96,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-II.pdf,15,population_lakhs:ITR2023_A1.1
+Arunachal Pradesh,men,11.9,16.96,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-II.pdf,15,population_lakhs:ITR2023_A1.1
+Assam,women,12.8,359.12,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,25,population_lakhs:ITR2023_A1.1
+Assam,men,16.0,359.12,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,25,population_lakhs:ITR2023_A1.1
+Bihar,women,12.7,1294.71,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,31,population_lakhs:ITR2023_A1.1
+Bihar,men,16.2,1294.71,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,31,population_lakhs:ITR2023_A1.1
+Chandigarh,women,19.0,12.08,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-II.pdf,81,population_lakhs:ITR2023_A1.1
+Chandigarh,men,16.6,12.08,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-II.pdf,81,population_lakhs:ITR2023_A1.1
+Chhattisgarh,women,9.0,303.59,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-II.pdf,21,population_lakhs:ITR2023_A1.1
+Chhattisgarh,men,10.8,303.59,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-II.pdf,21,population_lakhs:ITR2023_A1.1
+Dadra and Nagar Haveli and Daman and Diu,women,13.6,8.54,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,37,merge_into:Gujarat;sheet_name:Dadra & Nagar Haveli and Daman & Diu;population_lakhs:ITR2023_A1.1
+Dadra and Nagar Haveli and Daman and Diu,men,16.4,8.54,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,37,merge_into:Gujarat;sheet_name:Dadra & Nagar Haveli and Daman & Diu;population_lakhs:ITR2023_A1.1
+Delhi,women,12.2,195.59,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-II.pdf,87,sheet_name:NCT Delhi;population_lakhs:ITR2023_A1.1
+Delhi,men,14.1,195.59,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-II.pdf,87,sheet_name:NCT Delhi;population_lakhs:ITR2023_A1.1
+Goa,women,20.8,15.60,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,43,population_lakhs:ITR2023_A1.1
+Goa,men,24.1,15.60,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,43,population_lakhs:ITR2023_A1.1
+Gujarat,women,15.8,713.84,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,49,population_lakhs:ITR2023_A1.1
+Gujarat,men,16.9,713.84,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,49,population_lakhs:ITR2023_A1.1
+Haryana,women,11.9,303.77,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-II.pdf,27,population_lakhs:ITR2023_A1.1
+Haryana,men,13.5,303.77,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-II.pdf,27,population_lakhs:ITR2023_A1.1
+Himachal Pradesh,women,13.9,76.41,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,55,population_lakhs:ITR2023_A1.1
+Himachal Pradesh,men,14.7,76.41,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,55,population_lakhs:ITR2023_A1.1
+Jammu and Kashmir,women,8.7,144.16,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,61,sheet_name:Jammu & Kashmir;population_lakhs:ITR2023_A1.1
+Jammu and Kashmir,men,8.0,144.16,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,61,sheet_name:Jammu & Kashmir;population_lakhs:ITR2023_A1.1
+Jharkhand,women,10.2,409.47,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-II.pdf,33,population_lakhs:ITR2023_A1.1
+Jharkhand,men,14.1,409.47,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-II.pdf,33,population_lakhs:ITR2023_A1.1
+Karnataka,women,14.0,722.51,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,67,population_lakhs:ITR2023_A1.1
+Karnataka,men,15.6,722.51,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,67,population_lakhs:ITR2023_A1.1
+Kerala,women,24.8,346.78,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,73,population_lakhs:ITR2023_A1.1
+Kerala,men,27.0,346.78,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,73,population_lakhs:ITR2023_A1.1
+Ladakh,women,6.7,2.57,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,85,merge_into:Jammu and Kashmir;population_lakhs:ITR2023_A1.1
+Ladakh,men,8.3,2.57,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,85,merge_into:Jammu and Kashmir;population_lakhs:ITR2023_A1.1
+Lakshadweep,women,19.5,0.67,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,79,merge_into:Kerala;population_lakhs:ITR2023_A1.1
+Lakshadweep,men,20.7,0.67,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,79,merge_into:Kerala;population_lakhs:ITR2023_A1.1
+Madhya Pradesh,women,9.8,870.00,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-II.pdf,39,population_lakhs:ITR2023_A1.1
+Madhya Pradesh,men,12.2,870.00,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-II.pdf,39,population_lakhs:ITR2023_A1.1
+Maharashtra,women,12.4,1278.86,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,91,population_lakhs:ITR2023_A1.1
+Maharashtra,men,13.6,1278.86,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,91,population_lakhs:ITR2023_A1.1
+Manipur,women,13.6,35.43,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,103,population_lakhs:ITR2023_A1.1
+Manipur,men,16.5,35.43,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,103,population_lakhs:ITR2023_A1.1
+Meghalaya,women,9.5,38.05,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,97,population_lakhs:ITR2023_A1.1
+Meghalaya,men,13.9,38.05,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,97,population_lakhs:ITR2023_A1.1
+Mizoram,women,13.8,13.00,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,109,population_lakhs:ITR2023_A1.1
+Mizoram,men,15.4,13.00,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,109,population_lakhs:ITR2023_A1.1
+Nagaland,women,9.3,20.90,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,115,population_lakhs:ITR2023_A1.1
+Nagaland,men,12.4,20.90,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,115,population_lakhs:ITR2023_A1.1
+Odisha,women,14.0,473.01,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-II.pdf,45,population_lakhs:ITR2023_A1.1
+Odisha,men,17.0,473.01,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-II.pdf,45,population_lakhs:ITR2023_A1.1
+Puducherry,women,20.1,15.53,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-II.pdf,93,population_lakhs:ITR2023_A1.1
+Puducherry,men,21.7,15.53,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-II.pdf,93,population_lakhs:ITR2023_A1.1
+Punjab,women,14.7,304.32,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-II.pdf,51,population_lakhs:ITR2023_A1.1
+Punjab,men,14.1,304.32,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-II.pdf,51,population_lakhs:ITR2023_A1.1
+Rajasthan,women,7.2,809.78,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-II.pdf,57,population_lakhs:ITR2023_A1.1
+Rajasthan,men,8.9,809.78,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-II.pdf,57,population_lakhs:ITR2023_A1.1
+Sikkim,women,12.2,6.68,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,121,population_lakhs:ITR2023_A1.1
+Sikkim,men,15.7,6.68,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,121,population_lakhs:ITR2023_A1.1
+Tamil Nadu,women,20.7,774.50,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-II.pdf,63,population_lakhs:ITR2023_A1.1
+Tamil Nadu,men,22.1,774.50,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-II.pdf,63,population_lakhs:ITR2023_A1.1
+Telangana,women,14.7,403.50,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,127,population_lakhs:ITR2023_A1.1
+Telangana,men,18.1,403.50,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,127,population_lakhs:ITR2023_A1.1
+Tripura,women,17.7,40.21,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,133,population_lakhs:ITR2023_A1.1
+Tripura,men,19.3,40.21,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,133,population_lakhs:ITR2023_A1.1
+Uttar Pradesh,women,10.0,2398.03,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-II.pdf,69,population_lakhs:ITR2023_A1.1
+Uttar Pradesh,men,11.6,2398.03,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-II.pdf,69,population_lakhs:ITR2023_A1.1
+Uttarakhand,women,10.8,119.72,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-II.pdf,75,population_lakhs:ITR2023_A1.1
+Uttarakhand,men,14.3,119.72,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-II.pdf,75,population_lakhs:ITR2023_A1.1
+West Bengal,women,17.5,1014.61,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,139,population_lakhs:ITR2023_A1.1
+West Bengal,men,21.3,1014.61,data_raw/nfhs5/NFHS-5_India_and_State_Factsheet_Compendium_Phase-I.pdf,139,population_lakhs:ITR2023_A1.1

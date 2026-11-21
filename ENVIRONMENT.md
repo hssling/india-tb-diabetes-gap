@@ -21,3 +21,12 @@ only (plus pytest).
 From Task 4, the analysis uses numpy 2.3.5 and scipy 1.16.3, and imports `tbprio`
 pinned to v1.0.1 (`pyproject.toml`). matplotlib is used only for the manuscript
 figures.
+
+Task 3 (extraction, 21 Nov 2026) used the same Python 3.14.0 and pdfplumber
+0.11.8 (`src/extract/`, page by page with `page.flush_cache()`). Run, from the
+repository root: `python -I src/extract/itr_dm.py`, then
+`python -I src/extract/nfhs.py`, then
+`python -I verification/check_extraction_totals.py`. PyMuPDF was used only to
+cross-read the ITR 2019 Annexure 1.2 rows and the NFHS-5 indicator lines, and to
+render the pages read by eye for `tests/test_known_cells.py`; no committed code
+imports it.
