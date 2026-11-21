@@ -702,3 +702,10 @@ Mixing the two bases makes known status exceed N for Himachal Pradesh and Tripur
 **Reason.** The numerator and denominator must share a basis, as in tb_priority_tool's §12.2.
 
 **Timing.** Decided on 21 November 2026 from the Task 3 extraction review. At that point src/dmgap/ and outputs/ did not exist, and no ratio, gap, priority, trend or correlation had been computed. The matching itself compares printed counts with printed percentages; it is structural.
+
+**12.2 (21 November 2026), a naming note with no change to any rule.** §3.4 names the 2022 A1.6 flag `denominator_a1_6_sensitivity`. After §12.1, the extracted data use these flags:
+- `denominator_a1_6_sex_sum`: the main 2022 N;
+- `plan_12.1_registered_basis`: the A1.2 sensitivity file;
+- `plan_12.1_sensitivity`: the 2022 N derived from the printed percentage.
+
+Analyses read these names.
