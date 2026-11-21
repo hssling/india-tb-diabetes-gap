@@ -26,7 +26,8 @@ Task 3 (extraction, 21 Nov 2026) used the same Python 3.14.0 and pdfplumber
 0.11.8 (`src/extract/`, page by page with `page.flush_cache()`). Run, from the
 repository root: `python -I src/extract/itr_dm.py`, then
 `python -I src/extract/nfhs.py`, then
-`python -I verification/check_extraction_totals.py`. PyMuPDF was used only to
+`python -I verification/check_extraction_totals.py` and
+`python -I verification/check_implied_denominator.py`. PyMuPDF was used only to
 cross-read the ITR 2019 Annexure 1.2 rows and the NFHS-5 indicator lines, and to
 render the pages read by eye for `tests/test_known_cells.py`; no committed code
 imports it.

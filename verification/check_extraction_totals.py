@@ -1,5 +1,5 @@
 """Check the extracted tables against their printed India totals (analysis plan
-sections 3.4, 3.5 and 10.4).
+sections 3.5, 10.4 and 12.1).
 
 Run: python -I verification/check_extraction_totals.py   (from the repository root)
 
@@ -11,20 +11,14 @@ Reads only the committed extracts (no PDF is needed):
    with its size, in src/extract/itr_dm.py RECORDED_GAPS; any other difference
    fails. The same is done for data/extracted/tb_sex_2022.csv.
 2. Coarsening. For every data year and measure, the 33 unit values of
-   data/extracted/dm_panel.csv sum to the 36 printed rows of dm_cells.csv
-   (merging adds the member rows and loses nothing), and the panel has
-   33 units x 5 years x 4 measures.
-3. Implied denominators (section 3.4, an extraction check, not an estimate).
-   For every printed Total known-status cell that prints a percentage p, the
-   range of denominators consistent with it, K / ((p +- half a unit of p's
-   last digit) / 100), is compared with the registered notified count N of the
-   same printed row (and, for 2022, with the ITR 2023 A1.6 male + female +
-   transgender sum). Each comparison is written to
-   data/extracted/implied_denominator_check.csv; the counts inside and outside
-   the range are printed. It changes nothing in the analysis.
+   data/extracted/dm_panel.csv (and of the plan section 12.1 sensitivity file
+   dm_panel_notified_registered.csv) sum to the printed rows of dm_cells.csv
+   they are built from (merging adds the member rows and loses nothing), and
+   the panel has 33 units x 5 years x 4 measures.
 
-The printed-total results are written to data/extracted/total_checks.csv.
-Exit status 1 if a check fails.
+The implied-denominator check (plan sections 3.4 and 12.1) is
+verification/check_implied_denominator.py. The printed-total results are
+written to data/extracted/total_checks.csv. Exit status 1 if a check fails.
 """
 from __future__ import annotations
 
@@ -41,11 +35,6 @@ from src.extract import itr_dm  # noqa: E402  (standard library only at import)
 EXTRACTED = ROOT / "data" / "extracted"
 NATIONAL = "India"
 N_ROWS = 36
-
-# Data year -> (table key of the known-status column, table key of N).
-KNOWN = {2018: ("ITR2019_A1.2", "ITR2019_A1.2"), 2019: ("ITR2020_A2.5", "ITR2020_A2.5"),
-         2021: ("TBAR2022_A2.5", "TBAR2022_A1.2"), 2022: ("ITR2023_A2.10", "ITR2023_A1.2"),
-         2023: ("ITR2024_A2.10", "ITR2024_A1.2")}
 
 
 def _read(name: str) -> list[dict]:
@@ -86,7 +75,19 @@ def sex_totals(rows: list[dict]) -> list[dict]:
     return out
 
 
-def coarsening(cells: list[dict], panel: list[dict]) -> list[str]:
+def _printed_sum(cells: list[dict], src: itr_dm.Source) -> int:
+    key, fields, _ = src
+    return sum(int(r["value"]) for r in cells if r["table_key"] == key
+               and r["field"] in fields and r["printed_unit"] != NATIONAL and r["value"] != "")
+
+
+def _panel_sum(panel: list[dict], year: int, measure: str) -> int:
+    return sum(int(r["value"]) for r in panel if int(r["year"]) == year
+               and r["measure"] == measure and r["value"] != "")
+
+
+def coarsening(cells: list[dict], panel: list[dict],
+               registered: list[dict] | None = None) -> list[str]:
     bad = []
     if len(panel) != 33 * 5 * 4:
         bad.append(f"dm_panel.csv has {len(panel)} rows, expected 660")
@@ -94,55 +95,19 @@ def coarsening(cells: list[dict], panel: list[dict]) -> list[str]:
     if len(units) != 33:
         bad.append(f"dm_panel.csv has {len(units)} units, expected 33")
     for year, ms in itr_dm.SOURCES.items():
-        for measure, (key, _) in ms.items():
-            printed = sum(int(r["value"]) for r in cells if r["table_key"] == key
-                          and r["field"] == measure and r["printed_unit"] != NATIONAL
-                          and r["value"] != "")
-            merged = sum(int(r["value"]) for r in panel if int(r["year"]) == year
-                         and r["measure"] == measure and r["value"] != "")
+        for measure, src in ms.items():
+            printed, merged = _printed_sum(cells, src), _panel_sum(panel, year, measure)
             if printed != merged:
                 bad.append(f"{year} {measure}: panel sum {merged} != printed rows {printed}")
+    if registered is not None:
+        if len(registered) != 33 * 3:
+            bad.append(f"dm_panel_notified_registered.csv has {len(registered)} rows")
+        for year, src in itr_dm.REGISTERED_NOTIFIED.items():
+            printed = _printed_sum(cells, src)
+            merged = _panel_sum(registered, year, "notified")
+            if printed != merged:
+                bad.append(f"registered {year}: sum {merged} != printed rows {printed}")
     return bad
-
-
-def _pct(text: str) -> Decimal | None:
-    t = text.strip()
-    i = t.rfind("(")
-    if i < 0 or not t.endswith(")"):
-        return None
-    inner = t[i + 1:-1].replace("%", "").strip()
-    try:
-        return Decimal(inner)
-    except ArithmeticError:
-        return None
-
-
-def implied_denominators(cells: list[dict], sex: list[dict]) -> list[dict]:
-    val = {(r["table_key"], r["printed_unit"], r["field"]): r for r in cells}
-    a16 = {r["printed_unit"]: int(r["male"]) + int(r["female"]) + int(r["transgender"])
-           for r in sex if r["male"] != "" and r["female"] != "" and r["transgender"] != ""}
-    out = []
-    for year, (kkey, nkey) in KNOWN.items():
-        units = sorted({r["printed_unit"] for r in cells if r["table_key"] == kkey})
-        for u in units:
-            kr = val[(kkey, u, "known_status")]
-            p = _pct(kr["cell_printed"])
-            if p is None or kr["value"] in ("", "0"):
-                continue
-            k = int(kr["value"])
-            half = Decimal(1).scaleb(p.as_tuple().exponent) / 2
-            lo = Decimal(k) * 100 / (p + half)
-            hi = Decimal(k) * 100 / (p - half) if p - half > 0 else None
-            bases = [("registered_N", int(val[(nkey, u, "notified")]["value"]))]
-            if year == 2022 and u in a16:
-                bases.append(("a1_6_sex_sum", a16[u]))
-            for basis, n in bases:
-                inside = lo <= n and (hi is None or n <= hi)
-                out.append({"year": year, "printed_unit": u, "known_status": k,
-                            "pct_printed": str(p), "implied_lo": lo.quantize(Decimal("0.1")),
-                            "implied_hi": "" if hi is None else hi.quantize(Decimal("0.1")),
-                            "basis": basis, "n": n, "inside": "yes" if inside else "no"})
-    return out
 
 
 def _write(name: str, rows: list[dict]) -> None:
@@ -155,7 +120,6 @@ def _write(name: str, rows: list[dict]) -> None:
 def main() -> int:
     cells = _read("dm_cells.csv")
     sex = _read("tb_sex_2022.csv")
-    panel = _read("dm_panel.csv")
     checks = printed_totals(cells)
     bad = itr_dm.unrecorded_gaps(checks)
     for c in checks + sex_totals(sex):
@@ -165,18 +129,8 @@ def main() -> int:
               f"blank {c['blank_cells']}")
     bad += [f"tb_sex_2022 {c['field']}: difference {c['difference']}"
             for c in sex_totals(sex) if c["difference"] != 0]
-    bad += coarsening(cells, panel)
+    bad += coarsening(cells, _read("dm_panel.csv"), _read("dm_panel_notified_registered.csv"))
     _write("total_checks.csv", checks + sex_totals(sex))
-    imp = implied_denominators(cells, sex)
-    _write("implied_denominator_check.csv", imp)
-    print("implied-denominator check (section 3.4): N inside the range implied by the "
-          "printed known-status percentage")
-    for year in KNOWN:
-        for basis in ("registered_N", "a1_6_sex_sum"):
-            rs = [r for r in imp if r["year"] == year and r["basis"] == basis]
-            if rs:
-                n_in = sum(r["inside"] == "yes" for r in rs)
-                print(f"  {year} {basis}: {n_in} of {len(rs)} printed rows inside")
     for b in bad:
         print(f"FAIL: {b}")
     if bad:

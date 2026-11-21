@@ -1,0 +1,100 @@
+unit,year,measure,value,source_file,pdf_page,table_id,flag
+Andaman and Nicobar Islands,2021,notified,507,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Andhra Pradesh,2021,notified,86832,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Arunachal Pradesh,2021,notified,2724,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Assam,2021,notified,37641,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Bihar,2021,notified,131703,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Chandigarh,2021,notified,4720,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Chhattisgarh,2021,notified,32416,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Delhi,2021,notified,103038,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Goa,2021,notified,2018,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Gujarat,2021,notified,145744,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis;merged:Gujarat+Dadra and Nagar Haveli and Daman and Diu
+Haryana,2021,notified,69083,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Himachal Pradesh,2021,notified,14492,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis;NA:C1:known_status_exceeds_notified
+Jammu and Kashmir,2021,notified,11117,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis;merged:Jammu and Kashmir+Ladakh
+Jharkhand,2021,notified,52179,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Karnataka,2021,notified,72435,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Kerala,2021,notified,21884,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis;merged:Kerala+Lakshadweep
+Madhya Pradesh,2021,notified,166346,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Maharashtra,2021,notified,199976,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Manipur,2021,notified,1793,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Meghalaya,2021,notified,4152,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Mizoram,2021,notified,1749,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Nagaland,2021,notified,3648,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Odisha,2021,notified,52381,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Puducherry,2021,notified,3444,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Punjab,2021,notified,50142,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Rajasthan,2021,notified,149225,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Sikkim,2021,notified,1373,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Tamil Nadu,2021,notified,82823,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Telangana,2021,notified,60714,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Tripura,2021,notified,2543,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis;NA:C1:known_status_exceeds_notified
+Uttar Pradesh,2021,notified,453712,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Uttarakhand,2021,notified,22789,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+West Bengal,2021,notified,90487,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Andaman and Nicobar Islands,2022,notified,534,data_raw/india_tb_report/ITR2023.pdf,213,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Andhra Pradesh,2022,notified,92187,data_raw/india_tb_report/ITR2023.pdf,213,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Arunachal Pradesh,2022,notified,2863,data_raw/india_tb_report/ITR2023.pdf,213,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Assam,2022,notified,47822,data_raw/india_tb_report/ITR2023.pdf,213,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Bihar,2022,notified,161165,data_raw/india_tb_report/ITR2023.pdf,213,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Chandigarh,2022,notified,6066,data_raw/india_tb_report/ITR2023.pdf,213,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Chhattisgarh,2022,notified,38521,data_raw/india_tb_report/ITR2023.pdf,213,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Delhi,2022,notified,106731,data_raw/india_tb_report/ITR2023.pdf,213,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Goa,2022,notified,2091,data_raw/india_tb_report/ITR2023.pdf,213,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Gujarat,2022,notified,153311,data_raw/india_tb_report/ITR2023.pdf,213,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis;merged:Gujarat+Dadra and Nagar Haveli and Daman and Diu
+Haryana,2022,notified,75838,data_raw/india_tb_report/ITR2023.pdf,213,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Himachal Pradesh,2022,notified,16089,data_raw/india_tb_report/ITR2023.pdf,213,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis;NA:C1:known_status_exceeds_notified
+Jammu and Kashmir,2022,notified,12124,data_raw/india_tb_report/ITR2023.pdf,213,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis;merged:Jammu and Kashmir+Ladakh
+Jharkhand,2022,notified,57320,data_raw/india_tb_report/ITR2023.pdf,213,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Karnataka,2022,notified,80416,data_raw/india_tb_report/ITR2023.pdf,213,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Kerala,2022,notified,23399,data_raw/india_tb_report/ITR2023.pdf,213;214,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis;merged:Kerala+Lakshadweep
+Madhya Pradesh,2022,notified,186293,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Maharashtra,2022,notified,234105,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Manipur,2022,notified,2554,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Meghalaya,2022,notified,4989,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Mizoram,2022,notified,2085,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Nagaland,2022,notified,4125,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Odisha,2022,notified,60372,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Puducherry,2022,notified,3835,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Punjab,2022,notified,55150,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Rajasthan,2022,notified,169522,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Sikkim,2022,notified,1395,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Tamil Nadu,2022,notified,93879,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Telangana,2022,notified,72941,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Tripura,2022,notified,3024,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis;NA:C1:known_status_exceeds_notified
+Uttar Pradesh,2022,notified,522850,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Uttarakhand,2022,notified,27553,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+West Bengal,2022,notified,100972,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Andaman and Nicobar Islands,2023,notified,561,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Andhra Pradesh,2023,notified,89064,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Arunachal Pradesh,2023,notified,2604,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Assam,2023,notified,51862,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Bihar,2023,notified,186974,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Chandigarh,2023,notified,6721,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Chhattisgarh,2023,notified,38924,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Delhi,2023,notified,100523,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Goa,2023,notified,2082,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Gujarat,2023,notified,145674,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis;merged:Gujarat+Dadra and Nagar Haveli and Daman and Diu
+Haryana,2023,notified,80490,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Himachal Pradesh,2023,notified,15648,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis;NA:C1:known_status_exceeds_notified
+Jammu and Kashmir,2023,notified,12074,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis;merged:Jammu and Kashmir+Ladakh
+Jharkhand,2023,notified,61717,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Karnataka,2023,notified,81862,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Kerala,2023,notified,21805,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis;merged:Kerala+Lakshadweep
+Madhya Pradesh,2023,notified,184691,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Maharashtra,2023,notified,227664,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Manipur,2023,notified,2495,data_raw/india_tb_report/ITR2024.pdf,188,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Meghalaya,2023,notified,4908,data_raw/india_tb_report/ITR2024.pdf,188,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Mizoram,2023,notified,2273,data_raw/india_tb_report/ITR2024.pdf,188,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Nagaland,2023,notified,4287,data_raw/india_tb_report/ITR2024.pdf,188,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Odisha,2023,notified,62387,data_raw/india_tb_report/ITR2024.pdf,188,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Puducherry,2023,notified,4169,data_raw/india_tb_report/ITR2024.pdf,188,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Punjab,2023,notified,55224,data_raw/india_tb_report/ITR2024.pdf,188,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Rajasthan,2023,notified,165123,data_raw/india_tb_report/ITR2024.pdf,188,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Sikkim,2023,notified,1391,data_raw/india_tb_report/ITR2024.pdf,188,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Tamil Nadu,2023,notified,98251,data_raw/india_tb_report/ITR2024.pdf,188,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Telangana,2023,notified,74994,data_raw/india_tb_report/ITR2024.pdf,188,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Tripura,2023,notified,3386,data_raw/india_tb_report/ITR2024.pdf,188,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis;NA:C1:known_status_exceeds_notified
+Uttar Pradesh,2023,notified,632872,data_raw/india_tb_report/ITR2024.pdf,188,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+Uttarakhand,2023,notified,26829,data_raw/india_tb_report/ITR2024.pdf,188,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis
+West Bengal,2023,notified,102728,data_raw/india_tb_report/ITR2024.pdf,188,Annexure 1.2,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis

@@ -15,7 +15,15 @@ data_raw/ (ITR 2019, ITR 2020, TBAR 2022, ITR 2023, ITR 2024) and writes:
   initiated). ``value`` is the count summed over the unit's printed rows;
   nothing else is computed (no ratio, rate or estimate);
 - data/extracted/tb_sex_2022.csv: the ITR 2023 Annexure 1.6 "TB Cases
-  Notified" counts (male, female, transgender), one row per printed row.
+  Notified" counts (male, female, transgender), one row per printed row;
+- plan section 12.1 (21 Nov 2026): the main notified N of 2021-2023 is TBAR
+  2022 A1.4 net notified, ITR 2023 A1.6 male + female + transgender and ITR
+  2024 A1.4 net notified (current PHI) Total, the bases of the diabetes tables'
+  own percentages. Sensitivities: data/extracted/dm_panel_notified_registered.csv
+  (the registered A1.2 basis, flag plan_12.1_registered_basis) and
+  data/extracted/dm_panel_notified_2022_from_percent.csv (2022 N back-calculated
+  from the printed known-status percentage, with value_lo/value_hi, flag
+  derived_from_percent).
 
 The ITR 2023 Annexure 1.1 population (lakhs, as printed) is kept in
 dm_cells.csv; src/extract/nfhs.py reads it from there.
@@ -68,6 +76,8 @@ EXTRACTED = ROOT / "data" / "extracted"
 CELLS_CSV = EXTRACTED / "dm_cells.csv"
 PANEL_CSV = EXTRACTED / "dm_panel.csv"
 SEX_CSV = EXTRACTED / "tb_sex_2022.csv"
+REGISTERED_CSV = EXTRACTED / "dm_panel_notified_registered.csv"
+FROM_PCT_CSV = EXTRACTED / "dm_panel_notified_2022_from_percent.csv"
 
 CELL_COLS = ["edition", "year", "table_key", "table_id", "pdf_page", "printed_name",
              "printed_unit", "unit", "field", "column_header", "cell_printed", "value", "flag"]
@@ -152,6 +162,11 @@ SPECS: dict[str, TableSpec] = {s.key: s for s in (
         F("notified", 5, "TB patients notified (Achievement against target %): Total, "
                          "count part"),
     ), "1.2 TB Case Notification", "TB patients notified (Achievement against target %)"),
+    # Plan section 12.1: the main 2021 N. Left half of the spread.
+    TableSpec("TBAR2022_A1.4", "TBAR 2022", "Annexure 1.4", (91,), 5, (
+        F("notified", 3, "Net TB Patients Notified"),
+    ), "1.4 Patient Transfer Status & Treatment Initiation Status", "Net TB Patients Notified",
+        region=(0.0, 0.5)),
     # ---- 2022: ITR 2023 A2.10 "TB - DIABETES", A1.2, A1.6 and A1.1
     TableSpec("ITR2023_A2.10", "ITR 2023", "Annexure 2.10", (239, 240), 9, (
         F("known_status", 2, "TB patients with known DM status, n (% of notified): Total, "
@@ -187,44 +202,67 @@ SPECS: dict[str, TableSpec] = {s.key: s for s in (
         F("notified", 5, "TB patients notified, n(% of achievement against target): Total, "
                          "count part"),
     ), "1.2. TB case notification", "Target of TB patients expected"),
+    # Plan section 12.1: the main 2023 N.
+    TableSpec("ITR2024_A1.4", "ITR 2024", "Annexure 1.4", (191, 192), 9, (
+        F("notified", 5, "Net TB patients* notified (Based on current PHI); public-private "
+                         "disaggregated: Total"),
+    ), "1.4. Patient transfer status and treatment initiation status",
+        "Net TB patients* notified"),
 )}
 
-# Data year -> measure -> (table key, flags carried by every row of the measure).
+# Data year -> measure -> (table key, fields summed for a printed row, flags
+# carried by every row of the measure).
 _A26 = "itr2020_a26_discrepancy"
-SOURCES: dict[int, dict[str, tuple[str, tuple[str, ...]]]] = {
+_P121 = "plan_12.1"
+_SEX = ("male", "female", "transgender")
+Source = tuple[str, tuple[str, ...], tuple[str, ...]]
+SOURCES: dict[int, dict[str, Source]] = {
     2018: {
-        "notified": ("ITR2019_A1.2", ("denominator_own_table", "denominator_current_phi")),
-        "known_status": ("ITR2019_A1.2", ("known_blood_sugar_status_wording",)),
-        "diabetic": ("ITR2019_A1.2", ()),
-        "initiated": ("ITR2019_A1.2", ("c3_linked_ncd_clinic",)),
+        "notified": ("ITR2019_A1.2", ("notified",),
+                     ("denominator_own_table", "denominator_current_phi")),
+        "known_status": ("ITR2019_A1.2", ("known_status",),
+                         ("known_blood_sugar_status_wording",)),
+        "diabetic": ("ITR2019_A1.2", ("diabetic",), ()),
+        "initiated": ("ITR2019_A1.2", ("initiated",), ("c3_linked_ncd_clinic",)),
     },
     2019: {
         # ITR 2020 A2.5 prints no basis for its notified column (no footnote, no
         # header note on PDF pp. 216-217): recorded as notified_basis_not_stated.
-        "notified": ("ITR2020_A2.5", ("denominator_own_table", "notified_basis_not_stated",
-                                      _A26)),
-        "known_status": ("ITR2020_A2.5", (_A26,)),
-        "diabetic": ("ITR2020_A2.5", (_A26,)),
-        "initiated": ("ITR2020_A2.5", (_A26,)),
+        "notified": ("ITR2020_A2.5", ("notified",),
+                     ("denominator_own_table", "notified_basis_not_stated", _A26)),
+        "known_status": ("ITR2020_A2.5", ("known_status",), (_A26,)),
+        "diabetic": ("ITR2020_A2.5", ("diabetic",), (_A26,)),
+        "initiated": ("ITR2020_A2.5", ("initiated",), (_A26,)),
     },
+    # 2021-2023 notified: plan section 12.1 (21 Nov 2026) puts N on the basis of
+    # the diabetes tables' own percentages. The registered A1.2 basis is kept as
+    # a sensitivity (REGISTERED_NOTIFIED).
     2021: {
-        "notified": ("TBAR2022_A1.2", ("denominator_a1_2_diagnosing_phi",)),
-        "known_status": ("TBAR2022_A2.5", ()),
-        "diabetic": ("TBAR2022_A2.5", ()),
-        "initiated": ("TBAR2022_A2.5", ()),
+        "notified": ("TBAR2022_A1.4", ("notified",),
+                     ("denominator_a1_4_net_current_phi", _P121)),
+        "known_status": ("TBAR2022_A2.5", ("known_status",), ()),
+        "diabetic": ("TBAR2022_A2.5", ("diabetic",), ()),
+        "initiated": ("TBAR2022_A2.5", ("initiated",), ()),
     },
     2022: {
-        "notified": ("ITR2023_A1.2", ("denominator_a1_2_diagnosing_phi",)),
-        "known_status": ("ITR2023_A2.10", ()),
-        "diabetic": ("ITR2023_A2.10", ()),
-        "initiated": ("ITR2023_A2.10", ()),
+        "notified": ("ITR2023_A1.6", _SEX, ("denominator_a1_6_sex_sum", _P121)),
+        "known_status": ("ITR2023_A2.10", ("known_status",), ()),
+        "diabetic": ("ITR2023_A2.10", ("diabetic",), ()),
+        "initiated": ("ITR2023_A2.10", ("initiated",), ()),
     },
     2023: {
-        "notified": ("ITR2024_A1.2", ("denominator_a1_2_diagnosing_phi",)),
-        "known_status": ("ITR2024_A2.10", ()),
-        "diabetic": ("ITR2024_A2.10", ()),
-        "initiated": ("ITR2024_A2.10", ()),
+        "notified": ("ITR2024_A1.4", ("notified",),
+                     ("denominator_a1_4_net_current_phi", _P121)),
+        "known_status": ("ITR2024_A2.10", ("known_status",), ()),
+        "diabetic": ("ITR2024_A2.10", ("diabetic",), ()),
+        "initiated": ("ITR2024_A2.10", ("initiated",), ()),
     },
+}
+# The registered N of 2021-2023 (plan section 3.3: A1.2, diagnosing PHI), kept as
+# the plan section 12.1 sensitivity.
+REGISTERED_NOTIFIED: dict[int, Source] = {
+    y: (k, ("notified",), ("denominator_a1_2_diagnosing_phi", "plan_12.1_registered_basis"))
+    for y, k in ((2021, "TBAR2022_A1.2"), (2022, "ITR2023_A1.2"), (2023, "ITR2024_A1.2"))
 }
 YEARS = tuple(SOURCES)
 
@@ -362,8 +400,6 @@ def cell_values(tables: dict[str, Table]) -> dict[tuple[str, str, str], CellValu
     derived from their base (PCT_BASE), which is read first."""
     out: dict[tuple[str, str, str], CellValue] = {}
     order = {"notified": 0, "known_status": 1, "diabetic": 2, "initiated": 3}
-    base_table: dict[tuple[int, str], str] = {(y, m): k for y, ms in SOURCES.items()
-                                              for m, (k, _) in ms.items()}
     todo = [(t, f) for t in tables.values() for f in t.spec.fields]
     todo.sort(key=lambda tf: order.get(tf[1].name, -1))
     for t, f in todo:
@@ -375,10 +411,10 @@ def cell_values(tables: dict[str, Table]) -> dict[tuple[str, str, str], CellValu
                 out[(t.spec.key, u, f.name)] = CellValue(v, [])
                 continue
             base = None
-            if f.name in PCT_BASE:
-                bk = base_table[(t.spec.year, PCT_BASE[f.name])]
-                bv = out.get((bk, u, PCT_BASE[f.name]))
-                base = None if bv is None else bv.value  # type: ignore[assignment]
+            if f.name in PCT_BASE and t.spec.year in SOURCES:
+                src = SOURCES[t.spec.year][PCT_BASE[f.name]]
+                if all((src[0], u, b) in out for b in src[1]):
+                    base = member_value(out, src, u).value  # type: ignore[assignment]
             v, flags = cell_count(c, base, where)
             out[(t.spec.key, u, f.name)] = CellValue(v, flags)
     for t in tables.values():
@@ -387,6 +423,17 @@ def cell_values(tables: dict[str, Table]) -> dict[tuple[str, str, str], CellValu
         if blank:
             raise ValueError(f"{t.spec.key}: India row blank in {blank}")
     return out
+
+
+def member_value(vals: dict[tuple[str, str, str], CellValue], src: Source,
+                 printed: str) -> CellValue:
+    """The value of one printed row for a source: the sum of its fields (one
+    field, or the A1.6 male + female + transgender); None if any is blank."""
+    key, fields, _ = src
+    cvs = [vals[(key, printed, f)] for f in fields]
+    if any(cv.value is None for cv in cvs):
+        return CellValue(None, [])
+    return CellValue(sum(cv.value for cv in cvs), [fl for cv in cvs for fl in cv.flags])
 
 
 def total_checks(tables: dict[str, Table], vals: dict[tuple[str, str, str], CellValue]
@@ -463,20 +510,21 @@ def na_reasons(n: int | None, k: int | None, d: int | None, i: int | None) -> di
 NA_STEP_OF = {"known_status": "C1", "diabetic": "y", "initiated": "C3"}
 
 
-def panel_rows(tables: dict[str, Table], vals: dict[tuple[str, str, str], CellValue]
-               ) -> list[dict]:
+def panel_rows(tables: dict[str, Table], vals: dict[tuple[str, str, str], CellValue],
+               sources: dict[int, dict[str, Source]] = SOURCES) -> list[dict]:
     out = []
-    for year in YEARS:
+    for year in sources:
         for unit in crosswalk.UNITS:
             mem = crosswalk.members(unit, year)
             rows: dict[str, dict] = {}
             for m_name in MEASURES:
-                key, extra = SOURCES[year][m_name]
+                src = sources[year][m_name]
+                key, _, extra = src
                 t = tables[key]
                 used, missing, flags = [], [], list(extra)
                 total = 0
                 for m in mem:
-                    cv = vals[(key, m, m_name)]
+                    cv = member_value(vals, src, m)
                     if cv.value is None:
                         missing.append(m)
                         continue
@@ -507,6 +555,74 @@ def panel_rows(tables: dict[str, Table], vals: dict[tuple[str, str, str], CellVa
     return out
 
 
+def registered_notified_rows(tables: dict[str, Table],
+                            vals: dict[tuple[str, str, str], CellValue]) -> list[dict]:
+    """Plan section 12.1 sensitivity: the notified rows of 2021-2023 on the
+    registered A1.2 basis (dm_panel.csv columns). Where known status exceeds this
+    N, the C1 NA flag of plan section 3.5 is carried on the notified row itself."""
+    srcs = {y: dict(SOURCES[y], notified=REGISTERED_NOTIFIED[y]) for y in REGISTERED_NOTIFIED}
+    rows = panel_rows(tables, vals, srcs)
+    known = {(r["unit"], r["year"]): r for r in rows if r["measure"] == "known_status"}
+    out = []
+    for r in rows:
+        if r["measure"] != "notified":
+            continue
+        na = [f for f in known[(r["unit"], r["year"])]["flag"].split(";")
+              if f.startswith("NA:C1:")]
+        out.append(dict(r, flag=";".join([f for f in r["flag"].split(";") if f] + na)))
+    return out
+
+
+def implied_n(k: int, pct_text: str) -> tuple[int, int, int]:
+    """(N, lo, hi) for a count K printed with percentage p of N: N =
+    round-half-up(K x 100 / p), and [lo, hi] the whole N for which K/N prints as
+    p (half a unit of p's last digit either side)."""
+    p = _pct(pct_text)
+    if p <= 0 or k <= 0:
+        raise ValueError(f"no denominator is implied by {k} at {pct_text!r}")
+    half = Decimal(1).scaleb(p.as_tuple().exponent) / 2
+    n = int((Decimal(k) * 100 / p).quantize(Decimal(1), rounding=ROUND_HALF_UP))
+    lo = math.ceil(Decimal(k) * 100 / (p + half))
+    hi = math.floor(Decimal(k) * 100 / (p - half)) if p - half > 0 else n
+    return n, lo, hi
+
+
+FROM_PCT_COLS = PANEL_COLS[:4] + ["value_lo", "value_hi"] + PANEL_COLS[4:]
+
+
+def notified_2022_from_percent(tables: dict[str, Table]) -> list[dict]:
+    """Plan section 12.1 sensitivity for 2022: N back-calculated from the printed
+    ITR 2023 A2.10 Total known-status percentage ("% of notified"), summed over
+    the unit's printed rows, with the summed rounding-interval bounds."""
+    t = tables["ITR2023_A2.10"]
+    f = t.spec.field("known_status")
+    out = []
+    for unit in crosswalk.UNITS:
+        mem = crosswalk.members(unit, 2022)
+        n = lo = hi = 0
+        flags = ["derived_from_percent", "plan_12.1_sensitivity"]
+        used = []
+        for m in mem:
+            c = t.cells[m][f.index]
+            if c is None or c.n is None or c.pct is None:
+                flags.append(f"member_missing:{m}")
+                continue
+            a, b, d = implied_n(cells.parse_int(c.n), c.pct)
+            n, lo, hi = n + a, lo + b, hi + d
+            used.append(m)
+        if len(mem) > 1:
+            flags.append("merged:" + "+".join(mem))
+        vals: tuple = (n, lo, hi) if used else (None, None, None)
+        if not used:
+            flags.append("NA:all_members_missing")
+        out.append({"unit": unit, "year": 2022, "measure": "notified", "value": vals[0],
+                    "value_lo": vals[1], "value_hi": vals[2],
+                    "source_file": t.spec.source_file,
+                    "pdf_page": ";".join(str(p) for p in sorted({t.pages[m] for m in mem})),
+                    "table_id": t.spec.table_id, "flag": ";".join(flags)})
+    return out
+
+
 def sex_rows(tables: dict[str, Table], vals: dict[tuple[str, str, str], CellValue]
              ) -> list[dict]:
     t = tables["ITR2023_A1.6"]
@@ -527,9 +643,12 @@ def sex_rows(tables: dict[str, Table], vals: dict[tuple[str, str, str], CellValu
 def write_all(tables: dict[str, Table], out_dir: Path = EXTRACTED) -> dict[str, Path]:
     vals = cell_values(tables)
     paths = {"cells": out_dir / CELLS_CSV.name, "panel": out_dir / PANEL_CSV.name,
-             "sex": out_dir / SEX_CSV.name}
+             "registered": out_dir / REGISTERED_CSV.name,
+             "from_percent": out_dir / FROM_PCT_CSV.name, "sex": out_dir / SEX_CSV.name}
     annex.write_csv(paths["cells"], CELL_COLS, cell_rows(tables, vals))
     annex.write_csv(paths["panel"], PANEL_COLS, panel_rows(tables, vals))
+    annex.write_csv(paths["registered"], PANEL_COLS, registered_notified_rows(tables, vals))
+    annex.write_csv(paths["from_percent"], FROM_PCT_COLS, notified_2022_from_percent(tables))
     annex.write_csv(paths["sex"], SEX_COLS, sex_rows(tables, vals))
     return paths
 

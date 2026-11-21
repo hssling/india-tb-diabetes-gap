@@ -1,0 +1,34 @@
+unit,year,measure,value,value_lo,value_hi,source_file,pdf_page,table_id,flag
+Andaman and Nicobar Islands,2022,notified,548,548,548,data_raw/india_tb_report/ITR2023.pdf,239,Annexure 2.10,derived_from_percent;plan_12.1_sensitivity
+Andhra Pradesh,2022,notified,93143,93096,93189,data_raw/india_tb_report/ITR2023.pdf,239,Annexure 2.10,derived_from_percent;plan_12.1_sensitivity
+Arunachal Pradesh,2022,notified,3014,2995,3033,data_raw/india_tb_report/ITR2023.pdf,239,Annexure 2.10,derived_from_percent;plan_12.1_sensitivity
+Assam,2022,notified,47956,47927,47985,data_raw/india_tb_report/ITR2023.pdf,239,Annexure 2.10,derived_from_percent;plan_12.1_sensitivity
+Bihar,2022,notified,165865,165758,165972,data_raw/india_tb_report/ITR2023.pdf,239,Annexure 2.10,derived_from_percent;plan_12.1_sensitivity
+Chandigarh,2022,notified,3782,3781,3784,data_raw/india_tb_report/ITR2023.pdf,239,Annexure 2.10,derived_from_percent;plan_12.1_sensitivity
+Chhattisgarh,2022,notified,38714,38503,38928,data_raw/india_tb_report/ITR2023.pdf,239,Annexure 2.10,derived_from_percent;plan_12.1_sensitivity
+Delhi,2022,notified,88277,88223,88331,data_raw/india_tb_report/ITR2023.pdf,239,Annexure 2.10,derived_from_percent;plan_12.1_sensitivity
+Goa,2022,notified,2073,2073,2074,data_raw/india_tb_report/ITR2023.pdf,239,Annexure 2.10,derived_from_percent;plan_12.1_sensitivity
+Gujarat,2022,notified,149079,148312,149855,data_raw/india_tb_report/ITR2023.pdf,239,Annexure 2.10,derived_from_percent;plan_12.1_sensitivity;merged:Gujarat+Dadra and Nagar Haveli and Daman and Diu
+Haryana,2022,notified,78665,78624,78707,data_raw/india_tb_report/ITR2023.pdf,239,Annexure 2.10,derived_from_percent;plan_12.1_sensitivity
+Himachal Pradesh,2022,notified,16505,16423,16588,data_raw/india_tb_report/ITR2023.pdf,239,Annexure 2.10,derived_from_percent;plan_12.1_sensitivity
+Jammu and Kashmir,2022,notified,12302,12296,12308,data_raw/india_tb_report/ITR2023.pdf,239;240,Annexure 2.10,derived_from_percent;plan_12.1_sensitivity;merged:Jammu and Kashmir+Ladakh
+Jharkhand,2022,notified,58435,58402,58467,data_raw/india_tb_report/ITR2023.pdf,239,Annexure 2.10,derived_from_percent;plan_12.1_sensitivity
+Karnataka,2022,notified,79166,78752,79585,data_raw/india_tb_report/ITR2023.pdf,239,Annexure 2.10,derived_from_percent;plan_12.1_sensitivity
+Kerala,2022,notified,23543,23531,23555,data_raw/india_tb_report/ITR2023.pdf,239;240,Annexure 2.10,derived_from_percent;plan_12.1_sensitivity;merged:Kerala+Lakshadweep
+Madhya Pradesh,2022,notified,188982,188879,189086,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10,derived_from_percent;plan_12.1_sensitivity
+Maharashtra,2022,notified,229726,229608,229844,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10,derived_from_percent;plan_12.1_sensitivity
+Manipur,2022,notified,2626,2625,2627,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10,derived_from_percent;plan_12.1_sensitivity
+Meghalaya,2022,notified,4962,4960,4965,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10,derived_from_percent;plan_12.1_sensitivity
+Mizoram,2022,notified,2105,2105,2106,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10,derived_from_percent;plan_12.1_sensitivity
+Nagaland,2022,notified,4178,4176,4180,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10,derived_from_percent;plan_12.1_sensitivity
+Odisha,2022,notified,59956,59926,59987,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10,derived_from_percent;plan_12.1_sensitivity
+Puducherry,2022,notified,1527,1520,1535,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10,derived_from_percent;plan_12.1_sensitivity
+Punjab,2022,notified,57564,57533,57595,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10,derived_from_percent;plan_12.1_sensitivity
+Rajasthan,2022,notified,170352,170258,170446,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10,derived_from_percent;plan_12.1_sensitivity
+Sikkim,2022,notified,1411,1411,1412,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10,derived_from_percent;plan_12.1_sensitivity
+Tamil Nadu,2022,notified,95951,95902,96001,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10,derived_from_percent;plan_12.1_sensitivity
+Telangana,2022,notified,73240,73202,73279,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10,derived_from_percent;plan_12.1_sensitivity
+Tripura,2022,notified,3297,3295,3298,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10,derived_from_percent;plan_12.1_sensitivity
+Uttar Pradesh,2022,notified,536005,535714,536298,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10,derived_from_percent;plan_12.1_sensitivity
+Uttarakhand,2022,notified,27354,27340,27368,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10,derived_from_percent;plan_12.1_sensitivity
+West Bengal,2022,notified,101864,101809,101918,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10,derived_from_percent;plan_12.1_sensitivity

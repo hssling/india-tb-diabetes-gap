@@ -185,11 +185,12 @@ def test_percent_only_cell_derivation_flagged():
     t.cells["Goa"] = [None, None, annex.Cell(None, "(91.5)", "(91.5)"),
                       None, None, annex.Cell("80", "(8.7)", "80 (8.7)"),
                       None, None, annex.Cell("50", "(62.5)", "50 (62.5)")]
-    for key in ("ITR2023_A1.2",):
-        s = tables[key]
-        for u in list(crosswalk.PRINTED[2022]) + [crosswalk.NATIONAL]:
-            s.cells[u] = [None] * 5 + [annex.Cell("1000", "(90)", "1000 (90)")] + [None] * 3
-    only = {k: tables[k] for k in ("ITR2023_A2.10", "ITR2023_A1.2")}
+    # The 2022 base N is the A1.6 male + female + transgender sum (plan section 12.1).
+    s = tables["ITR2023_A1.6"]
+    for u in list(crosswalk.PRINTED[2022]) + [crosswalk.NATIONAL]:
+        s.cells[u] = [annex.Cell("600", None, "600"), annex.Cell("399", None, "399"),
+                      annex.Cell("1", None, "1")] + [None] * 6
+    only = {k: tables[k] for k in ("ITR2023_A2.10", "ITR2023_A1.6")}
     vals = itr_dm.cell_values(only)
     assert vals[("ITR2023_A2.10", "Goa", "known_status")].value == 915
     assert vals[("ITR2023_A2.10", "Goa", "known_status")].flags[0].startswith(
@@ -223,7 +224,57 @@ def test_unrecorded_gap_fails():
 
 
 def test_coarsening_preserves_totals():
-    assert cet.coarsening(_read("dm_cells.csv"), _read("dm_panel.csv")) == []
+    assert cet.coarsening(_read("dm_cells.csv"), _read("dm_panel.csv"),
+                          _read("dm_panel_notified_registered.csv")) == []
+
+
+# ---- plan section 12.1 ----------------------------------------------------------
+
+def test_main_n_sources_are_plan_12_1():
+    assert itr_dm.SOURCES[2021]["notified"][:2] == ("TBAR2022_A1.4", ("notified",))
+    assert itr_dm.SOURCES[2022]["notified"][:2] == ("ITR2023_A1.6",
+                                                    ("male", "female", "transgender"))
+    assert itr_dm.SOURCES[2023]["notified"][:2] == ("ITR2024_A1.4", ("notified",))
+    assert itr_dm.SOURCES[2018]["notified"][0] == "ITR2019_A1.2"
+    assert itr_dm.SOURCES[2019]["notified"][0] == "ITR2020_A2.5"
+
+
+def test_registered_basis_sensitivity_file():
+    rows = _read("dm_panel_notified_registered.csv")
+    assert list(rows[0]) == itr_dm.PANEL_COLS
+    assert len(rows) == 33 * 3
+    assert {(r["unit"], int(r["year"])) for r in rows} == \
+        {(u, y) for u in crosswalk.UNITS for y in (2021, 2022, 2023)}
+    assert all(r["measure"] == "notified" and r["table_id"] == "Annexure 1.2" and
+               "plan_12.1_registered_basis" in r["flag"].split(";") for r in rows)
+    # On the registered basis known status exceeds N in 6 unit-years (section 3.5);
+    # on the plan section 12.1 basis in none.
+    na = sorted((r["unit"], int(r["year"])) for r in rows if "NA:C1:" in r["flag"])
+    assert na == sorted((u, y) for u in ("Himachal Pradesh", "Tripura")
+                        for y in (2021, 2022, 2023))
+    assert not any("NA:" in r["flag"] for r in _read("dm_panel.csv"))
+
+
+def test_2022_from_percent_sensitivity_file():
+    rows = _read("dm_panel_notified_2022_from_percent.csv")
+    assert list(rows[0]) == itr_dm.FROM_PCT_COLS
+    assert len(rows) == 33 and {r["unit"] for r in rows} == set(crosswalk.UNITS)
+    for r in rows:
+        assert int(r["value_lo"]) <= int(r["value"]) <= int(r["value_hi"]), r["unit"]
+        assert {"derived_from_percent", "plan_12.1_sensitivity"} <= set(r["flag"].split(";"))
+        assert r["year"] == "2022" and r["table_id"] == "Annexure 2.10"
+    # The A1.6 main N lies within, or within 15 patients of, the interval.
+    main = {r["unit"]: int(r["value"]) for r in _read("dm_panel.csv")
+            if r["year"] == "2022" and r["measure"] == "notified"}
+    for r in rows:
+        assert int(r["value_lo"]) - 15 <= main[r["unit"]] <= int(r["value_hi"]) + 15, r["unit"]
+
+
+def test_implied_n():
+    assert itr_dm.implied_n(921, "(92.1)") == (1000, 1000, 1000)
+    assert itr_dm.implied_n(20, "(100%)") == (20, 20, 20)
+    with pytest.raises(ValueError):
+        itr_dm.implied_n(0, "(0)")
 
 
 # ---- structure ---------------------------------------------------------------------
@@ -253,8 +304,12 @@ def test_panel_definition_flags():
     assert all("c3_linked_ncd_clinic" in f for f in flags(2018, "initiated"))
     assert all("itr2020_a26_discrepancy" in f for m in itr_dm.MEASURES for f in flags(2019, m))
     assert all("denominator_own_table" in f for f in flags(2019, "notified"))
-    for y in (2021, 2022, 2023):
-        assert all("denominator_a1_2_diagnosing_phi" in f for f in flags(y, "notified"))
+    # Plan section 12.1: the main N of 2021-2023.
+    assert all({"denominator_a1_4_net_current_phi", "plan_12.1"} <= f
+               for y in (2021, 2023) for f in flags(y, "notified"))
+    assert all({"denominator_a1_6_sex_sum", "plan_12.1"} <= f for f in flags(2022, "notified"))
+    assert not any("denominator_a1_2_diagnosing_phi" in f for y in (2021, 2022, 2023)
+                   for f in flags(y, "notified"))
     assert not any("c3_linked_ncd_clinic" in f for y in (2019, 2021, 2022, 2023)
                    for f in flags(y, "initiated"))
     # The 2019 C3 header is "initiated on Anti-diabetic treatment" (plan section 5.1).
@@ -299,7 +354,7 @@ def test_notified_counts_match_the_priority_tool():
     mine = {(r["table_key"], r["printed_unit"], r["field"]): r["value"]
             for r in _read("dm_cells.csv")}
     rename = {"notified_male": "male", "notified_female": "female",
-              "notified_transgender": "transgender"}
+              "notified_transgender": "transgender", "net_notified": "notified"}
     n = 0
     with open(SIBLING_CELLS, encoding="utf-8", newline="") as f:
         for r in csv.DictReader(f):
@@ -308,4 +363,4 @@ def test_notified_counts_match_the_priority_tool():
             if field in ("notified", "male", "female", "transgender") and k in mine:
                 assert mine[k] == r["value"], k
                 n += 1
-    assert n == 4 * 37 + 3 * 37
+    assert n == 6 * 37 + 3 * 37  # A1.2 x 4, A1.4 (2021, 2023), A1.6 x 3 columns

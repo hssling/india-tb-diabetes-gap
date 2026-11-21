@@ -1,223 +1,297 @@
-year,printed_unit,known_status,pct_printed,implied_lo,implied_hi,basis,n,inside
-2018,Andaman and Nicobar Islands,190,33,567.2,584.6,registered_N,572,yes
-2018,Andhra Pradesh,57057,62,91291.2,92775.6,registered_N,91995,yes
-2018,Arunachal Pradesh,228,7,3040.0,3507.7,registered_N,3473,yes
-2018,Assam,3990,9,42000.0,46941.2,registered_N,43181,yes
-2018,Bihar,4483,4,99622.2,128085.7,registered_N,106313,yes
-2018,Chandigarh,1657,45,3641.8,3723.6,registered_N,3699,yes
-2018,Chhattisgarh,19849,46,42686.0,43624.2,registered_N,43155,yes
-2018,Dadra and Nagar Haveli,567,94,600.0,606.4,registered_N,606,yes
-2018,Daman and Diu,191,46,410.8,419.8,registered_N,414,yes
-2018,Delhi,22906,26,86437.7,89827.5,registered_N,89449,yes
-2018,Goa,884,37,2357.3,2421.9,registered_N,2392,yes
-2018,Gujarat,85588,56,151483.2,154212.6,registered_N,152667,yes
-2018,Haryana,29871,45,65650.5,67125.8,registered_N,66734,yes
-2018,Himachal Pradesh,8727,53,16312.1,16622.9,registered_N,16614,yes
-2018,India,619470,29,2099898.3,2173578.9,registered_N,2155894,yes
-2018,Jammu and Kashmir,3096,24,12636.7,13174.5,registered_N,12961,yes
-2018,Jharkhand,7422,15,47883.9,51186.2,registered_N,48772,yes
-2018,Karnataka,41250,51,80097.1,81683.2,registered_N,81380,yes
-2018,Kerala,8020,32,24676.9,25460.3,registered_N,24720,yes
-2018,Lakshadweep,12,52,22.9,23.3,registered_N,22,no
-2018,Madhya Pradesh,37173,23,158183.0,165213.3,registered_N,161285,yes
-2018,Maharashtra,53036,25,207984.3,216473.5,registered_N,208177,yes
-2018,Manipur,125,4,2777.8,3571.4,registered_N,2946,yes
-2018,Meghalaya,721,15,4651.6,4972.4,registered_N,4690,yes
-2018,Mizoram,862,33,2573.1,2652.3,registered_N,2592,yes
-2018,Nagaland,195,5,3545.5,4333.3,registered_N,4297,yes
-2018,Odisha,22799,45,50107.7,51233.7,registered_N,50244,yes
-2018,Puducherry,1308,83,1566.5,1585.5,registered_N,1586,no
-2018,Punjab,25891,47,54507.4,55679.6,registered_N,55152,yes
-2018,Rajasthan,35589,22,158173.3,165530.2,registered_N,160244,yes
-2018,Sikkim,931,64,1443.4,1466.1,registered_N,1444,yes
-2018,Tamil Nadu,26308,25,103168.6,107379.6,registered_N,107075,yes
-2018,Telangana,14246,27,51803.6,53758.5,registered_N,52139,yes
-2018,Tripura,495,19,2538.5,2675.7,registered_N,2660,yes
-2018,Uttar Pradesh,37920,9,399157.9,446117.6,registered_N,425451,yes
-2018,Uttarakhand,1732,8,20376.5,23093.3,registered_N,21931,yes
-2018,West Bengal,65208,62,104332.8,106029.3,registered_N,104862,yes
-2019,Andaman and Nicobar Islands,378,62,604.8,614.6,registered_N,613,yes
-2019,Andhra Pradesh,83094,83,99513.8,100720.0,registered_N,99904,yes
-2019,Arunachal Pradesh,1283,42,3018.8,3091.6,registered_N,3024,yes
-2019,Assam,23153,47,48743.2,49791.4,registered_N,48765,yes
-2019,Bihar,64870,51,125961.2,128455.4,registered_N,126416,yes
-2019,Chandigarh,3250,91,3551.9,3591.2,registered_N,3557,yes
-2019,Chhattisgarh,35152,80,43667.1,44216.4,registered_N,43791,yes
-2019,Dadra and Nagar Haveli,562,98,570.6,576.4,registered_N,572,yes
-2019,Daman and Diu,405,89,452.5,457.6,registered_N,457,yes
-2019,Delhi,47646,49,96254.5,98239.2,registered_N,97742,yes
-2019,Goa,1685,72,2324.1,2356.6,registered_N,2344,yes
-2019,Gujarat,134115,86,155046.2,156859.6,registered_N,156171,yes
-2019,Haryana,53760,72,74151.7,75188.8,registered_N,74734,yes
-2019,Himachal Pradesh,17389,97,17834.9,18019.7,registered_N,17988,yes
-2019,India,1535450,64,2380542.6,2418031.5,registered_N,2404815,yes
-2019,Jammu and Kashmir,7984,67,11828.1,12006.0,registered_N,11924,yes
-2019,Jharkhand,31027,54,56930.3,57994.4,registered_N,57432,yes
-2019,Karnataka,71171,79,89523.3,90663.7,registered_N,89897,yes
-2019,Kerala,21142,82,25626.7,25941.1,registered_N,25648,yes
-2019,Lakshadweep,16,100,15.9,16.1,registered_N,16,yes
-2019,Madhya Pradesh,121523,65,185531.3,188407.8,registered_N,187511,yes
-2019,Maharashtra,169928,76,222128.1,225070.2,registered_N,224566,yes
-2019,Manipur,909,34,2634.8,2713.4,registered_N,2647,yes
-2019,Meghalaya,2970,55,5351.4,5449.5,registered_N,5389,yes
-2019,Mizoram,1697,57,2951.3,3003.5,registered_N,2991,yes
-2019,Nagaland,1454,30,4767.2,4928.8,registered_N,4782,yes
-2019,Odisha,47645,89,53234.6,53836.2,registered_N,53287,yes
-2019,Puducherry,1629,98,1653.8,1670.8,registered_N,1663,yes
-2019,Punjab,52785,89,58977.7,59644.1,registered_N,59537,yes
-2019,Rajasthan,112197,64,173948.8,176688.2,registered_N,175425,yes
-2019,Sikkim,1301,89,1453.6,1470.1,registered_N,1469,yes
-2019,Tamil Nadu,79696,70,113044.0,114670.5,registered_N,113513,yes
-2019,Telangana,32098,45,70545.1,72130.3,registered_N,71482,yes
-2019,Tripura,1500,50,2970.3,3030.3,registered_N,3027,yes
-2019,Uttar Pradesh,212923,43,489478.2,500995.3,registered_N,499756,yes
-2019,Uttarakhand,7884,31,25028.6,25849.2,registered_N,25223,yes
-2019,West Bengal,89229,80,110843.5,112237.7,registered_N,111552,yes
-2021,Andaman and Nicobar Islands,476,92,514.6,520.2,registered_N,507,no
-2021,Andhra Pradesh,86127,98,87438.6,88335.4,registered_N,86832,no
-2021,Arunachal Pradesh,2425,84,2869.8,2904.2,registered_N,2724,no
-2021,Assam,28276,75,37451.7,37954.4,registered_N,37641,yes
-2021,Bihar,104223,77,134481.3,136239.2,registered_N,131703,no
-2021,Chandigarh,2990,92,3232.4,3267.8,registered_N,4720,no
-2021,Chhattisgarh,28791,88,32532.2,32904.0,registered_N,32416,no
-2021,Dadra and Nagar Haveli and Daman and Diu,748,98,759.4,767.2,registered_N,1013,no
-2021,Delhi,65654,78,83635.7,84714.8,registered_N,103038,no
-2021,Goa,1827,90,2018.8,2041.3,registered_N,2018,no
-2021,Gujarat,136129,96,141066.3,142543.5,registered_N,144731,no
-2021,Haryana,65152,91,71204.4,71991.2,registered_N,69083,no
-2021,Himachal Pradesh,14607,99,14680.4,14829.4,registered_N,14492,no
-2021,India,1900043,89,2122953.1,2146941.2,registered_N,2135830,yes
-2021,Jammu and Kashmir,9659,88,10914.1,11038.9,registered_N,10826,no
-2021,Jharkhand,39919,75,52872.8,53582.6,registered_N,52179,no
-2021,Karnataka,67424,94,71348.1,72111.2,registered_N,72435,no
-2021,Kerala,20105,91,21972.7,22215.5,registered_N,21872,no
-2021,Ladakh,256,80,318.0,322.0,registered_N,291,no
-2021,Lakshadweep,20,100,19.9,20.1,registered_N,12,no
-2021,Madhya Pradesh,151251,90,167128.2,168995.5,registered_N,166346,no
-2021,Maharashtra,183178,93,195912.3,198030.3,registered_N,199976,no
-2021,Manipur,1164,62,1862.4,1892.7,registered_N,1793,no
-2021,Meghalaya,3354,80,4166.5,4218.9,registered_N,4152,no
-2021,Mizoram,1741,98,1767.5,1785.6,registered_N,1749,no
-2021,Nagaland,2951,80,3665.8,3711.9,registered_N,3648,no
-2021,Odisha,49919,96,51729.5,52271.2,registered_N,52381,no
-2021,Puducherry,1383,98,1404.1,1418.5,registered_N,3444,no
-2021,Punjab,46341,89,51777.7,52362.7,registered_N,50142,no
-2021,Rajasthan,134955,89,150787.7,152491.5,registered_N,149225,no
-2021,Sikkim,1356,94,1434.9,1450.3,registered_N,1373,no
-2021,Tamil Nadu,80541,95,84336.1,85228.6,registered_N,82823,no
-2021,Telangana,57456,94,60800.0,61450.3,registered_N,60714,no
-2021,Tripura,2588,93,2767.9,2797.8,registered_N,2543,no
-2021,Uttar Pradesh,401375,86,464017.3,469444.4,registered_N,453712,no
-2021,Uttarakhand,20386,86,23567.6,23843.3,registered_N,22789,no
-2021,West Bengal,85296,93,91225.7,92211.9,registered_N,90487,no
-2022,Andaman and Nicobar Islands,521,95.1,547.6,548.1,registered_N,534,no
-2022,Andaman and Nicobar Islands,521,95.1,547.6,548.1,a1_6_sex_sum,547,no
-2022,Andhra Pradesh,92118,98.9,93095.5,93189.7,registered_N,92187,no
-2022,Andhra Pradesh,92118,98.9,93095.5,93189.7,a1_6_sex_sum,93092,no
-2022,Arunachal Pradesh,2381,79,2995.0,3033.1,registered_N,2863,no
-2022,Arunachal Pradesh,2381,79,2995.0,3033.1,a1_6_sex_sum,3014,yes
-2022,Assam,38940,81.2,47926.2,47985.2,registered_N,47822,no
-2022,Assam,38940,81.2,47926.2,47985.2,a1_6_sex_sum,47963,yes
-2022,Bihar,127882,77.1,165757.6,165972.7,registered_N,161165,no
-2022,Bihar,127882,77.1,165757.6,165972.7,a1_6_sex_sum,165821,yes
-2022,Chandigarh,3578,94.6,3780.2,3784.2,registered_N,6066,no
-2022,Chandigarh,3578,94.6,3780.2,3784.2,a1_6_sex_sum,3786,no
-2022,Chhattisgarh,35230,91,38502.7,38928.2,registered_N,38521,yes
-2022,Chhattisgarh,35230,91,38502.7,38928.2,a1_6_sex_sum,38741,yes
-2022,Dadra and Nagar Haveli and Daman and Diu,914,99.2,920.9,921.8,registered_N,1399,no
-2022,Dadra and Nagar Haveli and Daman and Diu,914,99.2,920.9,921.8,a1_6_sex_sum,921,yes
-2022,Delhi,71328,80.8,88222.6,88331.9,registered_N,106731,no
-2022,Delhi,71328,80.8,88222.6,88331.9,a1_6_sex_sum,88224,yes
-2022,Goa,1947,93.9,2072.4,2074.6,registered_N,2091,no
-2022,Goa,1947,93.9,2072.4,2074.6,a1_6_sex_sum,2070,no
-2022,Gujarat,142232,96,147390.7,148934.0,registered_N,151912,no
-2022,Gujarat,142232,96,147390.7,148934.0,a1_6_sex_sum,148125,yes
-2022,Haryana,74024,94.1,78623.5,78707.1,registered_N,75838,no
-2022,Haryana,74024,94.1,78623.5,78707.1,a1_6_sex_sum,78640,yes
-2022,Himachal Pradesh,16340,99,16422.1,16588.8,registered_N,16089,no
-2022,Himachal Pradesh,16340,99,16422.1,16588.8,a1_6_sex_sum,16505,yes
-2022,India,2215930,91.5,2420458.8,2423105.5,registered_N,2422121,yes
-2022,India,2215930,91.5,2420458.8,2423105.5,a1_6_sex_sum,2421666,yes
-2022,Jammu and Kashmir,11407,95.4,11950.8,11963.3,registered_N,11804,no
-2022,Jammu and Kashmir,11407,95.4,11950.8,11963.3,a1_6_sex_sum,11956,yes
-2022,Jharkhand,51890,88.8,58401.8,58467.6,registered_N,57320,no
-2022,Jharkhand,51890,88.8,58401.8,58467.6,a1_6_sex_sum,58468,no
-2022,Karnataka,75208,95,78751.8,79585.2,registered_N,80416,no
-2022,Karnataka,75208,95,78751.8,79585.2,a1_6_sex_sum,79141,yes
-2022,Kerala,21945,93.3,23508.3,23533.5,registered_N,23388,no
-2022,Kerala,21945,93.3,23508.3,23533.5,a1_6_sex_sum,23529,yes
-2022,Ladakh,315,91.3,344.8,345.2,registered_N,320,no
-2022,Ladakh,315,91.3,344.8,345.2,a1_6_sex_sum,345,yes
-2022,Lakshadweep,21,95.5,22.0,22.0,registered_N,11,no
-2022,Lakshadweep,21,95.5,22.0,22.0,a1_6_sex_sum,22,yes
-2022,Madhya Pradesh,171407,90.7,188878.2,189086.6,registered_N,186293,no
-2022,Madhya Pradesh,171407,90.7,188878.2,189086.6,a1_6_sex_sum,188906,yes
-2022,Maharashtra,222145,96.7,229607.2,229844.8,registered_N,234105,no
-2022,Maharashtra,222145,96.7,229607.2,229844.8,a1_6_sex_sum,229696,yes
-2022,Manipur,1951,74.3,2624.1,2627.6,registered_N,2554,no
-2022,Manipur,1951,74.3,2624.1,2627.6,a1_6_sex_sum,2621,no
-2022,Meghalaya,3811,76.8,4959.0,4965.5,registered_N,4989,no
-2022,Meghalaya,3811,76.8,4959.0,4965.5,a1_6_sex_sum,4961,yes
-2022,Mizoram,2076,98.6,2104.4,2106.5,registered_N,2085,no
-2022,Mizoram,2076,98.6,2104.4,2106.5,a1_6_sex_sum,2106,yes
-2022,Nagaland,3514,84.1,4175.9,4180.8,registered_N,4125,no
-2022,Nagaland,3514,84.1,4175.9,4180.8,a1_6_sex_sum,4184,no
-2022,Odisha,57738,96.3,59925.3,59987.5,registered_N,60372,no
-2022,Odisha,57738,96.3,59925.3,59987.5,a1_6_sex_sum,59955,yes
-2022,Puducherry,1512,99,1519.6,1535.0,registered_N,3835,no
-2022,Puducherry,1512,99,1519.6,1535.0,a1_6_sex_sum,1527,yes
-2022,Punjab,52671,91.5,57532.5,57595.4,registered_N,55150,no
-2022,Punjab,52671,91.5,57532.5,57595.4,a1_6_sex_sum,57562,yes
-2022,Rajasthan,153487,90.1,170257.3,170446.4,registered_N,169522,no
-2022,Rajasthan,153487,90.1,170257.3,170446.4,a1_6_sex_sum,170248,no
-2022,Sikkim,1376,97.5,1410.6,1412.0,registered_N,1395,no
-2022,Sikkim,1376,97.5,1410.6,1412.0,a1_6_sex_sum,1415,no
-2022,Tamil Nadu,92689,96.6,95901.7,96001.0,registered_N,93879,no
-2022,Tamil Nadu,92689,96.6,95901.7,96001.0,a1_6_sex_sum,95968,yes
-2022,Telangana,68626,93.7,73201.1,73279.2,registered_N,72941,no
-2022,Telangana,68626,93.7,73201.1,73279.2,a1_6_sex_sum,73220,yes
-2022,Tripura,3112,94.4,3294.9,3298.4,registered_N,3024,no
-2022,Tripura,3112,94.4,3294.9,3298.4,a1_6_sex_sum,3297,yes
-2022,Uttar Pradesh,490981,91.6,535713.0,536298.2,registered_N,522850,no
-2022,Uttar Pradesh,490981,91.6,535713.0,536298.2,a1_6_sex_sum,535854,yes
-2022,Uttarakhand,26287,96.1,27339.6,27368.0,registered_N,27553,no
-2022,Uttarakhand,26287,96.1,27339.6,27368.0,a1_6_sex_sum,27357,yes
-2022,West Bengal,94326,92.6,101809.0,101919.0,registered_N,100972,no
-2022,West Bengal,94326,92.6,101809.0,101919.0,a1_6_sex_sum,101879,yes
-2023,Andaman and Nicobar Islands,518,89,578.8,585.3,registered_N,561,no
-2023,Andhra Pradesh,88229,98.1,89892.0,89983.7,registered_N,89064,no
-2023,Arunachal Pradesh,1930,68.4,2819.6,2823.7,registered_N,2604,no
-2023,Assam,46094,88.8,51878.4,51936.9,registered_N,51862,no
-2023,Bihar,146889,76.9,190888.9,191137.3,registered_N,186974,no
-2023,Chandigarh,3617,85.2,4242.8,4247.8,registered_N,6721,no
-2023,Chhattisgarh,35425,90.9,38950.0,38992.8,registered_N,38924,no
-2023,Dadra and Nagar Haveli and Daman and Diu,863,99.5,866.9,867.8,registered_N,1167,no
-2023,Delhi,71731,80.6,88941.1,89051.5,registered_N,100523,no
-2023,Goa,1905,93.7,2032.0,2034.2,registered_N,2082,no
-2023,Gujarat,135370,96.3,140498.2,140644.2,registered_N,144507,no
-2023,Haryana,77752,96.5,80530.3,80613.8,registered_N,80490,no
-2023,Himachal Pradesh,15861,98.8,16045.5,16061.8,registered_N,15648,no
-2023,India,2361944,92.5,2552073.5,2554834.0,registered_N,2552257,yes
-2023,Jammu and Kashmir,11205,95.4,11739.1,11751.4,registered_N,11754,no
-2023,Jharkhand,58115,92,62827.0,63513.7,registered_N,61717,no
-2023,Karnataka,75958,94.5,80336.3,80421.4,registered_N,81862,no
-2023,Kerala,21022,96.4,21795.7,21818.4,registered_N,21799,yes
-2023,Ladakh,301,87,344.0,348.0,registered_N,320,no
-2023,Lakshadweep,13,92.9,14.0,14.0,registered_N,6,no
-2023,Madhya Pradesh,169107,90.5,186755.4,186961.9,registered_N,184691,no
-2023,Maharashtra,213034,95,223072.3,225432.8,registered_N,227664,no
-2023,Manipur,2031,79.1,2566.0,2569.3,registered_N,2495,no
-2023,Meghalaya,4199,85.5,4908.2,4914.0,registered_N,4908,no
-2023,Mizoram,2224,96.3,2308.3,2310.6,registered_N,2273,no
-2023,Nagaland,3794,86.8,4368.5,4373.5,registered_N,4287,no
-2023,Odisha,60112,97.2,61811.8,61875.5,registered_N,62387,no
-2023,Puducherry,1578,98,1602.0,1618.5,registered_N,4169,no
-2023,Punjab,52724,91.4,57653.4,57716.5,registered_N,55224,no
-2023,Rajasthan,148007,89.1,166020.2,166206.6,registered_N,165123,no
-2023,Sikkim,1337,95.2,1403.7,1405.1,registered_N,1391,no
-2023,Tamil Nadu,97022,96.6,100384.9,100488.9,registered_N,98251,no
-2023,Telangana,69431,92.5,75020.0,75101.1,registered_N,74994,no
-2023,Tripura,3426,95.6,3581.8,3585.6,registered_N,3386,no
-2023,Uttar Pradesh,620325,96.5,642490.9,643157.1,registered_N,632872,no
-2023,Uttarakhand,25574,95.7,26709.1,26737.1,registered_N,26829,no
-2023,West Bengal,95221,91.9,103557.4,103670.1,registered_N,102728,no
+year,printed_unit,known_status,pct_printed,n_lo,n_hi,basis,n,inside
+2018,Andaman and Nicobar Islands,190,33,568,584,own_table,572,yes
+2018,Andhra Pradesh,57057,62,91292,92775,own_table,91995,yes
+2018,Arunachal Pradesh,228,7,3040,3507,own_table,3473,yes
+2018,Assam,3990,9,42000,46941,own_table,43181,yes
+2018,Bihar,4483,4,99623,128085,own_table,106313,yes
+2018,Chandigarh,1657,45,3642,3723,own_table,3699,yes
+2018,Chhattisgarh,19849,46,42687,43624,own_table,43155,yes
+2018,Dadra and Nagar Haveli,567,94,600,606,own_table,606,yes
+2018,Daman and Diu,191,46,411,419,own_table,414,yes
+2018,Delhi,22906,26,86438,89827,own_table,89449,yes
+2018,Goa,884,37,2358,2421,own_table,2392,yes
+2018,Gujarat,85588,56,151484,154212,own_table,152667,yes
+2018,Haryana,29871,45,65651,67125,own_table,66734,yes
+2018,Himachal Pradesh,8727,53,16313,16622,own_table,16614,yes
+2018,Jammu and Kashmir,3096,24,12637,13174,own_table,12961,yes
+2018,Jharkhand,7422,15,47884,51186,own_table,48772,yes
+2018,Karnataka,41250,51,80098,81683,own_table,81380,yes
+2018,Kerala,8020,32,24677,25460,own_table,24720,yes
+2018,Lakshadweep,12,52,23,23,own_table,22,no
+2018,Madhya Pradesh,37173,23,158183,165213,own_table,161285,yes
+2018,Maharashtra,53036,25,207985,216473,own_table,208177,yes
+2018,Manipur,125,4,2778,3571,own_table,2946,yes
+2018,Meghalaya,721,15,4652,4972,own_table,4690,yes
+2018,Mizoram,862,33,2574,2652,own_table,2592,yes
+2018,Nagaland,195,5,3546,4333,own_table,4297,yes
+2018,Odisha,22799,45,50108,51233,own_table,50244,yes
+2018,Puducherry,1308,83,1567,1585,own_table,1586,no
+2018,Punjab,25891,47,54508,55679,own_table,55152,yes
+2018,Rajasthan,35589,22,158174,165530,own_table,160244,yes
+2018,Sikkim,931,64,1444,1466,own_table,1444,yes
+2018,Tamil Nadu,26308,25,103169,107379,own_table,107075,yes
+2018,Telangana,14246,27,51804,53758,own_table,52139,yes
+2018,Tripura,495,19,2539,2675,own_table,2660,yes
+2018,Uttar Pradesh,37920,9,399158,446117,own_table,425451,yes
+2018,Uttarakhand,1732,8,20377,23093,own_table,21931,yes
+2018,West Bengal,65208,62,104333,106029,own_table,104862,yes
+2018,India,619470,29,2099899,2173578,own_table,2155894,yes
+2019,Andaman and Nicobar Islands,378,62,605,614,own_table,613,yes
+2019,Andhra Pradesh,83094,83,99514,100720,own_table,99904,yes
+2019,Arunachal Pradesh,1283,42,3019,3091,own_table,3024,yes
+2019,Assam,23153,47,48744,49791,own_table,48765,yes
+2019,Bihar,64870,51,125962,128455,own_table,126416,yes
+2019,Chandigarh,3250,91,3552,3591,own_table,3557,yes
+2019,Chhattisgarh,35152,80,43668,44216,own_table,43791,yes
+2019,Dadra and Nagar Haveli,562,98,571,576,own_table,572,yes
+2019,Daman and Diu,405,89,453,457,own_table,457,yes
+2019,Delhi,47646,49,96255,98239,own_table,97742,yes
+2019,Goa,1685,72,2325,2356,own_table,2344,yes
+2019,Gujarat,134115,86,155047,156859,own_table,156171,yes
+2019,Haryana,53760,72,74152,75188,own_table,74734,yes
+2019,Himachal Pradesh,17389,97,17835,18019,own_table,17988,yes
+2019,Jammu and Kashmir,7984,67,11829,12006,own_table,11924,yes
+2019,Jharkhand,31027,54,56931,57994,own_table,57432,yes
+2019,Karnataka,71171,79,89524,90663,own_table,89897,yes
+2019,Kerala,21142,82,25627,25941,own_table,25648,yes
+2019,Lakshadweep,16,100,16,16,own_table,16,yes
+2019,Madhya Pradesh,121523,65,185532,188407,own_table,187511,yes
+2019,Maharashtra,169928,76,222129,225070,own_table,224566,yes
+2019,Manipur,909,34,2635,2713,own_table,2647,yes
+2019,Meghalaya,2970,55,5352,5449,own_table,5389,yes
+2019,Mizoram,1697,57,2952,3003,own_table,2991,yes
+2019,Nagaland,1454,30,4768,4928,own_table,4782,yes
+2019,Odisha,47645,89,53235,53836,own_table,53287,yes
+2019,Puducherry,1629,98,1654,1670,own_table,1663,yes
+2019,Punjab,52785,89,58978,59644,own_table,59537,yes
+2019,Rajasthan,112197,64,173949,176688,own_table,175425,yes
+2019,Sikkim,1301,89,1454,1470,own_table,1469,yes
+2019,Tamil Nadu,79696,70,113044,114670,own_table,113513,yes
+2019,Telangana,32098,45,70546,72130,own_table,71482,yes
+2019,Tripura,1500,50,2971,3030,own_table,3027,yes
+2019,Uttar Pradesh,212923,43,489479,500995,own_table,499756,yes
+2019,Uttarakhand,7884,31,25029,25849,own_table,25223,yes
+2019,West Bengal,89229,80,110844,112237,own_table,111552,yes
+2019,India,1535450,64,2380543,2418031,own_table,2404815,yes
+2021,Andaman and Nicobar Islands,476,92,515,520,a1_2_registered,507,no
+2021,Andaman and Nicobar Islands,476,92,515,520,a1_4_net_main,516,yes
+2021,Andhra Pradesh,86127,98,87439,88335,a1_2_registered,86832,no
+2021,Andhra Pradesh,86127,98,87439,88335,a1_4_net_main,87762,yes
+2021,Arunachal Pradesh,2425,84,2870,2904,a1_2_registered,2724,no
+2021,Arunachal Pradesh,2425,84,2870,2904,a1_4_net_main,2872,yes
+2021,Assam,28276,75,37452,37954,a1_2_registered,37641,yes
+2021,Assam,28276,75,37452,37954,a1_4_net_main,37730,yes
+2021,Bihar,104223,77,134482,136239,a1_2_registered,131703,no
+2021,Bihar,104223,77,134482,136239,a1_4_net_main,135488,yes
+2021,Chandigarh,2990,92,3233,3267,a1_2_registered,4720,no
+2021,Chandigarh,2990,92,3233,3267,a1_4_net_main,3242,yes
+2021,Chhattisgarh,28791,88,32533,32904,a1_2_registered,32416,no
+2021,Chhattisgarh,28791,88,32533,32904,a1_4_net_main,32615,yes
+2021,Dadra and Nagar Haveli and Daman and Diu,748,98,760,767,a1_2_registered,1013,no
+2021,Dadra and Nagar Haveli and Daman and Diu,748,98,760,767,a1_4_net_main,764,yes
+2021,Delhi,65654,78,83636,84714,a1_2_registered,103038,no
+2021,Delhi,65654,78,83636,84714,a1_4_net_main,84302,yes
+2021,Goa,1827,90,2019,2041,a1_2_registered,2018,no
+2021,Goa,1827,90,2019,2041,a1_4_net_main,2038,yes
+2021,Gujarat,136129,96,141067,142543,a1_2_registered,144731,no
+2021,Gujarat,136129,96,141067,142543,a1_4_net_main,141284,yes
+2021,Haryana,65152,91,71205,71991,a1_2_registered,69083,no
+2021,Haryana,65152,91,71205,71991,a1_4_net_main,71253,yes
+2021,Himachal Pradesh,14607,99,14681,14829,a1_2_registered,14492,no
+2021,Himachal Pradesh,14607,99,14681,14829,a1_4_net_main,14797,yes
+2021,Jammu and Kashmir,9659,88,10915,11038,a1_2_registered,10826,no
+2021,Jammu and Kashmir,9659,88,10915,11038,a1_4_net_main,11005,yes
+2021,Jharkhand,39919,75,52873,53582,a1_2_registered,52179,no
+2021,Jharkhand,39919,75,52873,53582,a1_4_net_main,53176,yes
+2021,Karnataka,67424,94,71349,72111,a1_2_registered,72435,no
+2021,Karnataka,67424,94,71349,72111,a1_4_net_main,71442,yes
+2021,Kerala,20105,91,21973,22215,a1_2_registered,21872,no
+2021,Kerala,20105,91,21973,22215,a1_4_net_main,22024,yes
+2021,Ladakh,256,80,319,322,a1_2_registered,291,no
+2021,Ladakh,256,80,319,322,a1_4_net_main,319,yes
+2021,Lakshadweep,20,100,20,20,a1_2_registered,12,no
+2021,Lakshadweep,20,100,20,20,a1_4_net_main,20,yes
+2021,Madhya Pradesh,151251,90,167129,168995,a1_2_registered,166346,no
+2021,Madhya Pradesh,151251,90,167129,168995,a1_4_net_main,168248,yes
+2021,Maharashtra,183178,93,195913,198030,a1_2_registered,199976,no
+2021,Maharashtra,183178,93,195913,198030,a1_4_net_main,196595,yes
+2021,Manipur,1164,62,1863,1892,a1_2_registered,1793,no
+2021,Manipur,1164,62,1863,1892,a1_4_net_main,1874,yes
+2021,Meghalaya,3354,80,4167,4218,a1_2_registered,4152,no
+2021,Meghalaya,3354,80,4167,4218,a1_4_net_main,4193,yes
+2021,Mizoram,1741,98,1768,1785,a1_2_registered,1749,no
+2021,Mizoram,1741,98,1768,1785,a1_4_net_main,1781,yes
+2021,Nagaland,2951,80,3666,3711,a1_2_registered,3648,no
+2021,Nagaland,2951,80,3666,3711,a1_4_net_main,3687,yes
+2021,Odisha,49919,96,51730,52271,a1_2_registered,52381,no
+2021,Odisha,49919,96,51730,52271,a1_4_net_main,52147,yes
+2021,Puducherry,1383,98,1405,1418,a1_2_registered,3444,no
+2021,Puducherry,1383,98,1405,1418,a1_4_net_main,1409,yes
+2021,Punjab,46341,89,51778,52362,a1_2_registered,50142,no
+2021,Punjab,46341,89,51778,52362,a1_4_net_main,52076,yes
+2021,Rajasthan,134955,89,150788,152491,a1_2_registered,149225,no
+2021,Rajasthan,134955,89,150788,152491,a1_4_net_main,151034,yes
+2021,Sikkim,1356,94,1435,1450,a1_2_registered,1373,no
+2021,Sikkim,1356,94,1435,1450,a1_4_net_main,1439,yes
+2021,Tamil Nadu,80541,95,84337,85228,a1_2_registered,82823,no
+2021,Tamil Nadu,80541,95,84337,85228,a1_4_net_main,85010,yes
+2021,Telangana,57456,94,60800,61450,a1_2_registered,60714,no
+2021,Telangana,57456,94,60800,61450,a1_4_net_main,60924,yes
+2021,Tripura,2588,93,2768,2797,a1_2_registered,2543,no
+2021,Tripura,2588,93,2768,2797,a1_4_net_main,2777,yes
+2021,Uttar Pradesh,401375,86,464018,469444,a1_2_registered,453712,no
+2021,Uttar Pradesh,401375,86,464018,469444,a1_4_net_main,464899,yes
+2021,Uttarakhand,20386,86,23568,23843,a1_2_registered,22789,no
+2021,Uttarakhand,20386,86,23568,23843,a1_4_net_main,23576,yes
+2021,West Bengal,85296,93,91226,92211,a1_2_registered,90487,no
+2021,West Bengal,85296,93,91226,92211,a1_4_net_main,91512,yes
+2021,India,1900043,89,2122954,2146941,a1_2_registered,2135830,yes
+2021,India,1900043,89,2122954,2146941,a1_4_net_main,2135830,yes
+2022,Andaman and Nicobar Islands,521,95.1,548,548,a1_2_registered,534,no
+2022,Andaman and Nicobar Islands,521,95.1,548,548,a1_6_sex_sum_main,547,no
+2022,Andhra Pradesh,92118,98.9,93096,93189,a1_2_registered,92187,no
+2022,Andhra Pradesh,92118,98.9,93096,93189,a1_6_sex_sum_main,93092,no
+2022,Arunachal Pradesh,2381,79,2995,3033,a1_2_registered,2863,no
+2022,Arunachal Pradesh,2381,79,2995,3033,a1_6_sex_sum_main,3014,yes
+2022,Assam,38940,81.2,47927,47985,a1_2_registered,47822,no
+2022,Assam,38940,81.2,47927,47985,a1_6_sex_sum_main,47963,yes
+2022,Bihar,127882,77.1,165758,165972,a1_2_registered,161165,no
+2022,Bihar,127882,77.1,165758,165972,a1_6_sex_sum_main,165821,yes
+2022,Chandigarh,3578,94.6,3781,3784,a1_2_registered,6066,no
+2022,Chandigarh,3578,94.6,3781,3784,a1_6_sex_sum_main,3786,no
+2022,Chhattisgarh,35230,91,38503,38928,a1_2_registered,38521,yes
+2022,Chhattisgarh,35230,91,38503,38928,a1_6_sex_sum_main,38741,yes
+2022,Dadra and Nagar Haveli and Daman and Diu,914,99.2,921,921,a1_2_registered,1399,no
+2022,Dadra and Nagar Haveli and Daman and Diu,914,99.2,921,921,a1_6_sex_sum_main,921,yes
+2022,Delhi,71328,80.8,88223,88331,a1_2_registered,106731,no
+2022,Delhi,71328,80.8,88223,88331,a1_6_sex_sum_main,88224,yes
+2022,Goa,1947,93.9,2073,2074,a1_2_registered,2091,no
+2022,Goa,1947,93.9,2073,2074,a1_6_sex_sum_main,2070,no
+2022,Gujarat,142232,96,147391,148934,a1_2_registered,151912,no
+2022,Gujarat,142232,96,147391,148934,a1_6_sex_sum_main,148125,yes
+2022,Haryana,74024,94.1,78624,78707,a1_2_registered,75838,no
+2022,Haryana,74024,94.1,78624,78707,a1_6_sex_sum_main,78640,yes
+2022,Himachal Pradesh,16340,99,16423,16588,a1_2_registered,16089,no
+2022,Himachal Pradesh,16340,99,16423,16588,a1_6_sex_sum_main,16505,yes
+2022,Jammu and Kashmir,11407,95.4,11951,11963,a1_2_registered,11804,no
+2022,Jammu and Kashmir,11407,95.4,11951,11963,a1_6_sex_sum_main,11956,yes
+2022,Jharkhand,51890,88.8,58402,58467,a1_2_registered,57320,no
+2022,Jharkhand,51890,88.8,58402,58467,a1_6_sex_sum_main,58468,no
+2022,Karnataka,75208,95,78752,79585,a1_2_registered,80416,no
+2022,Karnataka,75208,95,78752,79585,a1_6_sex_sum_main,79141,yes
+2022,Kerala,21945,93.3,23509,23533,a1_2_registered,23388,no
+2022,Kerala,21945,93.3,23509,23533,a1_6_sex_sum_main,23529,yes
+2022,Ladakh,315,91.3,345,345,a1_2_registered,320,no
+2022,Ladakh,315,91.3,345,345,a1_6_sex_sum_main,345,yes
+2022,Lakshadweep,21,95.5,22,22,a1_2_registered,11,no
+2022,Lakshadweep,21,95.5,22,22,a1_6_sex_sum_main,22,yes
+2022,Madhya Pradesh,171407,90.7,188879,189086,a1_2_registered,186293,no
+2022,Madhya Pradesh,171407,90.7,188879,189086,a1_6_sex_sum_main,188906,yes
+2022,Maharashtra,222145,96.7,229608,229844,a1_2_registered,234105,no
+2022,Maharashtra,222145,96.7,229608,229844,a1_6_sex_sum_main,229696,yes
+2022,Manipur,1951,74.3,2625,2627,a1_2_registered,2554,no
+2022,Manipur,1951,74.3,2625,2627,a1_6_sex_sum_main,2621,no
+2022,Meghalaya,3811,76.8,4960,4965,a1_2_registered,4989,no
+2022,Meghalaya,3811,76.8,4960,4965,a1_6_sex_sum_main,4961,yes
+2022,Mizoram,2076,98.6,2105,2106,a1_2_registered,2085,no
+2022,Mizoram,2076,98.6,2105,2106,a1_6_sex_sum_main,2106,yes
+2022,Nagaland,3514,84.1,4176,4180,a1_2_registered,4125,no
+2022,Nagaland,3514,84.1,4176,4180,a1_6_sex_sum_main,4184,no
+2022,Odisha,57738,96.3,59926,59987,a1_2_registered,60372,no
+2022,Odisha,57738,96.3,59926,59987,a1_6_sex_sum_main,59955,yes
+2022,Puducherry,1512,99,1520,1535,a1_2_registered,3835,no
+2022,Puducherry,1512,99,1520,1535,a1_6_sex_sum_main,1527,yes
+2022,Punjab,52671,91.5,57533,57595,a1_2_registered,55150,no
+2022,Punjab,52671,91.5,57533,57595,a1_6_sex_sum_main,57562,yes
+2022,Rajasthan,153487,90.1,170258,170446,a1_2_registered,169522,no
+2022,Rajasthan,153487,90.1,170258,170446,a1_6_sex_sum_main,170248,no
+2022,Sikkim,1376,97.5,1411,1412,a1_2_registered,1395,no
+2022,Sikkim,1376,97.5,1411,1412,a1_6_sex_sum_main,1415,no
+2022,Tamil Nadu,92689,96.6,95902,96001,a1_2_registered,93879,no
+2022,Tamil Nadu,92689,96.6,95902,96001,a1_6_sex_sum_main,95968,yes
+2022,Telangana,68626,93.7,73202,73279,a1_2_registered,72941,no
+2022,Telangana,68626,93.7,73202,73279,a1_6_sex_sum_main,73220,yes
+2022,Tripura,3112,94.4,3295,3298,a1_2_registered,3024,no
+2022,Tripura,3112,94.4,3295,3298,a1_6_sex_sum_main,3297,yes
+2022,Uttar Pradesh,490981,91.6,535714,536298,a1_2_registered,522850,no
+2022,Uttar Pradesh,490981,91.6,535714,536298,a1_6_sex_sum_main,535854,yes
+2022,Uttarakhand,26287,96.1,27340,27368,a1_2_registered,27553,no
+2022,Uttarakhand,26287,96.1,27340,27368,a1_6_sex_sum_main,27357,yes
+2022,West Bengal,94326,92.6,101809,101918,a1_2_registered,100972,no
+2022,West Bengal,94326,92.6,101809,101918,a1_6_sex_sum_main,101879,yes
+2022,India,2215930,91.5,2420459,2423105,a1_2_registered,2422121,yes
+2022,India,2215930,91.5,2420459,2423105,a1_6_sex_sum_main,2421666,yes
+2023,Andaman and Nicobar Islands,518,89,579,585,a1_2_registered,561,no
+2023,Andaman and Nicobar Islands,518,89,579,585,a1_4_net_main,582,yes
+2023,Andhra Pradesh,88229,98.1,89893,89983,a1_2_registered,89064,no
+2023,Andhra Pradesh,88229,98.1,89893,89983,a1_4_net_main,89911,yes
+2023,Arunachal Pradesh,1930,68.4,2820,2823,a1_2_registered,2604,no
+2023,Arunachal Pradesh,1930,68.4,2820,2823,a1_4_net_main,2820,yes
+2023,Assam,46094,88.8,51879,51936,a1_2_registered,51862,no
+2023,Assam,46094,88.8,51879,51936,a1_4_net_main,51911,yes
+2023,Bihar,146889,76.9,190889,191137,a1_2_registered,186974,no
+2023,Bihar,146889,76.9,190889,191137,a1_4_net_main,191122,yes
+2023,Chandigarh,3617,85.2,4243,4247,a1_2_registered,6721,no
+2023,Chandigarh,3617,85.2,4243,4247,a1_4_net_main,4243,yes
+2023,Chhattisgarh,35425,90.9,38950,38992,a1_2_registered,38924,no
+2023,Chhattisgarh,35425,90.9,38950,38992,a1_4_net_main,38981,yes
+2023,Dadra and Nagar Haveli and Daman and Diu,863,99.5,867,867,a1_2_registered,1167,no
+2023,Dadra and Nagar Haveli and Daman and Diu,863,99.5,867,867,a1_4_net_main,867,yes
+2023,Delhi,71731,80.6,88942,89051,a1_2_registered,100523,no
+2023,Delhi,71731,80.6,88942,89051,a1_4_net_main,88981,yes
+2023,Goa,1905,93.7,2032,2034,a1_2_registered,2082,no
+2023,Goa,1905,93.7,2032,2034,a1_4_net_main,2034,yes
+2023,Gujarat,135370,96.3,140499,140644,a1_2_registered,144507,no
+2023,Gujarat,135370,96.3,140499,140644,a1_4_net_main,140618,yes
+2023,Haryana,77752,96.5,80531,80613,a1_2_registered,80490,no
+2023,Haryana,77752,96.5,80531,80613,a1_4_net_main,80600,yes
+2023,Himachal Pradesh,15861,98.8,16046,16061,a1_2_registered,15648,no
+2023,Himachal Pradesh,15861,98.8,16046,16061,a1_4_net_main,16046,yes
+2023,Jammu and Kashmir,11205,95.4,11740,11751,a1_2_registered,11754,no
+2023,Jammu and Kashmir,11205,95.4,11740,11751,a1_4_net_main,11747,yes
+2023,Jharkhand,58115,92,62828,63513,a1_2_registered,61717,no
+2023,Jharkhand,58115,92,62828,63513,a1_4_net_main,63137,yes
+2023,Karnataka,75958,94.5,80337,80421,a1_2_registered,81862,no
+2023,Karnataka,75958,94.5,80337,80421,a1_4_net_main,80352,yes
+2023,Kerala,21022,96.4,21796,21818,a1_2_registered,21799,yes
+2023,Kerala,21022,96.4,21796,21818,a1_4_net_main,21812,yes
+2023,Ladakh,301,87,344,347,a1_2_registered,320,no
+2023,Ladakh,301,87,344,347,a1_4_net_main,346,yes
+2023,Lakshadweep,13,92.9,14,14,a1_2_registered,6,no
+2023,Lakshadweep,13,92.9,14,14,a1_4_net_main,14,yes
+2023,Madhya Pradesh,169107,90.5,186756,186961,a1_2_registered,184691,no
+2023,Madhya Pradesh,169107,90.5,186756,186961,a1_4_net_main,186883,yes
+2023,Maharashtra,213034,95,223073,225432,a1_2_registered,227664,no
+2023,Maharashtra,213034,95,223073,225432,a1_4_net_main,224265,yes
+2023,Manipur,2031,79.1,2567,2569,a1_2_registered,2495,no
+2023,Manipur,2031,79.1,2567,2569,a1_4_net_main,2567,yes
+2023,Meghalaya,4199,85.5,4909,4913,a1_2_registered,4908,no
+2023,Meghalaya,4199,85.5,4909,4913,a1_4_net_main,4912,yes
+2023,Mizoram,2224,96.3,2309,2310,a1_2_registered,2273,no
+2023,Mizoram,2224,96.3,2309,2310,a1_4_net_main,2310,yes
+2023,Nagaland,3794,86.8,4369,4373,a1_2_registered,4287,no
+2023,Nagaland,3794,86.8,4369,4373,a1_4_net_main,4369,yes
+2023,Odisha,60112,97.2,61812,61875,a1_2_registered,62387,no
+2023,Odisha,60112,97.2,61812,61875,a1_4_net_main,61874,yes
+2023,Puducherry,1578,98,1603,1618,a1_2_registered,4169,no
+2023,Puducherry,1578,98,1603,1618,a1_4_net_main,1610,yes
+2023,Punjab,52724,91.4,57654,57716,a1_2_registered,55224,no
+2023,Punjab,52724,91.4,57654,57716,a1_4_net_main,57683,yes
+2023,Rajasthan,148007,89.1,166021,166206,a1_2_registered,165123,no
+2023,Rajasthan,148007,89.1,166021,166206,a1_4_net_main,166098,yes
+2023,Sikkim,1337,95.2,1404,1405,a1_2_registered,1391,no
+2023,Sikkim,1337,95.2,1404,1405,a1_4_net_main,1405,yes
+2023,Tamil Nadu,97022,96.6,100385,100488,a1_2_registered,98251,no
+2023,Tamil Nadu,97022,96.6,100385,100488,a1_4_net_main,100455,yes
+2023,Telangana,69431,92.5,75020,75101,a1_2_registered,74994,no
+2023,Telangana,69431,92.5,75020,75101,a1_4_net_main,75065,yes
+2023,Tripura,3426,95.6,3582,3585,a1_2_registered,3386,no
+2023,Tripura,3426,95.6,3582,3585,a1_4_net_main,3583,yes
+2023,Uttar Pradesh,620325,96.5,642491,643157,a1_2_registered,632872,no
+2023,Uttar Pradesh,620325,96.5,642491,643157,a1_4_net_main,642774,yes
+2023,Uttarakhand,25574,95.7,26710,26737,a1_2_registered,26829,no
+2023,Uttarakhand,25574,95.7,26710,26737,a1_4_net_main,26720,yes
+2023,West Bengal,95221,91.9,103558,103670,a1_2_registered,102728,no
+2023,West Bengal,95221,91.9,103558,103670,a1_4_net_main,103560,yes
+2023,India,2361944,92.5,2552074,2554833,a1_2_registered,2552257,yes
+2023,India,2361944,92.5,2552074,2554833,a1_4_net_main,2552257,yes
