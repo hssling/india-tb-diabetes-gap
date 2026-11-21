@@ -1,6 +1,6 @@
 """Copied unchanged from hssling/india-tb-priority-tool (MIT), src/extract/grid.py
 at tag v1.0.1 (DOI 10.5281/zenodo.24411057), for the diabetes-TB gap study
-(Task 3, 21 Nov 2026). Plan section 3.3 requires the rotated ITR 2019 cells to
+(extraction, 21 Nov 2026). Plan section 3.3 requires the rotated ITR 2019 cells to
 be read by cell position; this module does that.
 
 Rebuild the State/UT rows of one annexure page from character positions.

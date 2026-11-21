@@ -1,6 +1,6 @@
 """Copied unchanged from hssling/india-tb-priority-tool (MIT), src/extract/cells.py
 at tag v1.0.1 (DOI 10.5281/zenodo.24411057), for the diabetes-TB gap study
-(Task 3, 21 Nov 2026).
+(extraction, 21 Nov 2026).
 
 Cell parsers. Blanks, dashes and NA are errors: callers decide their meaning.
 

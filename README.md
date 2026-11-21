@@ -92,12 +92,12 @@ below 1).
 | H3 | Units with identification below the benchmark in 2023, P(C2 < 1) ≥ 0.95 | 24 of 33 | - | none (descriptive) |
 
 - **H1.** Identification rises with the diabetes burden: across units, the odds of a
-  screened TB patient being identified with diabetes rise more than in proportion to the
-  odds of raised blood sugar in adults (1 lies just below the interval). This is partly
+  screened TB patient being identified with diabetes rise with the odds of raised blood
+  sugar in adults (descriptive; the slope is not compared with 1). This is partly
   expected whatever the programme does, because both sources count treated diabetes. The
   model is ecological; with 33 units (Kish effective number of clusters 12.9) the
   bootstrap interval may be too narrow. The model-based Wald interval is 1.42 to 1.98
-  (descriptive). The registered Spearman sensitivity gives ρ = 0.80 (Fieller interval
+  (descriptive). The registered Spearman sensitivity gives ρ = 0.80 (Fisher-z interval with the Fieller-Hartley-Pearson variance,
   0.62 to 0.90; n = 33). Leaving out one unit at a time, β₁ ranges from 1.41 (without
   Tamil Nadu) to 1.83 (without Andhra Pradesh).
 - **H2** restates published national percentages (seen before registration) with
@@ -161,9 +161,9 @@ alphabetically within a tier.
 - **Trend (`trend.csv`).** No unit has a "falling coverage" flag in the main model or
   any sensitivity model. Coverage rose steeply from 2018 to 2021, which may partly
   reflect the change of denominator basis.
-- **Robustness.** Under a State-specific perturbation of p_u (1,000 replicates), at least
-  26 of 33 units keep their tier, H3 membership and class in 90% or more of replicates
-  (`perturbation.csv`); k_b ranges from 0.735 to 0.894. The k-grid, the simple reference,
+- **Robustness.** Under a State-specific perturbation of p_u (1,000 replicates), for each of
+  tier, H3 membership and class, 26-30 of 33 units keep it in ≥90% of replicates (21 keep
+  all three; `perturbation.csv`); k_b ranges from 0.735 to 0.894. The k-grid, the simple reference,
   shrinkage off and the A1.2 denominator basis are in the `spec` columns.
 
 The files are described in [`outputs/README.md`](outputs/README.md) and in plan section

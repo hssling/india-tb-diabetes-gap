@@ -16,7 +16,7 @@ pages listed in docs/data_inventory.md. Writes data/extracted/nfhs_dm.csv:
   Ladakh sheet), or "India" for the India sheet. One row per sheet and sex:
   the sheets are NOT merged here. The merge of section 4.3 (Gujarat with
   DNH&DD, Kerala with Lakshadweep, Jammu and Kashmir with Ladakh) is a
-  population-weighted combination and is left to the analysis (Task 4); a
+  population-weighted combination and is left to the analysis (src/dmgap/); a
   member sheet carries ``merge_into:<unit>``.
 - ``prevalence_pct`` is the Total cell as printed (a percentage, not divided
   by 100). A cell in parentheses (25-49 unweighted cases) is used and flagged

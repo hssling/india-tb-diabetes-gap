@@ -1,7 +1,7 @@
 """Pinned values, read by eye from the source pages, so that a wrong column, a
 wrong row or a wrong page fails.
 
-The implementer of Task 3 (21 Nov 2026) read every value below from the
+The extraction reviewer (21 Nov 2026) read every value below from the
 rendered PDF pages (PyMuPDF images at 110-130 dpi), not from the extraction:
 ITR 2019 PDF p. 169 (rotated); ITR 2020 p. 217; TBAR 2022 pp. 89 and 96;
 ITR 2023 pp. 211, 213, 221 and 240; ITR 2024 pp. 188 and 212; NFHS-5 Phase I

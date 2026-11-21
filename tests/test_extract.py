@@ -1,4 +1,4 @@
-"""Task 3 extraction: the three pinned Review Focus tests, the printed-total and
+"""Extraction: the three pinned Review Focus tests, the printed-total and
 coarsening checks, and the structure of the extracted files.
 
 No PDF is needed: the rules are tested on synthetic cells, and the committed

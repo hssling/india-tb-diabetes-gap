@@ -1,4 +1,4 @@
-"""Task 4: the full analysis of the registered plan (docs/analysis_plan.md, §4-§8, §10).
+"""The full analysis of the registered plan (docs/analysis_plan.md, §4-§8, §10).
 
 Run from the repository root:  python -I src/run_all.py  [--out DIR]
 
@@ -605,7 +605,7 @@ class Analysis:
 
 
 def main(argv=None) -> int:
-    ap = argparse.ArgumentParser(description="Run the registered analysis (Task 4).")
+    ap = argparse.ArgumentParser(description="Run the registered analysis.")
     ap.add_argument("--out", type=Path, default=OUT, help="output directory")
     args = ap.parse_args(argv)
     a = Analysis()

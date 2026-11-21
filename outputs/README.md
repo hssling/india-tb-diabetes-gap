@@ -1,4 +1,4 @@
-# outputs/: notes for readers and for Task 5
+# outputs/: notes for readers and for the verification
 
 Written by `python -I src/run_all.py` (plan §10.3). Reruns are byte-identical. Every file
 carries a `spec` column where it reports sensitivities.

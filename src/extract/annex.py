@@ -1,6 +1,6 @@
 """Copied unchanged from hssling/india-tb-priority-tool (MIT), src/extract/annex.py
 at tag v1.0.1 (DOI 10.5281/zenodo.24411057), for the diabetes-TB gap study
-(Task 3, 21 Nov 2026); grid.py needs its Cell record and token rules.
+(extraction, 21 Nov 2026); grid.py needs its Cell record and token rules.
 
 Cell tokens, the printed-total comparison and the CSV writer.
 

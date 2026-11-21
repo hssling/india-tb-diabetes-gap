@@ -1,4 +1,4 @@
-"""Task 4 analysis tests (plan §4-§8, §10).
+"""Analysis tests (plan §4-§8, §10).
 
 The two pinned Review Focus tests (test_detection_gap_floor_zero,
 test_tbprio_pinned_version), the brief's tests (test_ratio_interval_rule, test_label_rule,

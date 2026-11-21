@@ -1,5 +1,5 @@
 """Copied from hssling/india-tb-priority-tool (MIT), src/extract/crosswalk.py at
-tag v1.0.1 (DOI 10.5281/zenodo.24411057), for the diabetes-TB gap study (Task 3,
+tag v1.0.1 (DOI 10.5281/zenodo.24411057), for the diabetes-TB gap study (extraction,
 21 Nov 2026). The TB-report part is unchanged; its five data years (2018, 2019,
 2021, 2022, 2023) and 33 units are those of this study's plan, section 4.1.
 Added at the end: the NFHS-5 fact-sheet names (``nfhs_printed_unit``,
