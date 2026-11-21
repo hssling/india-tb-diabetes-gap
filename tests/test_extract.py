@@ -321,6 +321,17 @@ def test_cells_have_provenance():
     rows = _read("dm_cells.csv")
     assert len(rows) == 37 * sum(len(s.fields) for s in itr_dm.SPECS.values())
     assert all(r["pdf_page"] and r["table_id"] and r["cell_printed"] for r in rows)
+    # Plan section 3.5: every value carries source_file, pdf_page and table_id.
+    assert all(r["source_file"] == itr_dm.SPECS[r["table_key"]].source_file for r in rows)
+
+
+def test_extraction_rerun_is_byte_identical(tmp_path):
+    """Rerunning the extraction from the PDFs reproduces the committed files."""
+    if not all((ROOT / s.source_file).is_file() for s in itr_dm.SPECS.values()):
+        pytest.skip("data_raw/ is not distributed; run python -I tools/fetch_sources.py")
+    paths = itr_dm.write_all(itr_dm.read_all(), tmp_path)
+    for p in paths.values():
+        assert p.read_bytes() == (EXTRACTED / p.name).read_bytes(), p.name
 
 
 def test_nfhs_structure():

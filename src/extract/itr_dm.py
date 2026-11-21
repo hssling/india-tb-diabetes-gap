@@ -79,7 +79,8 @@ SEX_CSV = EXTRACTED / "tb_sex_2022.csv"
 REGISTERED_CSV = EXTRACTED / "dm_panel_notified_registered.csv"
 FROM_PCT_CSV = EXTRACTED / "dm_panel_notified_2022_from_percent.csv"
 
-CELL_COLS = ["edition", "year", "table_key", "table_id", "pdf_page", "printed_name",
+CELL_COLS = ["edition", "year", "table_key", "source_file", "table_id", "pdf_page",
+             "printed_name",
              "printed_unit", "unit", "field", "column_header", "cell_printed", "value", "flag"]
 PANEL_COLS = ["unit", "year", "measure", "value", "source_file", "pdf_page", "table_id", "flag"]
 SEX_COLS = ["printed_name", "printed_unit", "unit", "male", "female", "transgender",
@@ -479,6 +480,7 @@ def cell_rows(tables: dict[str, Table], vals: dict[tuple[str, str, str], CellVal
                 cv = vals[(key, u, f.name)]
                 out.append({
                     "edition": t.spec.edition, "year": t.spec.year, "table_key": key,
+                    "source_file": t.spec.source_file,
                     "table_id": t.spec.table_id, "pdf_page": t.pages[u],
                     "printed_name": t.raw_names[u], "printed_unit": u,
                     "unit": "" if u == crosswalk.NATIONAL else crosswalk.coarsen(u),
