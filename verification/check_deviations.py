@@ -32,6 +32,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PLAN = Path("docs") / "analysis_plan.md"
 HEADING = "## 12. Deviations (dated)"
+# Entries logged so far; extend this set when a new dated entry is added.
+REQUIRED_ENTRIES = {"1", "2", "3", "4"}
 ENTRY = re.compile(r"^\*\*12\.(\d+)\s*(\(([^)]*)\))?")
 DATE = re.compile(r"^\d{1,2} (January|February|March|April|May|June|July|August|September|"
                   r"October|November|December) \d{4}$")
@@ -84,6 +86,9 @@ def problems(root: Path = ROOT) -> tuple[list[str], list[str]]:
     """(failures, descriptions of covered files)."""
     plan = (root / PLAN).read_text(encoding="utf-8")
     ent, bad = entries(plan)
+    # The dated entries are append-only: once logged, an entry may never disappear.
+    for n in sorted(REQUIRED_ENTRIES - set(ent), key=int):
+        bad.append(f"plan 12.{n} is missing (dated entries are never removed)")
     ok: list[str] = []
     for f in files(root):
         rel = f.relative_to(root).as_posix()
