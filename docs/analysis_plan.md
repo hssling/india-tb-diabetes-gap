@@ -3,7 +3,7 @@
 **Date of this plan:** 21 November 2026
 **Author:** Siddalingaiah H S, MD, Professor, Department of Community Medicine, Shridevi Institute of Medical Sciences and Research Hospital, Tumkur 572106, Karnataka, India. ORCID 0000-0002-4771-8285. hssling@yahoo.com. Single author.
 **Repository:** https://github.com/hssling/india-tb-diabetes-gap
-**Status:** registered before any estimate was computed. The registration point (the commit SHA and the UTC time of the public push, taken from the GitHub API) is recorded in `docs/registration_event.json`. `verification/check_plan_order.py` checks that the text above §12 is byte-identical at every later commit, and that no file under `src/dmgap/` (the analysis package) or `outputs/` was committed before the registration commit.
+**Status:** registered before any estimate was computed. The registration point (the commit SHA and the UTC time of the public push, taken from the GitHub API) is recorded in `docs/registration_event.json`. `verification/check_plan_order.py` checks that the text above §12 is byte-identical at every later commit, and that no file under `src/dmgap/` (the analysis package), `data/extracted/` or `outputs/` was committed before the registration commit. The registration record must name the full 40-character commit SHA and may never be re-pointed.
 **Design:** `docs/superpowers/specs/2026-11-21-tb-diabetes-gap-design.md` (approved by the author on 21 November 2026). **Implementation plan:** `docs/superpowers/plans/2026-11-21-tb-diabetes-gap.md`, sections "Global Constraints", "Fixed analysis values", "Strengthened analyses" and "Controller rulings after Task 1". **Data inventory (structure only):** `docs/data_inventory.md`. Where any of these and this plan differ, this plan governs.
 
 **Conventions in this plan.**
@@ -60,7 +60,7 @@ The question is: in each State, how many TB patients with diabetes are likely go
 | 3 | Trend | Fixed: 2018, 2021, 2022; no COVID indicator | Ruling: 2018, 2019, 2021, 2022, 2023, with the 2021 indicator, as in the priority tool | §7 |
 | 4 | Multiplier k | Fixed: main 1; sensitivities 1.5 and 2 | Strengthened: main k_b; sensitivities k = 1, 1.5, 2, the median and best-decile benchmarks | §5.2 |
 | 5 | Detection ratio | Fixed: R = y/p_s | Strengthened: C2 = y/(k·p_s). Here R_k = y/(k·p_u); R_1 is the fixed R; C2 is R at k = k_b | §5.1, §5.6 |
-| 6 | "Likely under-detection" and H3 | Fixed and Constraint: the 95% interval of R wholly below 1, at k = 1; H3 counts these units in 2022 | Strengthened: H3 counts units with C2 below the benchmark at 95% posterior probability. Ruling: main year 2023. The k = 1 rule keeps the phrase and is reported alongside H3 | §5.6, §8.7 |
+| 6 | "Likely under-detection" and H3 | Fixed and Constraint: the 95% interval of R wholly below 1, at k = 1; H3 counts these units in 2022 | Strengthened: H3 counts units with C2 below the benchmark at 95% posterior probability. Settled here: H3 follows the ruled main priority year, 2023 (out-of-pool); 2022 reported alongside. The k = 1 rule keeps the phrase and is reported alongside H3 | §5.6, §8.7 |
 | 7 | H1 estimate | Fixed: Spearman ρ, Fieller interval | Strengthened: quasi-binomial slope β₁ with a cluster bootstrap; Spearman kept as a registered sensitivity | §8.2–§8.4 |
 | 8 | H1 years | Fixed: 2021 + 2022 pooled; Strengthened: year effect (2021, 2022) | Ruling: 2019 + 2021 | §8.2 |
 | 9 | H1 grid | Fixed: weighting × year {2021, 2022, pooled} × shrinkage of y | Strengthened: reference × year set × weights. Ruling: year-set axis {2019 + 2021, 2021–2023, 2023 alone} | §8.8 |
@@ -76,6 +76,7 @@ The question is: in each State, how many TB patients with diabetes are likely go
 | 19 | Seed | The tbprio package's own constant is 20261121 | Constraint: 20261122. tbprio's seed constant is not used | §10.1 |
 | 20 | Task 5 verification text | "H1 and its Fieller interval" | H1 is now β₁; the recompute covers β₁ and the Spearman sensitivity with its Fieller interval | §10.4 |
 | 21 | Shrinkage of y | Fixed H1 grid axis | Removed from the grid by the Strengthened grid; kept as a sensitivity of the priorities (shrinkage off) | §5.7 |
+| 22 | k = 1 as "lower bound" | Fixed and Strengthened: k = 1 "(lower bound)" | Settled here: k = 1 is a reference point, not a guaranteed lower bound, because p_u's random-glucose threshold is below diagnostic thresholds (§10.5). The quoted words stay verbatim and are read this way | §5.2, §10.5 |
 
 ---
 
@@ -240,6 +241,8 @@ For a coarsened unit with member sheets j (Gujarat with "Dadra & Nagar Haveli an
 - **y** (identified among screened) = D/K, with the same Jeffreys interval.
 - **C2** = R at k = k_b: C2 = y/(k_b·p_u), with the draw-based interval of §5.6. Its label in text is "diabetes identified among screened TB patients, newly diagnosed or known, relative to the benchmark expectation". R at k = 1, 1.5 and 2 is reported alongside.
 - **C3** (initiated) = I/D, with the Jeffreys interval. All five tables print C3 as counts. The ITR 2020 A2.5 header for 2019 reads "TB- DM patients initiated on Anti-diabetic treatment (%)" (inventory; Task 3 re-records it), so the main C3 uses 2019, 2021, 2022 and 2023. If Task 3 finds a different 2019 header, 2019 C3 is shown separately like 2018, and this is recorded in §12. 2018 ("Linked to NCD Clinic") is reported in a separate column with the flag `c3_linked_ncd_clinic` and is not compared with the other years.
+- **Linkage gap E3** = D − I (identified, not initiated), with Jeffreys draws of C3. It is reported with P(top-5) and tier for 2023, and it is not added to E1 + E2. A unit whose C3 is below the 75th percentile of units' C3 with probability ≥ 0.95 is described as 'linkage below the benchmark'.
+  - Operational detail: for each data year with the main C3 definition (2019, 2021, 2022, 2023), a C3 draw set: a fresh `numpy.random.default_rng(20261122)`; the units with non-NA C3, in the order of §5.3; c3^(d) = `rng.beta(½ + I, ½ + D − I, size=10000)`; E3^(d) = D·(1 − c3^(d)). P(top-5) = `tbprio.priority.p_topk` and tier = `tbprio.priority.tier(·, False)`, as in §6.1. The linkage benchmark c3_b = the 75th percentile, across the year's units with non-NA C3, of the Jeffreys posterior means (½ + I)/(1 + D); "linkage below the benchmark" when the share of draws with c3^(d) < c3_b is at least 0.95. 2018 (linked to an NCD clinic) has no E3 tier. Headline E3 tiers are for 2023; the other years are reported alongside.
 - **Cumulative cascade (descriptive, fixed here).** C1·C2 = D ÷ (N·k_b·p_u), the TB patients identified with diabetes as a share of those expected among all notified; and C1·C2·C3 = I ÷ (N·k_b·p_u), those started on treatment as a share of those expected. Both can exceed 1. No interval, no tier, no label.
 - National values for each year (sums of N, K, D and I over the units with non-NA cells) are reported for C1, y and C3 with Wilson intervals (§8.6). No national R is formed.
 - The cascade is descriptive; it has no tier and no label.
@@ -254,7 +257,7 @@ For a coarsened unit with member sheets j (Gujarat with "Dadra & Nagar Haveli an
    - expected yield = k_b·p_s;
    - sensitivities: k = 1 (lower bound), 1.5 and 2 (published TB:population diabetes ratios, Crossref-verified at the manuscript stage), and the median and best-decile benchmarks.
 
-**Resolution.** The strengthened text governs: the main multiplier is k_b; k = 1, 1.5 and 2 and the median and best-decile benchmarks are sensitivities. The rulings do not change the k_b pool (they move only H1 to 2019 + 2021, §8.2), so the pool stays 2021 + 2022. Because H1's reason (matching NFHS-5 fieldwork) applies to k_b too, a pool of 2019 + 2021 is added as a sensitivity.
+**Resolution.** The strengthened text governs: the main multiplier is k_b; k = 1, 1.5 and 2 and the median and best-decile benchmarks are sensitivities. The rulings do not change the k_b pool (they move only H1 to 2019 + 2021, §8.2), so the pool stays 2021 + 2022. Because H1's reason (matching NFHS-5 fieldwork) applies to k_b too, a pool of 2019 + 2021 is added as a sensitivity, defined over the units with non-NA y in both 2019 and 2021.
 
 **Operational detail.**
 - **Units.** Those with non-NA y in both 2021 and 2022. Excluded units are listed; k_b still applies to them.
@@ -275,6 +278,7 @@ A **draw set** is defined by a data year t, a prior mode (empirical Bayes, the m
 - **Priors.** Empirical Bayes: the untested share has (a₁, b₁) = `tbprio.shrink.beta_binomial(U, N)` over the units with non-NA C1 in the year; the yield has (a₂, b₂) = `tbprio.shrink.beta_binomial(D, K)` over the units with non-NA y in the year. Jeffreys: (a₁, b₁) = (a₂, b₂) = `tbprio.shrink.JEFFREYS_BINOMIAL` = (½, ½).
 - **Special cases.** If ΣU = 0 over the year's units (nobody untested), no untested-share draws are taken, every E1 draw is 0, and the year is reported as having no screening gap. If `tbprio.shrink.beta_binomial` raises for any other reason (fewer than 2 units, or a pooled rate of 0 or 1), the Jeffreys prior is used for that year and quantity, with the flag `prior_fallback_jeffreys`.
 - **Order.** A fresh `numpy.random.default_rng(20261122)` is created for each draw set. Units are processed in alphabetical order of unit name. For each unit, first (if its C1 is non-NA) s^(d) = `rng.beta(a₁ + U, b₁ + K, size=10000)`, the untested share; then (if its y is non-NA) y^(d) = `rng.beta(a₂ + D, b₂ + K − D, size=10000)`. Coverage draws are c^(d) = 1 − s^(d).
+- Alphabetical order is Python `sorted()` over the canonical names in `src/extract/crosswalk.py`, which are: Andaman and Nicobar Islands, Andhra Pradesh, Arunachal Pradesh, Assam, Bihar, Chandigarh, Chhattisgarh, Delhi, Goa, Gujarat, Haryana, Himachal Pradesh, Jammu and Kashmir, Jharkhand, Karnataka, Kerala, Madhya Pradesh, Maharashtra, Manipur, Meghalaya, Mizoram, Nagaland, Odisha, Puducherry, Punjab, Rajasthan, Sikkim, Tamil Nadu, Telangana, Tripura, Uttar Pradesh, Uttarakhand, West Bengal. These 33 names are the canonical unit names of tb_priority_tool's crosswalk (`UNITS` in its `src/extract/crosswalk.py`), and the list above is already in `sorted()` order.
 - `tbprio.harm.estimate` and `tbprio.harm.draws` are not used: their harm is the gap from a percentile benchmark of the same rate, which is neither E1 nor E2. Their conventions (one call per unit, alphabetical order, 10,000 draws, a fresh generator per set) are followed.
 - Each quantity is summarised by `tbprio.harm.summary`, which gives the mean of the 10,000 draws and their 2.5th and 97.5th percentiles (`mean`, `lo`, `hi`).
 
@@ -354,6 +358,9 @@ Each is reported alongside the main analysis, without a label:
 - Main: 2023, k = k_b, the empirical-Bayes draw set (the same draws as the priorities). Units with both C1 and y non-NA.
 - Share S^(d) = E1^(d) ÷ (E1^(d) + E2^(d)). A draw with E1^(d) + E2^(d) = 0 counts towards neither class.
 - "Screening-led": P(S > 0.5) ≥ 0.95. "Detection-led" (written "identification-led" in text, §1.3): P(S < 0.5) ≥ 0.95. Otherwise "mixed". If every draw has E1 + E2 = 0, the unit is "no shortfall".
+- P(S > 0.5) and P(S < 0.5) are computed over all 10,000 draws. Draws with S = 0.5 or E1 + E2 = 0 count in neither.
+- The class is reported with T per 100,000 notified. Units below the median of T per 100,000 are described as 'small total shortfall' before their class.
+  - Operational detail: T per 100,000 notified = the mean of T^(d) ÷ N × 100,000 (§6.2); the median is taken over the units classified in that year and specification.
 - E1, E2 and S are reported as the mean and 95% interval. Sensitivities: k = 1, 1.5, 2, and the other data years. Output: `outputs/decomposition.csv`.
 
 ### 6.4 National scenario
@@ -362,9 +369,9 @@ Each is reported alongside the main analysis, without a label:
 6. **Policy scenario.** The national number of additional diabetic TB patients identified per year if every unit reached the benchmark coverage and k_b, with a 95% interval, and the share contributed by the top 5 units. Labelled an illustration, not a forecast.
 
 **Operational detail.**
-- **Benchmark coverage** c_b (2023) = the 75th percentile, across units, of the empirical-Bayes posterior-mean coverage 1 − (a₁ + U)/(a₁ + b₁ + N) (the same benchmark logic as k_b). Under the median and p90 sensitivities, c_b and k_b both move to that percentile.
+- **Benchmark coverage** c_b (2023) = the 75th percentile, across the units with non-NA C1 in 2023, using 2023's (a₁, b₁), of the empirical-Bayes posterior-mean coverage 1 − (a₁ + U)/(a₁ + b₁ + N) (the same benchmark logic as k_b). Under the median and p90 sensitivities, c_b and k_b both move to that percentile.
 - For each unit with both C1 and y non-NA in 2023, in draw d: A_u^(d) = N·[max(c^(d), c_b)·max(y^(d), k_b·p_u) − c^(d)·y^(d)], which is never negative. Units already at or above both benchmarks add nothing; newly screened patients are assumed to have the yield max(y^(d), k_b·p_u).
-- National A^(d) = Σ_u A_u^(d), reported as the mean and 95% interval (`tbprio.harm.summary`).
+- National A^(d) = Σ_u A_u^(d), reported as the mean and 95% interval (`tbprio.harm.summary`). The interval reflects binomial uncertainty in coverage and yield only; it excludes uncertainty in p_u and k_b, and this is stated with the scenario.
 - **Top-5 share.** The five units with the largest mean A_u (`tbprio.validate.top5`, ties broken alphabetically). Share = Σ over those five of mean A_u ÷ Σ over all units of mean A_u; its 95% interval is that of the per-draw ratio with the five units fixed.
 - Units excluded for NA are listed. The scenario is labelled "an illustration, not a forecast" wherever it appears. Sensitivities: k = 1, 1.5, 2 (with c_b unchanged) and the median and p90 benchmarks. Output: `outputs/scenario.csv`.
 
@@ -393,7 +400,7 @@ Each is reported alongside the main analysis, without a label:
 ### 7.3 Sensitivities
 
 - **Without the 2021 indicator**: `tbprio.trend.fit(years, K, N, indicator=False)` over the same years, with the main φ (as in the priority tool's §7.3).
-- **Dropping 2018** (the ruling's sensitivity): the main model over 2019, 2021, 2022 and 2023, with φ pooled over these fits.
+- **Dropping 2018** (the ruling's sensitivity): the main model over 2019, 2021, 2022 and 2023, with φ pooled over these fits. This model is presented as the practice-relevant view of recent change: screening was being scaled up between 2018 and 2019 (§11), so with 2018 included a "falling coverage" flag is nearly impossible, and the denominator bases also change between years (§3.4), so every slope partly reflects them.
 - **The 2022 A1.6 denominator** (§3.4): the main model with that 2022 N, with φ pooled over these fits.
 - For each, the number of units whose falling-coverage flag differs from the main model is reported. Output: `outputs/trend.csv`.
 
@@ -439,6 +446,7 @@ The fixed H1 (Spearman ρ with the Fieller interval) is the registered sensitivi
 - **Pearson φ** = Σ a(y − μ)²/(μ(1 − μ)) ÷ (n_obs − n_par). It is reported with the fit, together with the model-based Wald interval β₁ ± 1.96·√(φ·[(XᵀWX)⁻¹]₁₁) as a descriptive comparison. The Wald interval is not used for the label.
 - **H1** = β₁ under the main specification: reference sex-weighted, year set {2019, 2021}, weights tested. "If detection follows true burden, β > 0." Null 0.
 - The model is ecological: β₁ describes units, not patients.
+- β₁ > 0 is partly expected whatever the programme does, because both sources count treated diabetes: the TB–DM count includes known diabetes (§1.3), and NFHS-5 lines 101 and 104 include adults taking medicine. This is stated with H1.
 
 ### 8.3 H1 interval: the cluster bootstrap
 
@@ -446,6 +454,8 @@ The fixed H1 (Spearman ρ with the Fieller interval) is the registered sensitivi
 - In each draw, each drawn unit brings all its unit-years (a unit drawn twice enters twice), and the model is refitted by the IRLS of §8.2.
 - A draw whose fit is undefined (non-convergence or a singular XᵀWX, for example when every drawn unit has the same p_u) is discarded, and the number discarded is reported.
 - The 95% interval is the 2.5th and 97.5th percentiles of β₁ over the retained draws. It is computed for the main specification only.
+- Reported with the interval: the Kish effective number of clusters, (Σ_u w_u)² ÷ Σ_u w_u², where w_u = Σ_t a_ut is the unit's total prior weight; and whether 1 lies inside the interval (β₁ = 1: the odds of identification change in proportion to the odds of p_u).
+- With about 33 units, the percentile cluster bootstrap may give too-narrow intervals. This is stated with H1 (§10.5).
 
 ### 8.4 H1 sensitivity: Spearman ρ with the Fieller interval
 
@@ -463,7 +473,7 @@ The fixed H1 (Spearman ρ with the Fieller interval) is the registered sensitivi
 - For each unit: expected E_u = K_u·μ̂_u, with μ̂_u = expit(β̂₀ + β̂₁·logit(p_u) + the year term); z_u = (D_u − K_u·μ̂_u) ÷ √(K_u·μ̂_u·(1 − μ̂_u)).
 - φ_f = `tbprio.district.winsorised_phi(z)` over the units of the funnel year: each z is set to the 10th or 90th percentile where it lies outside them, and φ_f is the mean of the squared values. The limits are multiplied by `tbprio.district.widen(φ_f)`, which is √φ_f when φ_f > 1 and 1 otherwise.
 - Limits: ±1.96 (95%) and ±3.09 (99.8%), times the widening factor.
-- Flag: z_u below the lower 99.8% limit → "detection well below what its diabetes burden predicts" (written "identification well below …" in text, §1.3). Above the upper 99.8% limit → "identification well above what its diabetes burden predicts" (descriptive). Positions between the 95% and 99.8% limits are reported.
+- Flag: z_u below the lower 99.8% limit → "detection well below what its diabetes burden predicts" (written in text as "identification well below what the across-unit relationship with p_u predicts", §1.3). Above the upper 99.8% limit → "identification well above what the across-unit relationship with p_u predicts" (descriptive). Positions between the 95% and 99.8% limits are reported.
 - Output: `outputs/funnel.csv`. The funnel has no label.
 
 ### 8.6 H2: national screening coverage
@@ -482,6 +492,7 @@ The fixed H1 (Spearman ρ with the Fieller interval) is the registered sensitivi
 **Operational detail.**
 - **H3** = the number of units, in data year 2023, with P(R_{k_b} < 1) ≥ 0.95 (§5.6), over the units with non-NA y. The number of units assessed is reported. Descriptive; no null, interval or label.
 - **Reported alongside H3** (descriptive): the number of units "likely under-detecting" (§5.6, R at k = 1, the fixed H3 definition) in 2023 and in 2022 (the fixed year); both counts for every data year; and the counts under k = 1.5, 2, the median and p90 benchmarks, the simple reference, and p_u × 0.8 and × 1.2.
+- By construction, about 75% of the pool units have g_u < k_b. H3 is reported next to this count (the pool units with g_u < k_b, in 2021 + 2022) and is never described as widespread under-identification. 2023 is outside the pool years; 2022 is inside them and is labelled in-sample.
 
 ### 8.8 Specification grid
 
@@ -528,6 +539,8 @@ The fixed H1 (Spearman ρ with the Fieller interval) is the registered sensitivi
 - Under k_b, a common scaling of p_u cancels: k_b scales by the reciprocal factor, so k_b·p_u, and with it E1, E2, C2, H3, the decomposition and the scenario, are unchanged. This is stated, and these quantities are not rerun.
 - The scaling is applied to every quantity at a fixed k (1, 1.5, 2): R and the "likely under-detection" counts, E1 and E2, and their 2023 tiers. It is also applied to the H1 main point estimate. The Spearman sensitivity is unchanged by a common scaling and is not rerun.
 - A common scaling cannot represent State-specific error in NFHS-5; this is a limitation (§10.5).
+- **State-specific perturbation.** 1,000 replicates (a new rng(20261122), units in the §5.3 order). Each unit's p_u is multiplied by an independent exp(N(0, 0.10²)). k_b, E1, E2, H3, the 2023 tiers and the decomposition classes are recomputed on the existing draw sets, which do not depend on p_u. For each unit, report the share of replicates in which its tier, H3 membership and class are unchanged.
+  - Operational detail: the normal values are drawn in one call, `rng.normal(0.0, 0.10, size=(1000, U))`, with U the number of units and column j the j-th unit in the §5.3 order; a unit's multiplier is the exponential of its value. The results go to `outputs/perturbation.csv`.
 
 ---
 
@@ -566,7 +579,9 @@ Any analysis not in this plan is labelled exploratory wherever it appears, and i
 - "Reset per analysis" means a new `numpy.random.default_rng(20261122)` at the start of each of:
   - each draw set (§5.3), that is, each data year × prior mode (× denominator basis, for 2022);
   - the H1 cluster bootstrap (§8.3);
-  - each leave-one-out refit of the act-now sets (§8.10).
+  - each leave-one-out refit of the act-now sets (§8.10);
+  - each C3 draw set (§5.1);
+  - the State-specific perturbation (§8.11).
 - The seed constant of tbprio (`tbprio.harm.SEED`, 20261121) is not used.
 - 10,000 draws in every draw set, and 10,000 bootstrap draws.
 - Reruns with the same inputs must give byte-identical outputs. This is checked.
@@ -601,10 +616,10 @@ Extracted data (Task 3):
 
 Analysis outputs (Task 4), each with a `spec` column where it carries sensitivities:
 - `outputs/reference_prevalence.csv`: unit, members, w, m, f, p (sex-weighted), p (simple), population weights, flags.
-- `outputs/benchmark.csv`: k_b for every specification (percentile, pool, reference, prior) with its number of units; c_b for 2023.
-- `outputs/cascade.csv`: per unit and year: N, K, D, I; C1, y and C3 with Jeffreys intervals; R at k_b, 1, 1.5 and 2 with draw intervals; P(R_{k_b} < 1); the "likely under-detection" and "below the benchmark" flags; the cumulative cascade; flags.
-- `outputs/gaps.csv`: per unit, year, gap and specification: `point, mean, lo, hi, per_100k_notified`.
-- `outputs/priority.csv`: per unit, year, gap (E1, E2, total) and specification: `mean, lo, hi, per_100k_notified, p_top5, tier, falling_coverage`.
+- `outputs/benchmark.csv`: k_b for every specification (percentile, pool, reference, prior) with its number of units; c_b for 2023; the linkage benchmark c3_b for each year with the main C3 definition.
+- `outputs/cascade.csv`: per unit and year: N, K, D, I; C1, y and C3 with Jeffreys intervals; R at k_b, 1, 1.5 and 2 with draw intervals; P(R_{k_b} < 1); the "likely under-detection" and "below the benchmark" flags; P(C3 < c3_b) and the "linkage below the benchmark" flag; the cumulative cascade; flags.
+- `outputs/gaps.csv`: per unit, year, gap (E1, E2, E3) and specification: `point, mean, lo, hi, per_100k_notified`.
+- `outputs/priority.csv`: per unit, year, gap (E1, E2, total, E3) and specification: `mean, lo, hi, per_100k_notified, p_top5, tier, falling_coverage`.
 - `outputs/decomposition.csv`: E1, E2 and the share S, with intervals, P(S > 0.5), P(S < 0.5) and the class.
 - `outputs/scenario.csv`: the national A and its interval; per-unit A; the top-5 units and their share, with its interval.
 - `outputs/trend.csv`: per unit and model: years, n_years, indicator, slope, SE, lo, hi, φ, falling_coverage, status.
@@ -612,12 +627,13 @@ Analysis outputs (Task 4), each with a `spec` column where it carries sensitivit
 - `outputs/headline.csv`: `estimate, value, lo, hi, null, n, n_grid, n_agree, label`, for H1, H2 and H3 (H2 and H3 without a label).
 - `outputs/headline_sensitivity.csv`: the Spearman sensitivity, the fixed-definition H3 counts, the H2 companions and the NFHS-scaling results.
 - `outputs/spec_curve.csv`: the 12 H1 grid entries.
+- `outputs/perturbation.csv`: per unit, the shares of the 1,000 State-specific perturbation replicates in which its tier, H3 membership and decomposition class are unchanged (§8.11).
 - `outputs/leave_one_out.csv`.
 - `outputs/na_cells.csv`: every NA or flagged cell, with the reason.
 
 ### 10.4 Verification
 
-- `verification/check_plan_order.py` checks the registration order: no file under `src/dmgap/` or `outputs/` before the registration commit, over the full history with merges included; the registration record never re-pointed; and the text above §12 unchanged at every later commit on the ancestry path and in the working tree. Before `docs/registration_event.json` exists it fails with "NOT REGISTERED YET".
+- `verification/check_plan_order.py` checks the registration order: no file under `src/dmgap/`, `data/extracted/` or `outputs/` before the registration commit, over the full history with merges included; the registration record naming a full 40-character SHA and never re-pointed; and the text above §12 unchanged at every later commit on the ancestry path and in the working tree. Before `docs/registration_event.json` exists it fails with "NOT REGISTERED YET".
 - An independent standard-library recompute covers: p_u for three units; E1 and E2 for three units; the R intervals and the H3 count; β₁ by its own IRLS; the Spearman sensitivity and its Fieller interval; and the label, from `outputs/spec_curve.csv`.
 - Further checks: the extracted tables against their printed totals; the implied-denominator check (§3.4); a byte-for-byte rerun of `outputs/`; and mutation tests showing that each check fails when its target is altered.
 - Every deviation from this plan is dated and explained in §12.
@@ -627,9 +643,10 @@ Analysis outputs (Task 4), each with a `spec` column where it carries sensitivit
 - **NFHS-5 gives no confidence interval.** p_u is a point estimate with no sampling interval. The × 0.8 and × 1.2 sensitivity is a common scaling: it cancels under k_b, and it cannot represent State-specific error, which is the error that could move units between tiers or across the funnel limits. Small States and UTs have the smallest NFHS samples.
 - **NFHS measures random blood sugar.** Footnote 23 of the fact sheets reads "Random blood sugar measurement." A single random reading above 140 mg/dl, or taking medicine, is not a diagnosis of diabetes. p_u is a reference level of raised or treated blood sugar in adults aged 15 and over, not diabetes prevalence. The TB programme's test is not printed in any table and may differ by State and year.
 - **The TB–DM count includes known diabetes.** The ITR count includes "already existing" diabetes (ITR 2019 narrative), so C2 is diabetes identified, newly diagnosed or known. The analysis cannot say how much diabetes the TB programme newly found.
-- **The expected yield is an assumption.** TB patients differ from the adult population in age and sex, and diabetes raises TB risk, so diabetes among TB patients is expected to exceed p_u. k = 1 is a lower bound; k_b is relative to the better quarter of units (a quarter lie above it by construction); k = 1.5 and 2 rest on published ratios. NFHS covers ages 15 and over, while TB notifications include children. f_u is from 2022 for every year.
+- **The expected yield is an assumption.** TB patients differ from the adult population in age and sex, and diabetes raises TB risk, so diabetes among TB patients is expected to exceed p_u. p_u's random-glucose threshold (>140 mg/dl) is below diagnostic thresholds, so p_u may overstate diabetes. k = 1 is a reference point, not a guaranteed lower bound, and 'likely under-detection' at k = 1 may reflect this threshold difference. k_b is relative to the better quarter of units (a quarter lie above it by construction); k = 1.5 and 2 rest on published ratios. NFHS covers ages 15 and over, while TB notifications include children. f_u is from 2022 for every year.
 - **Denominator bases differ by year.** 2018 uses current-PHI notified from its own table; 2019 its own table's notified; 2021–2023 the A1.2 diagnosing-PHI notified from another annexure; and the 2022 percentages may be on the A1.6 basis. Coverage and its trend may partly reflect these bases.
 - **C3 definitions change.** "Linked to NCD Clinic" in 2018; "initiated on anti-diabetic treatment" from 2019. 2018 C3 is not compared with later years.
+- **H1.** β₁ > 0 is partly expected because both sources count treated diabetes. With about 33 units, the percentile cluster bootstrap may give too-narrow intervals.
 - **State level only.** The analysis is ecological. A unit-level association (H1) says nothing about individual patients. Small UTs are merged into larger units. No district figures are published.
 - **Timing.** NFHS-5 fieldwork was 2019–21, and the main priority year is 2023. H1 uses 2019 and 2021 for this reason, but the 2023 gaps apply a 2019–21 reference.
 - **P(top-5) near 0 or 1.** With thousands to tens of thousands of tested patients per unit, binomial noise is small, so P(top-5) will mostly be close to 0 or 1. The tiers then express little uncertainty beyond sampling; the larger uncertainty from p_u, k and recording is shown only through the sensitivities.
@@ -642,18 +659,19 @@ Analysis outputs (Task 4), each with a `spec` column where it carries sensitivit
 
 **Constraint (verbatim).** No estimate (ratio, prevalence combination, gap, priority, trend, correlation) before the registration commit is pushed. Inventory of structure is allowed.
 
-This section lists everything seen before this plan was registered. **No estimate of any kind had been computed** in this repository or for this study: no p_u, f_u, coverage, yield, ratio R, k_b, c_b, E1, E2, share, P(top-5), tier, trend, regression coefficient, correlation, funnel position, scenario or national rate, for any unit or year. No State value had been extracted.
+This section lists everything seen before this plan was registered. **No estimate of any kind had been computed** in this repository or for this study: no p_u, f_u, coverage, yield, ratio R, k_b, c_b, E1, E2, share, P(top-5), tier, trend, regression coefficient, correlation, funnel position, scenario or national rate, for any unit or year. No State value had been extracted in this repository.
 
 1. **The source tables, by structure (Task 1 inventory, 21 November 2026).** Every table listed in `docs/data_inventory.md` was opened, in ITR 2019, ITR 2020 (the sibling copy), ITR 2021 (as page images), TBAR 2022, ITR 2023 and ITR 2024. Annexure numbers, pages, verbatim headers, the units covered and the printed India total rows were recorded.
    - The printed India rows were transcribed, including the national percentages printed in them. These show national screening coverage, national TB–DM yield and national treatment initiation for each year, as printed (for example, known blood-sugar status 29% in 2018 and known DM status 91.5% in 2022). H2 is therefore known in outline before registration, which is one reason it is descriptive. Nothing was calculated from these rows.
    - State rows were located by a text match on unit names and counted. Their values were on the pages read and may have been visible. None was recorded or used.
    - The ITR 2020 A2.5 and A2.6 discrepancy was found by comparing their printed headers and India rows, not State values.
+   - The strengthened analysis set (commit 57e9a0b) was fixed before the Task 1 inventory (commit cde8e60). The controller's rulings after Task 1 (commit 6c0d004) followed the inventory.
    - The controller's rulings after Task 1 (five data years, main years, the meaning of C2, denominators, C3 definitions, NFHS inputs, the tbprio pin and the extraction method) were made from this structural record, not from State values.
 2. **The TB–DM percentages printed in the ITR tables.** Every diabetes table prints, per State, the coverage and yield percentages (and the treatment-initiation percentage) next to the counts. C1, y and C3 are therefore published State figures, which readers of the reports, including the author, may have seen. This study adds the reference to diabetes burden (R, k_b), the counts of unidentified patients (E1, E2), their uncertainty, the tiers, the trends, H1 and the funnel.
-3. **NFHS-5 State diabetes prevalences.** These are widely published and had probably been seen by the author. The author's own IJTB 2026 paper (doi 10.1016/j.ijtb.2026.01.010) used NFHS-5 risk indicators. In Task 1, the indicator lines of every State/UT fact sheet were located and their labels quoted; the values were on the pages read and may have been visible, but none was recorded. The national NFHS-5 figures for high blood sugar are also widely published. Together with the printed national TB–DM yield, the direction of a national comparison could be anticipated in outline. No ratio was computed.
-4. **The companion repositories.** The author's priority tool (hssling/india-tb-priority-tool), State TB Score study and ACF campaign study extracted no diabetes values (a text search of their extracted data and code found none). The priority tool's finding about the percentage base of ITR 2023 Annexure 2.1 (its plan §12.2) was seen and is the reason for the 2022 A1.6 sensitivity (§3.4). Its methods (shrinkage, benchmark, P(top-k), tiers, trend, label rule, funnel φ) are reused through the pinned package.
+3. **NFHS-5 State diabetes prevalences.** These are widely published and had probably been seen by the author. The author's own IJTB 2026 paper (doi 10.1016/j.ijtb.2026.01.010) used NFHS-5 risk indicators. In Task 1, the indicator lines of every State/UT fact sheet were located and their labels quoted; the values were on the pages read and may have been visible, but none was recorded. The national NFHS-5 figures for high blood sugar are also widely published. Together with the printed national TB–DM yield, the direction of a national comparison could be anticipated in outline. No ratio was computed. A printed national yield near 8%, against widely published NFHS-5 raised-glucose levels, made k_b < 1 and widespread R_1 < 1 foreseeable.
+4. **The companion repositories.** The author's priority tool (hssling/india-tb-priority-tool), State TB Score study and ACF campaign study extracted no diabetes values (a text search of their extracted data and code found none). The priority tool's finding about the percentage base of ITR 2023 Annexure 2.1 (its plan §12.2) was seen and is the reason for the 2022 A1.6 sensitivity (§3.4). The priority tool extracted, and the author has seen, the State notified counts of ITR 2019 A1.2, TBAR 2022 A1.2, ITR 2023 A1.2 and ITR 2024 A1.2, and the ITR 2023 A1.6 notified counts by sex. These are the N inputs of C1 and E1 and the inputs of f_u. They were not combined with any diabetes value. Its methods (shrinkage, benchmark, P(top-k), tiers, trend, label rule, funnel φ) are reused through the pinned package.
 5. **Literature.** A novelty check on 21 November 2026 searched for State-level TB–diabetes cascades for India and found none. The k = 1.5 and 2 sensitivities come from published ratios of diabetes prevalence among TB patients to that in the general population, to be verified on Crossref at the manuscript stage.
-6. **Nothing else.** No output of this repository existed before the registration commit, and no file under `src/dmgap/` had been written.
+6. **Nothing else.** No output of this repository existed before the registration commit, and no file under `src/dmgap/` or `data/extracted/` had been written.
 
 ---
 
