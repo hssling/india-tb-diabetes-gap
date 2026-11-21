@@ -241,15 +241,15 @@ which runs in the pytest step of check_all:
 - The manuscript checks (below) run only where the private `manuscript/` folder exists; in a
   clone without it, check_all reports them as SKIP.
 
-## Manuscript checks (Task 6)
+## Manuscript checks
 
 `verification/mutate_manuscript.py` copies the private, git-ignored `manuscript/` folder into
 `manuscript/_mutations/` for every break (the real files are never written), applies one
 named mutation, and runs check_manuscript_numbers and check_docx_tie on the copy. The
 anchors that quote the manuscript are kept in the private `section_phrases.json`. Run on
 21 November 2026 against the built Primary Care Diabetes set: **52 of 52 named mutations
-caught**, and with `--sweep` every number token was caught: 325 of 325 in `manuscript.md`
-(outside the References and the title-page block) and 751 of 751 in `02_manuscript.docx`
+caught**, and with `--sweep` every number token was caught: 353 of 353 in `manuscript.md`
+(outside the References and the title-page block) and 789 of 789 in `02_manuscript.docx`
 (tables and references included). The sweep first found one escape, a digit of the cited
 tbprio Zenodo DOI in the .docx, because the tie normalised every Zenodo DOI; the tie now
 normalises only the release DOI (the placeholder, or the DOI that `--doi` fills), and the

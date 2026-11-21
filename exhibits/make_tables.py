@@ -1,18 +1,19 @@
 # Adapted from hssling/india-tb-priority-tool v1.0.1 (MIT), exhibits/make_tables.py (itself adapted
 # from hssling/india-tb-acf-campaign); modified: the tables of this paper (Table 1, headline
-# estimates and the scenario; Tables S1-S13, the supplement), each built from outputs/ (Table S1:
+# estimates and the scenario; Tables S1-S14, the supplement), each built from outputs/ (Table S1:
 # the committed extraction in data/extracted/dm_panel.csv).
 """Write the manuscript's tables from outputs/ into <manuscript folder>/exhibits/.
 
 Run as: python -I exhibits/make_tables.py [--manuscript-dir DIR]   (default: manuscript)
 
-Writes exhibits/tables.md (every table, in order: Table 1, then Tables S1-S13 in order of first
-citation; the build puts Table 1 in the manuscript and Tables S1-S13 in the supplementary
-material) and one CSV per table (table1.csv, tables1.csv ... tables13.csv) holding the same rows.
+Writes exhibits/tables.md (every table, in order: Table 1, then Tables S1-S14 in order of first
+citation; the build puts Table 1 in the manuscript and Tables S1-S14 in the supplementary
+material) and one CSV per table (table1.csv, tables1.csv ... tables14.csv) holding the same rows.
 Every cell is computed here from outputs/ (Table S1: data/extracted/dm_panel.csv) with the formats
 of exhibits/formats.py; nothing is typed in by hand. The number check
 (verification/check_manuscript_numbers.py) regenerates the tables and requires tables.md to be
-identical. The manuscript folder is git-ignored; this script is committed.
+identical. Table S14 applies a fixed guidance rule to existing outputs; it estimates nothing.
+The manuscript folder is git-ignored; this script is committed.
 """
 from __future__ import annotations
 
@@ -94,7 +95,7 @@ def table1(root: Path) -> Table:
          f"{h1['label']} ({count(h1['n_agree'])} of {count(h1['n_grid'])} grid entries agree in sign)"],
         ["H1, model-based interval", "As H1, with the Wald interval scaled by the Pearson dispersion",
          ratio_ci(wald["value"], wald["lo"], wald["hi"]), f"{n_units} units", "none (descriptive)"],
-        ["H1, Spearman sensitivity", "Rank correlation of p_u with the pooled 2019 and 2021 yield (Fieller interval)",
+        ["H1, Spearman sensitivity", "Rank correlation of p_u with the pooled 2019 and 2021 yield (Fisher-z interval, Fieller–Hartley–Pearson variance)",
          ratio_ci(sp["value"], sp["lo"], sp["hi"]), f"{count(sp['n'])} units", "none (descriptive)"],
         ["H1, leave-one-out", f"Each unit left out in turn (lowest without {lo['omitted']}; highest without "
          f"{hi['omitted']})", rng(ratio(lo["value"]), ratio(hi["value"])), f"{n_units} units", "none (descriptive)"],
@@ -577,10 +578,49 @@ def tables13(root: Path) -> Table:
                  ["Unit", "E1 tier", "E2 tier", "Total tier", "Below the benchmark (H3)", "Class"], rows, notes)
 
 
+# --------------------------------------------------------------------------------------
+# Table S14: the step to strengthen first, by a fixed rule on existing outputs (no estimation)
+# --------------------------------------------------------------------------------------
+STEP_TEXT = {
+    "linkage": "linkage: start treatment for those identified",
+    "identification-led": "identification: check the test, confirmation and recording",
+    "screening-led": "screening: reach those still unscreened",
+    "mixed": "screening and identification",
+}
+
+
+def guidance_step(cls: str, c3_below_half: bool) -> tuple[str, str]:
+    """(first, then): linkage first where fewer than half of those identified were started on
+    treatment; otherwise the step named by the decomposition class."""
+    if c3_below_half:
+        return STEP_TEXT["linkage"], STEP_TEXT[cls]
+    return STEP_TEXT[cls], DASH
+
+
+def tables14(root: Path) -> Table:
+    dc = {r["unit"]: r for r in read_csv(root, "outputs/decomposition.csv") if r["spec"] == "main" and r["year"] == MAIN_YEAR}
+    pr = {(r["unit"], r["gap"]): r for r in priority(root) if r["year"] == MAIN_YEAR and r["spec"] == "main"}
+    st = {r["unit"]: r for r in cascade_main(root)}
+    rows = []
+    for u in sorted(st):
+        c3 = float(st[u]["C3"])
+        first, then = guidance_step(dc[u]["class"], c3 < 0.5)
+        rows.append([u, dc[u]["class"], pr[(u, "E1")]["tier"], pr[(u, "E2")]["tier"], pr[(u, "E3")]["tier"],
+                     f"{'yes' if c3 < 0.5 else 'no'} ({pct(c3)})", first, then])
+    notes = ["Data year 2023, main specification; every column is read from the outputs of Tables S5 to S8, and nothing is "
+             "estimated here. Rule: where fewer than half of those identified were started on treatment (C3 below 50%), "
+             "linkage comes first and the decomposition class second; otherwise the class names the step. The tiers show "
+             "where the gap is largest in patients. A low identification may reflect a truly lower prevalence, the testing "
+             "method or recording; the steps are options for the programme, not tested interventions."]
+    return Table("Table S14", "Guidance by unit: the decomposition class, the 2023 tiers and the step to strengthen first",
+                 ["Unit", "Class", "E1 tier", "E2 tier", "E3 tier", "C3 below 50%", "Step to strengthen first", "Then"],
+                 rows, notes)
+
+
 def build(root: Path = ROOT) -> list[Table]:
     return [table1(root), tables1(root), tables2(root), tables3(root), tables4(root), tables5(root), tables6(root),
             tables7(root), tables8(root), tables9(root), tables10(root), tables11(root), tables12(root),
-            tables13(root)]
+            tables13(root), tables14(root)]
 
 
 # --------------------------------------------------------------------------------------

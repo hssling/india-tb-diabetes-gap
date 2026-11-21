@@ -1,4 +1,4 @@
-"""Tests of the manuscript tooling (Task 6): the exhibit builders, the submission build's guards and
+"""Tests of the manuscript tooling: the exhibit builders, the submission build's guards and
 the manuscript checks. None needs the private manuscript folder, pandoc or Microsoft Word."""
 from __future__ import annotations
 
@@ -36,7 +36,7 @@ def test_formats():
 def test_tables_build_from_outputs():
     tables = make_tables.build(ROOT)
     labels = [t.label for t in tables]
-    assert labels == ["Table 1"] + [f"Table S{k}" for k in range(1, 14)]
+    assert labels == ["Table 1"] + [f"Table S{k}" for k in range(1, 15)]
     for t in tables:
         assert t.rows and t.notes
         for r in t.rows:
@@ -171,3 +171,12 @@ def test_mutation_sweep_skips_front_matter_and_references():
     assert toks == ["2023", "92.5"]
     assert len({m[0] for m in mutate_manuscript.MUTATIONS}) == len(mutate_manuscript.MUTATIONS)
     assert all(re.fullmatch(r"\d+[a-z]", m[0]) for m in mutate_manuscript.MUTATIONS)
+
+
+def test_guidance_rule_uses_existing_outputs_only():
+    assert make_tables.guidance_step("identification-led", True)[0].startswith("linkage")
+    assert make_tables.guidance_step("screening-led", False) == (make_tables.STEP_TEXT["screening-led"], make_tables.DASH)
+    s14 = next(t for t in make_tables.build(ROOT) if t.label == "Table S14")
+    dc = {r["unit"]: r["class"] for r in formats.read_csv(ROOT, "outputs/decomposition.csv")
+          if r["spec"] == "main" and r["year"] == "2023"}
+    assert {r[0]: r[1] for r in s14.rows} == dc

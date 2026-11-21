@@ -129,6 +129,10 @@ def catalogue(root: Path) -> dict[str, tuple[str, str]]:
     put("plan.p90", plan_has(root, "90th percentile", "§5.2").replace(" ", "-"), "docs/analysis_plan.md §5.2")
     put("plan.p975", plan_has(root, "97.5th percentile", "§5.6"), "docs/analysis_plan.md §5.6")
     put("plan.replicates", plan_has(root, "1,000 replicates", "§8.11"), "docs/analysis_plan.md §8.11")
+    put("plan.yield8", plan_has(root, "near 8%", "§11"), "docs/analysis_plan.md §11 (printed national yield near 8%)")
+    put("lit.dm_range", "13% to 32%", "literature: abstracts of refs 8 (1,084 of 8,109, 13%) and 9 (298 of 920, 32.4%), "
+        "via Crossref; ref 7 (25.3%) lies within")
+    put("lit.kiefe", "10%", "literature: Kiefe et al. 1998, the achievable benchmark (top performers covering 10% of patients)")
     put("plan.top5", "five", plan_has(root, "P(top-5)", "§6.1") and "docs/analysis_plan.md §6.1 (top five)")
 
     # ---- the national cascade (outputs/cascade.csv, national rows) ------------------------
@@ -190,6 +194,8 @@ def catalogue(root: Path) -> dict[str, tuple[str, str]]:
     put("H3.k15k2", f"{count(hk['1.5']['value'])} and {count(hk['2']['value'])}",
         "outputs/headline_sensitivity.csv: count_P(R<1)>=0.95 at k=1.5 and k=2, 2023")
     loo = read_csv(root, "outputs/leave_one_out.csv")
+    put("H1.kish", num(one(hs, "kish", estimate="H1_kish_effective_clusters", spec="main")["value"], 1),
+        "outputs/headline_sensitivity.csv: H1_kish_effective_clusters")
     put("H1.loo", rng(ratio(one(loo, "min", kind="H1_beta1_min")["value"]), ratio(one(loo, "max", kind="H1_beta1_max")["value"])),
         "outputs/leave_one_out.csv: H1_beta1_min, H1_beta1_max")
     sp = one(hs, "spearman", estimate="H1_spearman_fieller", spec="sex_weighted 2019+2021")
@@ -214,6 +220,8 @@ def catalogue(root: Path) -> dict[str, tuple[str, str]]:
     t = sorted((r for r in main if r["gap"] == "total"), key=lambda r: -float(r["per_100k_notified"]))
     put("total.per100k", f"{t[0]['unit']} ({count(t[0]['per_100k_notified'])} per 100,000 notified) and {t[1]['unit']} "
         f"({count(t[1]['per_100k_notified'])})", "outputs/priority.csv: main 2023 total, two largest per_100k_notified")
+    gj = one(main, "Gujarat total", unit="Gujarat", gap="total")
+    put("gj.per100k", count(gj["per_100k_notified"]), "outputs/priority.csv: main 2023 Gujarat total per_100k_notified")
     reg = [r for r in pr if r["spec"] == "denominator_a1_2_registered" and r["gap"] == "E1" and r["tier"] == "act now"]
     m1 = {r["unit"] for r in main if r["gap"] == "E1" and r["tier"] == "act now"}
     r1 = {r["unit"] for r in reg}
@@ -234,6 +242,8 @@ def catalogue(root: Path) -> dict[str, tuple[str, str]]:
     put("scen.top5", pct(one(sc, "top5", spec="main", row="top5_share")["mean"]), "outputs/scenario.csv: main top5_share")
     put("scen.k1", count(s["k=1"]["mean"]), "outputs/scenario.csv: k=1 national mean")
     put("scen.median", count(s["kb_median"]["mean"]), "outputs/scenario.csv: kb_median national mean")
+    allnat = [float(r["mean"]) for r in sc if r["row"] == "national"]
+    put("scen.range", rng(count(min(allnat)), count(max(allnat))), "outputs/scenario.csv: national mean, min and max over specs")
     put("scen.k15k2", f"{count(s['k=1.5']['mean'])} and {count(s['k=2']['mean'])}", "outputs/scenario.csv: k=1.5 and k=2 national")
 
     # ---- perturbation ---------------------------------------------------------------------------
@@ -294,12 +304,23 @@ def claims(root: Path) -> list[str]:
     hi = [r for r in dc if c1[r["unit"]] >= 0.9]
     need(sum(r["class"] == "identification-led" for r in hi) > len(hi) / 2,
          "where coverage is at least 90%, most units are identification-led")
+    c2 = {r["unit"]: float(r["C2"]) for r in st}
+    need({r["unit"] for r in dc if r["class"] == "screening-led"} == {u for u, v in c2.items() if v >= 1},
+         "screening-led units are exactly those identifying at or above the benchmark")
+    need(one(pr, "Gujarat total", unit="Gujarat", gap="total")["tier"] == "act now",
+         "Gujarat is in the act-now tier for the total shortfall")
+    pt = read_csv(root, "outputs/perturbation.csv")
+    cols = ("share_tier_E1_unchanged", "share_tier_E2_unchanged", "share_tier_total_unchanged", "share_h3_unchanged",
+            "share_class_unchanged")
+    need(sum(all(float(r[c]) >= 0.9 for c in cols) for r in pt) == 21, "21 units keep all results in at least 90% of replicates")
     tr = read_csv(root, "outputs/trend.csv")
     need(not any(r["falling_coverage"] == "True" for r in tr), "no unit has falling coverage in any trend model")
     fu = read_csv(root, "outputs/funnel.csv")
     for y in ("2019", "2021", "2023"):
         need(one(fu, f"Gujarat {y}", unit="Gujarat", funnel_year=y)["position"] == "below the 99.8% limit",
              f"Gujarat lies below the 99.8% limit in {y}")
+    need(one(fu, "Tamil Nadu 2019", unit="Tamil Nadu", funnel_year="2019")["position"] == "above the 99.8% limit",
+         "Tamil Nadu lies above the 99.8% limit in 2019")
     for y in ("2021", "2023"):
         for u in ("Karnataka", "Tamil Nadu"):
             need(one(fu, f"{u} {y}", unit=u, funnel_year=y)["position"] == "above the 99.8% limit",
@@ -328,14 +349,14 @@ def section_phrases(ms_dir: Path) -> dict[str, list[str]]:
 # --------------------------------------------------------------------------------------
 # Fixed (non-result) number patterns
 # --------------------------------------------------------------------------------------
-SUPPLEMENT = [f"S{k}" for k in range(1, 14)]
+SUPPLEMENT = [f"S{k}" for k in range(1, 15)]
 TABLES = [1]
 FIGURES = [1, 2, 3, 4]
 FIXED: list[tuple[str, str]] = [
     ("reference", r"\[\d+(?:[,–]\d+)*\]"),
     ("exhibit", r"\bTables? S\d{1,2}(?:(?:,| and| to|–) ?S\d{1,2})*\b"),
     ("exhibit", r"\b(?:Table|Fig\.)s? [1-4](?:(?:,| and| to) [1-4])*\b"),
-    ("name", r"\b[CEH][1-3]\b|\bNFHS-5\b|\bHbA1c\b|\bP\(top-5\)|\bper 100,000\b|\bICMR-INDIAB-17\b"),
+    ("name", r"\b[CEH][1-3]\b|\bNFHS-[45]\b|\bHbA1c\b|\bP\(top-5\)|\bper 100,000\b|\bICMR-INDIAB-17\b"),
     ("ci_level", r"\b95%"),
     ("plan_section", r"\bplan sections? 12\.\d(?:–12\.\d)?\b"),
     ("formula", r"\bN\(1 − C1\)|\bC2 = y/\(k_b p_u\)|\bP\(C2 < 1\)|\bE1/\(E1 \+ E2\)|\bbelow 1\b|\bmax\(0,|\bexcluded 0\b|\bnear 0 or 1\b|\bk = 1\.5 and 2\b"),
@@ -578,7 +599,7 @@ def reference_problems(text: str) -> list[str]:
     if never:
         out.append(f"REFERENCES: never cited: {never}")
     for k, e in refs:
-        if "doi.org" not in e and "accessed" not in e.lower():
+        if "doi.org" not in e and "(accessed " not in e and "as described in" not in e:
             out.append(f"REFERENCES: [{k}] has neither a DOI nor an access date")
         if e.startswith(("[dataset]", "[software]")) and "doi.org/10.5281/zenodo." not in e:
             out.append(f"REFERENCES: [{k}] is a data or software reference without its Zenodo DOI")
@@ -655,7 +676,7 @@ BANNED = [
      "an internal variable name"),
 ]
 WORDING = [
-    (r"\bnewly diagnosed\b(?! or known)", "write 'identified' (newly diagnosed or known), never 'newly diagnosed' alone"),
+    (r"\bnewly diagnosed\b(?! or known| where reported)", "write 'identified' (newly diagnosed or known), never 'newly diagnosed' alone"),
     (r"\bdetection-led\b", "write 'identification-led'"),
     (r"\bwidespread\b", "H3 is never 'widespread'"),
     (r"\bcaus(?:ed|es|ing)\b|\bled to\b|\bresulted in\b|\bimpact of the programme\b|\bbecause of the programme\b",

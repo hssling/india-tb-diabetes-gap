@@ -65,7 +65,7 @@ MAX_DISPLAY = 5
 MS = cmn.MS_NAME
 TP = cmn.TITLE_PAGE
 # The paragraphs the build adds (tools/build_submission.py imports them from here).
-SUPP_NOTE = ("Tables S1 to S13 are cited in the manuscript in this order. Every cell is generated from the study's "
+SUPP_NOTE = ("Tables S1 to S14 are cited in the manuscript in this order. Every cell is generated from the study's "
              "committed outputs; units are listed alphabetically (tiers, not ranks).")
 DOI_STATEMENT = ("The author declares that they have no known competing financial interests or personal relationships "
                  "that could have appeared to influence the work reported in this paper.")

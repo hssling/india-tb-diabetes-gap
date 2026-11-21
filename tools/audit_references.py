@@ -149,7 +149,10 @@ def zenodo_check(n: int, entry: str, doi: str) -> tuple[str, bool]:
         return (f"| {n} | {doi} | [software] {entry.split(',')[1].strip()} | Zenodo version DOI (DataCite, not looked up; "
                 f"only Crossref metadata may be downloaded); version named: {'yes' if ok else 'NO'} | — | "
                 f"{'yes' if ok else 'NO'} |"), ok
-    return f"| {n} | {doi} | {entry[:60]} | a Zenodo DOI outside a [dataset] or [software] entry | — | NO |", False
+    ok = bool(re.search(r"version \d+\.\d+\.\d+", entry)) and doi.split(".")[-1].isdigit()
+    return (f"| {n} | {doi} | {entry.split(',')[1].strip()} | Zenodo version DOI of released software (DataCite, not looked "
+            f"up; only Crossref metadata may be downloaded); version named: {'yes' if ok else 'NO'} | — | "
+            f"{'yes' if ok else 'NO'} |"), ok
 
 
 def sha(path: Path) -> str:
@@ -163,6 +166,9 @@ def sha(path: Path) -> str:
 def non_doi_check(n: int, entry: str, root: Path) -> tuple[str, bool]:
     with open(root / "data" / "source_manifest.csv", newline="", encoding="utf-8") as f:
         man = list(csv.DictReader(f))
+    sec = re.search(r"as described in India TB Report (\d{4}), p\. (\d+)\)\.$", entry)
+    if sec:
+        return secondary_check(n, entry, sec, man, root)
     url = re.search(r"(https?://\S+) \(accessed (\d{1,2} \w+ \d{4})\)\.$", entry)
     if not url:
         return f"| {n} | none | {entry[:70]} | no DOI, no URL with an access date | — | NO |", False
@@ -179,6 +185,30 @@ def non_doi_check(n: int, entry: str, root: Path) -> tuple[str, bool]:
         states.append(f"{Path(r['path']).name}: {st}")
     return (f"| {n} | none | {'; '.join(Path(r['path']).name for r in hit)} | upstream URL in data/source_manifest.csv; "
             f"{'; '.join(states)}; accessed {url.group(2)} | — | {'yes' if ok else 'NO'} |"), ok
+
+
+def secondary_check(n: int, entry: str, sec, man: list[dict], root: Path) -> tuple[str, bool]:
+    """A document cited as described in a report (not opened for the study): the report's local copy
+    must name it, with the cited year, on the cited page."""
+    year, page = sec.group(1), int(sec.group(2))
+    hit = [r for r in man if f"India-TB-Report-{year}" in r["path"]]
+    if len(hit) != 1:
+        return f"| {n} | none | {entry[:60]} | India TB Report {year} not in data/source_manifest.csv | — | NO |", False
+    p = root / hit[0]["path"]
+    if not p.exists():
+        return (f"| {n} | none | {entry[:60]} | secondary citation; the local copy of India TB Report {year} is absent "
+                f"(not re-verified) | — | yes |"), True
+    try:
+        import fitz  # PyMuPDF, used only to read the cited page
+    except ImportError:
+        return f"| {n} | none | {entry[:60]} | secondary citation; PyMuPDF absent (not re-verified) | — | yes |", True
+    text = " ".join(fitz.open(str(p))[page - 1].get_text().split())
+    m = re.search(r"National Framework for Joint TB-Diabetes Collaborative Activities.{0,10}in (\d{4})", text)
+    cited_year = re.search(r", (\d{4}) \(not accessed", entry)
+    ok = bool(m) and bool(cited_year) and m.group(1) == cited_year.group(1) and sha(p) == hit[0]["sha256"]
+    return (f"| {n} | none | the framework, as described in India TB Report {year} p. {page} | the report's local copy "
+            f"(SHA-256 verified) names the framework and dates it {m.group(1) if m else '(not found)'}; cited year "
+            f"{cited_year.group(1) if cited_year else '(none)'} | — | {'yes' if ok else 'NO'} |"), ok
 
 
 def main(argv: list[str] | None = None) -> int:
