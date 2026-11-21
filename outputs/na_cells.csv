@@ -1,0 +1,498 @@
+spec,unit,year,measure,value,kind,reason,source_file,pdf_page,table_id
+main,Andaman and Nicobar Islands,2018,notified,572,flag,denominator_own_table;denominator_current_phi,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Andaman and Nicobar Islands,2018,known_status,190,flag,known_blood_sugar_status_wording,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Andaman and Nicobar Islands,2018,initiated,15,flag,c3_linked_ncd_clinic,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Andhra Pradesh,2018,notified,91995,flag,denominator_own_table;denominator_current_phi,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Andhra Pradesh,2018,known_status,57057,flag,known_blood_sugar_status_wording,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Andhra Pradesh,2018,initiated,1790,flag,c3_linked_ncd_clinic,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Arunachal Pradesh,2018,notified,3473,flag,denominator_own_table;denominator_current_phi,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Arunachal Pradesh,2018,known_status,228,flag,known_blood_sugar_status_wording,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Arunachal Pradesh,2018,initiated,4,flag,c3_linked_ncd_clinic,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Assam,2018,notified,43181,flag,denominator_own_table;denominator_current_phi,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Assam,2018,known_status,3990,flag,known_blood_sugar_status_wording,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Assam,2018,initiated,86,flag,c3_linked_ncd_clinic,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Bihar,2018,notified,106313,flag,denominator_own_table;denominator_current_phi,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Bihar,2018,known_status,4483,flag,known_blood_sugar_status_wording,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Bihar,2018,initiated,74,flag,c3_linked_ncd_clinic,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Chandigarh,2018,notified,3699,flag,denominator_own_table;denominator_current_phi,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Chandigarh,2018,known_status,1657,flag,known_blood_sugar_status_wording,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Chandigarh,2018,initiated,37,flag,c3_linked_ncd_clinic,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Chhattisgarh,2018,notified,43155,flag,denominator_own_table;denominator_current_phi,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Chhattisgarh,2018,known_status,19849,flag,known_blood_sugar_status_wording,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Chhattisgarh,2018,initiated,498,flag,c3_linked_ncd_clinic,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Delhi,2018,notified,89449,flag,denominator_own_table;denominator_current_phi,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Delhi,2018,known_status,22906,flag,known_blood_sugar_status_wording,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Delhi,2018,initiated,505,flag,c3_linked_ncd_clinic,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Goa,2018,notified,2392,flag,denominator_own_table;denominator_current_phi,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Goa,2018,known_status,884,flag,known_blood_sugar_status_wording,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Goa,2018,initiated,67,flag,c3_linked_ncd_clinic,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Gujarat,2018,notified,153687,flag,denominator_own_table;denominator_current_phi;merged:Gujarat+Dadra and Nagar Haveli+Daman and Diu,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Gujarat,2018,known_status,86346,flag,known_blood_sugar_status_wording;merged:Gujarat+Dadra and Nagar Haveli+Daman and Diu,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Gujarat,2018,diabetic,3603,flag,merged:Gujarat+Dadra and Nagar Haveli+Daman and Diu,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Gujarat,2018,initiated,1475,flag,c3_linked_ncd_clinic;merged:Gujarat+Dadra and Nagar Haveli+Daman and Diu,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Haryana,2018,notified,66734,flag,denominator_own_table;denominator_current_phi,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Haryana,2018,known_status,29871,flag,known_blood_sugar_status_wording,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Haryana,2018,initiated,619,flag,c3_linked_ncd_clinic,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Himachal Pradesh,2018,notified,16614,flag,denominator_own_table;denominator_current_phi,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Himachal Pradesh,2018,known_status,8727,flag,known_blood_sugar_status_wording,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Himachal Pradesh,2018,initiated,234,flag,c3_linked_ncd_clinic,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Jammu and Kashmir,2018,notified,12961,flag,denominator_own_table;denominator_current_phi,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Jammu and Kashmir,2018,known_status,3096,flag,known_blood_sugar_status_wording,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Jammu and Kashmir,2018,initiated,50,flag,c3_linked_ncd_clinic,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Jharkhand,2018,notified,48772,flag,denominator_own_table;denominator_current_phi,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Jharkhand,2018,known_status,7422,flag,known_blood_sugar_status_wording,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Jharkhand,2018,initiated,113,flag,c3_linked_ncd_clinic,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Karnataka,2018,notified,81380,flag,denominator_own_table;denominator_current_phi,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Karnataka,2018,known_status,41250,flag,known_blood_sugar_status_wording,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Karnataka,2018,initiated,2086,flag,c3_linked_ncd_clinic,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Kerala,2018,notified,24742,flag,denominator_own_table;denominator_current_phi;merged:Kerala+Lakshadweep,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Kerala,2018,known_status,8032,flag,known_blood_sugar_status_wording;merged:Kerala+Lakshadweep,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Kerala,2018,diabetic,2226,flag,merged:Kerala+Lakshadweep,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Kerala,2018,initiated,1107,flag,c3_linked_ncd_clinic;merged:Kerala+Lakshadweep,data_raw/india_tb_report/India-TB-Report-2019.pdf,169,Annexure 1.2
+main,Madhya Pradesh,2018,notified,161285,flag,denominator_own_table;denominator_current_phi,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Madhya Pradesh,2018,known_status,37173,flag,known_blood_sugar_status_wording,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Madhya Pradesh,2018,initiated,460,flag,c3_linked_ncd_clinic,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Maharashtra,2018,notified,208177,flag,denominator_own_table;denominator_current_phi,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Maharashtra,2018,known_status,53036,flag,known_blood_sugar_status_wording,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Maharashtra,2018,initiated,1445,flag,c3_linked_ncd_clinic,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Manipur,2018,notified,2946,flag,denominator_own_table;denominator_current_phi,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Manipur,2018,known_status,125,flag,known_blood_sugar_status_wording,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Manipur,2018,initiated,5,flag,c3_linked_ncd_clinic,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Meghalaya,2018,notified,4690,flag,denominator_own_table;denominator_current_phi,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Meghalaya,2018,known_status,721,flag,known_blood_sugar_status_wording,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Meghalaya,2018,initiated,11,flag,c3_linked_ncd_clinic,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Mizoram,2018,notified,2592,flag,denominator_own_table;denominator_current_phi,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Mizoram,2018,known_status,862,flag,known_blood_sugar_status_wording,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Mizoram,2018,initiated,3,flag,c3_linked_ncd_clinic,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Nagaland,2018,notified,4297,flag,denominator_own_table;denominator_current_phi,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Nagaland,2018,known_status,195,flag,known_blood_sugar_status_wording,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Nagaland,2018,initiated,0,flag,c3_linked_ncd_clinic,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Odisha,2018,notified,50244,flag,denominator_own_table;denominator_current_phi,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Odisha,2018,known_status,22799,flag,known_blood_sugar_status_wording,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Odisha,2018,initiated,695,flag,c3_linked_ncd_clinic,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Puducherry,2018,notified,1586,flag,denominator_own_table;denominator_current_phi,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Puducherry,2018,known_status,1308,flag,known_blood_sugar_status_wording,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Puducherry,2018,initiated,188,flag,c3_linked_ncd_clinic,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Punjab,2018,notified,55152,flag,denominator_own_table;denominator_current_phi,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Punjab,2018,known_status,25891,flag,known_blood_sugar_status_wording,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Punjab,2018,initiated,618,flag,c3_linked_ncd_clinic,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Rajasthan,2018,notified,160244,flag,denominator_own_table;denominator_current_phi,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Rajasthan,2018,known_status,35589,flag,known_blood_sugar_status_wording,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Rajasthan,2018,initiated,339,flag,c3_linked_ncd_clinic,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Sikkim,2018,notified,1444,flag,denominator_own_table;denominator_current_phi,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Sikkim,2018,known_status,931,flag,known_blood_sugar_status_wording,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Sikkim,2018,initiated,13,flag,c3_linked_ncd_clinic,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Tamil Nadu,2018,notified,107075,flag,denominator_own_table;denominator_current_phi,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Tamil Nadu,2018,known_status,26308,flag,known_blood_sugar_status_wording,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Tamil Nadu,2018,initiated,2231,flag,c3_linked_ncd_clinic,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Telangana,2018,notified,52139,flag,denominator_own_table;denominator_current_phi,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Telangana,2018,known_status,14246,flag,known_blood_sugar_status_wording,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Telangana,2018,initiated,209,flag,c3_linked_ncd_clinic,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Tripura,2018,notified,2660,flag,denominator_own_table;denominator_current_phi,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Tripura,2018,known_status,495,flag,known_blood_sugar_status_wording,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Tripura,2018,initiated,29,flag,c3_linked_ncd_clinic,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Uttar Pradesh,2018,notified,425451,flag,denominator_own_table;denominator_current_phi,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Uttar Pradesh,2018,known_status,37920,flag,known_blood_sugar_status_wording,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Uttar Pradesh,2018,initiated,565,flag,c3_linked_ncd_clinic,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Uttarakhand,2018,notified,21931,flag,denominator_own_table;denominator_current_phi,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Uttarakhand,2018,known_status,1732,flag,known_blood_sugar_status_wording,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Uttarakhand,2018,initiated,25,flag,c3_linked_ncd_clinic,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,West Bengal,2018,notified,104862,flag,denominator_own_table;denominator_current_phi,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,West Bengal,2018,known_status,65208,flag,known_blood_sugar_status_wording,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,West Bengal,2018,initiated,3317,flag,c3_linked_ncd_clinic,data_raw/india_tb_report/India-TB-Report-2019.pdf,170,Annexure 1.2
+main,Andaman and Nicobar Islands,2019,notified,613,flag,denominator_own_table;notified_basis_not_stated;itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Andaman and Nicobar Islands,2019,known_status,378,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Andaman and Nicobar Islands,2019,diabetic,40,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Andaman and Nicobar Islands,2019,initiated,28,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Andhra Pradesh,2019,notified,99904,flag,denominator_own_table;notified_basis_not_stated;itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Andhra Pradesh,2019,known_status,83094,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Andhra Pradesh,2019,diabetic,8043,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Andhra Pradesh,2019,initiated,5074,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Arunachal Pradesh,2019,notified,3024,flag,denominator_own_table;notified_basis_not_stated;itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Arunachal Pradesh,2019,known_status,1283,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Arunachal Pradesh,2019,diabetic,36,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Arunachal Pradesh,2019,initiated,16,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Assam,2019,notified,48765,flag,denominator_own_table;notified_basis_not_stated;itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Assam,2019,known_status,23153,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Assam,2019,diabetic,1716,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Assam,2019,initiated,608,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Bihar,2019,notified,126416,flag,denominator_own_table;notified_basis_not_stated;itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Bihar,2019,known_status,64870,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Bihar,2019,diabetic,2823,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Bihar,2019,initiated,885,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Chandigarh,2019,notified,3557,flag,denominator_own_table;notified_basis_not_stated;itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Chandigarh,2019,known_status,3250,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Chandigarh,2019,diabetic,246,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Chandigarh,2019,initiated,98,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Chhattisgarh,2019,notified,43791,flag,denominator_own_table;notified_basis_not_stated;itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Chhattisgarh,2019,known_status,35152,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Chhattisgarh,2019,diabetic,2407,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Chhattisgarh,2019,initiated,1107,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Delhi,2019,notified,97742,flag,denominator_own_table;notified_basis_not_stated;itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Delhi,2019,known_status,47646,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Delhi,2019,diabetic,3955,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Delhi,2019,initiated,1735,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Goa,2019,notified,2344,flag,denominator_own_table;notified_basis_not_stated;itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Goa,2019,known_status,1685,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Goa,2019,diabetic,287,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Goa,2019,initiated,175,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Gujarat,2019,notified,157200,flag,denominator_own_table;notified_basis_not_stated;itr2020_a26_discrepancy;merged:Gujarat+Dadra and Nagar Haveli+Daman and Diu,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Gujarat,2019,known_status,135082,flag,itr2020_a26_discrepancy;merged:Gujarat+Dadra and Nagar Haveli+Daman and Diu,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Gujarat,2019,diabetic,7283,flag,itr2020_a26_discrepancy;merged:Gujarat+Dadra and Nagar Haveli+Daman and Diu,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Gujarat,2019,initiated,4417,flag,itr2020_a26_discrepancy;merged:Gujarat+Dadra and Nagar Haveli+Daman and Diu,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Haryana,2019,notified,74734,flag,denominator_own_table;notified_basis_not_stated;itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Haryana,2019,known_status,53760,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Haryana,2019,diabetic,3831,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Haryana,2019,initiated,1928,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Himachal Pradesh,2019,notified,17988,flag,denominator_own_table;notified_basis_not_stated;itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Himachal Pradesh,2019,known_status,17389,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Himachal Pradesh,2019,diabetic,1165,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Himachal Pradesh,2019,initiated,774,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Jammu and Kashmir,2019,notified,11924,flag,denominator_own_table;notified_basis_not_stated;itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Jammu and Kashmir,2019,known_status,7984,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Jammu and Kashmir,2019,diabetic,405,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Jammu and Kashmir,2019,initiated,148,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Jharkhand,2019,notified,57432,flag,denominator_own_table;notified_basis_not_stated;itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Jharkhand,2019,known_status,31027,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Jharkhand,2019,diabetic,1407,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Jharkhand,2019,initiated,534,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Karnataka,2019,notified,89897,flag,denominator_own_table;notified_basis_not_stated;itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Karnataka,2019,known_status,71171,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Karnataka,2019,diabetic,8251,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Karnataka,2019,initiated,4778,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,216,Annexure 2.5
+main,Kerala,2019,notified,25664,flag,denominator_own_table;notified_basis_not_stated;itr2020_a26_discrepancy;merged:Kerala+Lakshadweep,data_raw/india_tb_report/ITR2020.pdf,216;217,Annexure 2.5
+main,Kerala,2019,known_status,21158,flag,itr2020_a26_discrepancy;merged:Kerala+Lakshadweep,data_raw/india_tb_report/ITR2020.pdf,216;217,Annexure 2.5
+main,Kerala,2019,diabetic,6087,flag,itr2020_a26_discrepancy;merged:Kerala+Lakshadweep,data_raw/india_tb_report/ITR2020.pdf,216;217,Annexure 2.5
+main,Kerala,2019,initiated,3865,flag,itr2020_a26_discrepancy;merged:Kerala+Lakshadweep,data_raw/india_tb_report/ITR2020.pdf,216;217,Annexure 2.5
+main,Madhya Pradesh,2019,notified,187511,flag,denominator_own_table;notified_basis_not_stated;itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Madhya Pradesh,2019,known_status,121523,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Madhya Pradesh,2019,diabetic,4870,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Madhya Pradesh,2019,initiated,1907,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Maharashtra,2019,notified,224566,flag,denominator_own_table;notified_basis_not_stated;itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Maharashtra,2019,known_status,169928,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Maharashtra,2019,diabetic,9320,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Maharashtra,2019,initiated,4598,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Manipur,2019,notified,2647,flag,denominator_own_table;notified_basis_not_stated;itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Manipur,2019,known_status,909,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Manipur,2019,diabetic,84,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Manipur,2019,initiated,38,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Meghalaya,2019,notified,5389,flag,denominator_own_table;notified_basis_not_stated;itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Meghalaya,2019,known_status,2970,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Meghalaya,2019,diabetic,130,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Meghalaya,2019,initiated,46,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Mizoram,2019,notified,2991,flag,denominator_own_table;notified_basis_not_stated;itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Mizoram,2019,known_status,1697,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Mizoram,2019,diabetic,74,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Mizoram,2019,initiated,33,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Nagaland,2019,notified,4782,flag,denominator_own_table;notified_basis_not_stated;itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Nagaland,2019,known_status,1454,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Nagaland,2019,diabetic,59,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Nagaland,2019,initiated,27,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Odisha,2019,notified,53287,flag,denominator_own_table;notified_basis_not_stated;itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Odisha,2019,known_status,47645,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Odisha,2019,diabetic,3679,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Odisha,2019,initiated,1967,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Puducherry,2019,notified,1663,flag,denominator_own_table;notified_basis_not_stated;itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Puducherry,2019,known_status,1629,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Puducherry,2019,diabetic,398,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Puducherry,2019,initiated,385,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Punjab,2019,notified,59537,flag,denominator_own_table;notified_basis_not_stated;itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Punjab,2019,known_status,52785,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Punjab,2019,diabetic,4834,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Punjab,2019,initiated,2133,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Rajasthan,2019,notified,175425,flag,denominator_own_table;notified_basis_not_stated;itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Rajasthan,2019,known_status,112197,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Rajasthan,2019,diabetic,2989,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Rajasthan,2019,initiated,1507,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Sikkim,2019,notified,1469,flag,denominator_own_table;notified_basis_not_stated;itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Sikkim,2019,known_status,1301,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Sikkim,2019,diabetic,93,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Sikkim,2019,initiated,40,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Tamil Nadu,2019,notified,113513,flag,denominator_own_table;notified_basis_not_stated;itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Tamil Nadu,2019,known_status,79696,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Tamil Nadu,2019,diabetic,16605,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Tamil Nadu,2019,initiated,9490,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Telangana,2019,notified,71482,flag,denominator_own_table;notified_basis_not_stated;itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Telangana,2019,known_status,32098,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Telangana,2019,diabetic,1734,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Telangana,2019,initiated,864,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Tripura,2019,notified,3027,flag,denominator_own_table;notified_basis_not_stated;itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Tripura,2019,known_status,1500,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Tripura,2019,diabetic,248,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Tripura,2019,initiated,116,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Uttar Pradesh,2019,notified,499756,flag,denominator_own_table;notified_basis_not_stated;itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Uttar Pradesh,2019,known_status,212923,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Uttar Pradesh,2019,diabetic,10147,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Uttar Pradesh,2019,initiated,3530,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Uttarakhand,2019,notified,25223,flag,denominator_own_table;notified_basis_not_stated;itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Uttarakhand,2019,known_status,7884,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Uttarakhand,2019,diabetic,599,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Uttarakhand,2019,initiated,211,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,West Bengal,2019,notified,111552,flag,denominator_own_table;notified_basis_not_stated;itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,West Bengal,2019,known_status,89229,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,West Bengal,2019,diabetic,10446,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,West Bengal,2019,initiated,6427,flag,itr2020_a26_discrepancy,data_raw/india_tb_report/ITR2020.pdf,217,Annexure 2.5
+main,Andaman and Nicobar Islands,2021,notified,516,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/TBAnnaulReport2022.pdf,91,Annexure 1.4
+main,Andhra Pradesh,2021,notified,87762,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/TBAnnaulReport2022.pdf,91,Annexure 1.4
+main,Arunachal Pradesh,2021,notified,2872,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/TBAnnaulReport2022.pdf,91,Annexure 1.4
+main,Assam,2021,notified,37730,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/TBAnnaulReport2022.pdf,91,Annexure 1.4
+main,Bihar,2021,notified,135488,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/TBAnnaulReport2022.pdf,91,Annexure 1.4
+main,Chandigarh,2021,notified,3242,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/TBAnnaulReport2022.pdf,91,Annexure 1.4
+main,Chhattisgarh,2021,notified,32615,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/TBAnnaulReport2022.pdf,91,Annexure 1.4
+main,Delhi,2021,notified,84302,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/TBAnnaulReport2022.pdf,91,Annexure 1.4
+main,Goa,2021,notified,2038,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/TBAnnaulReport2022.pdf,91,Annexure 1.4
+main,Gujarat,2021,notified,142048,flag,denominator_a1_4_net_current_phi;plan_12.1;merged:Gujarat+Dadra and Nagar Haveli and Daman and Diu,data_raw/india_tb_report/TBAnnaulReport2022.pdf,91,Annexure 1.4
+main,Gujarat,2021,known_status,136877,flag,merged:Gujarat+Dadra and Nagar Haveli and Daman and Diu,data_raw/india_tb_report/TBAnnaulReport2022.pdf,96,Annexure 2.5
+main,Gujarat,2021,diabetic,7538,flag,merged:Gujarat+Dadra and Nagar Haveli and Daman and Diu,data_raw/india_tb_report/TBAnnaulReport2022.pdf,96,Annexure 2.5
+main,Gujarat,2021,initiated,6530,flag,merged:Gujarat+Dadra and Nagar Haveli and Daman and Diu,data_raw/india_tb_report/TBAnnaulReport2022.pdf,96,Annexure 2.5
+main,Haryana,2021,notified,71253,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/TBAnnaulReport2022.pdf,91,Annexure 1.4
+main,Himachal Pradesh,2021,notified,14797,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/TBAnnaulReport2022.pdf,91,Annexure 1.4
+main,Jammu and Kashmir,2021,notified,11324,flag,denominator_a1_4_net_current_phi;plan_12.1;merged:Jammu and Kashmir+Ladakh,data_raw/india_tb_report/TBAnnaulReport2022.pdf,91,Annexure 1.4
+main,Jammu and Kashmir,2021,known_status,9915,flag,merged:Jammu and Kashmir+Ladakh,data_raw/india_tb_report/TBAnnaulReport2022.pdf,96,Annexure 2.5
+main,Jammu and Kashmir,2021,diabetic,640,flag,merged:Jammu and Kashmir+Ladakh,data_raw/india_tb_report/TBAnnaulReport2022.pdf,96,Annexure 2.5
+main,Jammu and Kashmir,2021,initiated,332,flag,merged:Jammu and Kashmir+Ladakh,data_raw/india_tb_report/TBAnnaulReport2022.pdf,96,Annexure 2.5
+main,Jharkhand,2021,notified,53176,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/TBAnnaulReport2022.pdf,91,Annexure 1.4
+main,Karnataka,2021,notified,71442,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/TBAnnaulReport2022.pdf,91,Annexure 1.4
+main,Kerala,2021,notified,22044,flag,denominator_a1_4_net_current_phi;plan_12.1;merged:Kerala+Lakshadweep,data_raw/india_tb_report/TBAnnaulReport2022.pdf,91,Annexure 1.4
+main,Kerala,2021,known_status,20125,flag,merged:Kerala+Lakshadweep,data_raw/india_tb_report/TBAnnaulReport2022.pdf,96,Annexure 2.5
+main,Kerala,2021,diabetic,6658,flag,merged:Kerala+Lakshadweep,data_raw/india_tb_report/TBAnnaulReport2022.pdf,96,Annexure 2.5
+main,Kerala,2021,initiated,4008,flag,merged:Kerala+Lakshadweep,data_raw/india_tb_report/TBAnnaulReport2022.pdf,96,Annexure 2.5
+main,Madhya Pradesh,2021,notified,168248,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/TBAnnaulReport2022.pdf,91,Annexure 1.4
+main,Maharashtra,2021,notified,196595,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/TBAnnaulReport2022.pdf,91,Annexure 1.4
+main,Manipur,2021,notified,1874,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/TBAnnaulReport2022.pdf,91,Annexure 1.4
+main,Meghalaya,2021,notified,4193,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/TBAnnaulReport2022.pdf,91,Annexure 1.4
+main,Mizoram,2021,notified,1781,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/TBAnnaulReport2022.pdf,91,Annexure 1.4
+main,Nagaland,2021,notified,3687,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/TBAnnaulReport2022.pdf,91,Annexure 1.4
+main,Odisha,2021,notified,52147,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/TBAnnaulReport2022.pdf,91,Annexure 1.4
+main,Puducherry,2021,notified,1409,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/TBAnnaulReport2022.pdf,91,Annexure 1.4
+main,Punjab,2021,notified,52076,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/TBAnnaulReport2022.pdf,91,Annexure 1.4
+main,Rajasthan,2021,notified,151034,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/TBAnnaulReport2022.pdf,91,Annexure 1.4
+main,Sikkim,2021,notified,1439,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/TBAnnaulReport2022.pdf,91,Annexure 1.4
+main,Tamil Nadu,2021,notified,85010,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/TBAnnaulReport2022.pdf,91,Annexure 1.4
+main,Telangana,2021,notified,60924,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/TBAnnaulReport2022.pdf,91,Annexure 1.4
+main,Tripura,2021,notified,2777,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/TBAnnaulReport2022.pdf,91,Annexure 1.4
+main,Uttar Pradesh,2021,notified,464899,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/TBAnnaulReport2022.pdf,91,Annexure 1.4
+main,Uttarakhand,2021,notified,23576,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/TBAnnaulReport2022.pdf,91,Annexure 1.4
+main,West Bengal,2021,notified,91512,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/TBAnnaulReport2022.pdf,91,Annexure 1.4
+main,Andaman and Nicobar Islands,2022,notified,547,flag,denominator_a1_6_sex_sum;plan_12.1,data_raw/india_tb_report/ITR2023.pdf,221,Annexure 1.6
+main,Andhra Pradesh,2022,notified,93092,flag,denominator_a1_6_sex_sum;plan_12.1,data_raw/india_tb_report/ITR2023.pdf,221,Annexure 1.6
+main,Arunachal Pradesh,2022,notified,3014,flag,denominator_a1_6_sex_sum;plan_12.1,data_raw/india_tb_report/ITR2023.pdf,221,Annexure 1.6
+main,Assam,2022,notified,47963,flag,denominator_a1_6_sex_sum;plan_12.1,data_raw/india_tb_report/ITR2023.pdf,221,Annexure 1.6
+main,Bihar,2022,notified,165821,flag,denominator_a1_6_sex_sum;plan_12.1,data_raw/india_tb_report/ITR2023.pdf,221,Annexure 1.6
+main,Chandigarh,2022,notified,3786,flag,denominator_a1_6_sex_sum;plan_12.1,data_raw/india_tb_report/ITR2023.pdf,221,Annexure 1.6
+main,Chhattisgarh,2022,notified,38741,flag,denominator_a1_6_sex_sum;plan_12.1,data_raw/india_tb_report/ITR2023.pdf,221,Annexure 1.6
+main,Delhi,2022,notified,88224,flag,denominator_a1_6_sex_sum;plan_12.1,data_raw/india_tb_report/ITR2023.pdf,221,Annexure 1.6
+main,Goa,2022,notified,2070,flag,denominator_a1_6_sex_sum;plan_12.1,data_raw/india_tb_report/ITR2023.pdf,221,Annexure 1.6
+main,Gujarat,2022,notified,149046,flag,denominator_a1_6_sex_sum;plan_12.1;merged:Gujarat+Dadra and Nagar Haveli and Daman and Diu,data_raw/india_tb_report/ITR2023.pdf,221,Annexure 1.6
+main,Gujarat,2022,known_status,143146,flag,merged:Gujarat+Dadra and Nagar Haveli and Daman and Diu,data_raw/india_tb_report/ITR2023.pdf,239,Annexure 2.10
+main,Gujarat,2022,diabetic,6652,flag,merged:Gujarat+Dadra and Nagar Haveli and Daman and Diu,data_raw/india_tb_report/ITR2023.pdf,239,Annexure 2.10
+main,Gujarat,2022,initiated,5343,flag,merged:Gujarat+Dadra and Nagar Haveli and Daman and Diu,data_raw/india_tb_report/ITR2023.pdf,239,Annexure 2.10
+main,Haryana,2022,notified,78640,flag,denominator_a1_6_sex_sum;plan_12.1,data_raw/india_tb_report/ITR2023.pdf,221,Annexure 1.6
+main,Himachal Pradesh,2022,notified,16505,flag,denominator_a1_6_sex_sum;plan_12.1,data_raw/india_tb_report/ITR2023.pdf,221,Annexure 1.6
+main,Jammu and Kashmir,2022,notified,12301,flag,denominator_a1_6_sex_sum;plan_12.1;merged:Jammu and Kashmir+Ladakh,data_raw/india_tb_report/ITR2023.pdf,221,Annexure 1.6
+main,Jammu and Kashmir,2022,known_status,11722,flag,merged:Jammu and Kashmir+Ladakh,data_raw/india_tb_report/ITR2023.pdf,239;240,Annexure 2.10
+main,Jammu and Kashmir,2022,diabetic,777,flag,merged:Jammu and Kashmir+Ladakh,data_raw/india_tb_report/ITR2023.pdf,239;240,Annexure 2.10
+main,Jammu and Kashmir,2022,initiated,416,flag,merged:Jammu and Kashmir+Ladakh,data_raw/india_tb_report/ITR2023.pdf,239;240,Annexure 2.10
+main,Jharkhand,2022,notified,58468,flag,denominator_a1_6_sex_sum;plan_12.1,data_raw/india_tb_report/ITR2023.pdf,221,Annexure 1.6
+main,Karnataka,2022,notified,79141,flag,denominator_a1_6_sex_sum;plan_12.1,data_raw/india_tb_report/ITR2023.pdf,221,Annexure 1.6
+main,Kerala,2022,notified,23551,flag,denominator_a1_6_sex_sum;plan_12.1;merged:Kerala+Lakshadweep,data_raw/india_tb_report/ITR2023.pdf,221,Annexure 1.6
+main,Kerala,2022,known_status,21966,flag,merged:Kerala+Lakshadweep,data_raw/india_tb_report/ITR2023.pdf,239;240,Annexure 2.10
+main,Kerala,2022,diabetic,7151,flag,merged:Kerala+Lakshadweep,data_raw/india_tb_report/ITR2023.pdf,239;240,Annexure 2.10
+main,Kerala,2022,initiated,4613,flag,merged:Kerala+Lakshadweep,data_raw/india_tb_report/ITR2023.pdf,239;240,Annexure 2.10
+main,Madhya Pradesh,2022,notified,188906,flag,denominator_a1_6_sex_sum;plan_12.1,data_raw/india_tb_report/ITR2023.pdf,222,Annexure 1.6
+main,Maharashtra,2022,notified,229696,flag,denominator_a1_6_sex_sum;plan_12.1,data_raw/india_tb_report/ITR2023.pdf,222,Annexure 1.6
+main,Manipur,2022,notified,2621,flag,denominator_a1_6_sex_sum;plan_12.1,data_raw/india_tb_report/ITR2023.pdf,222,Annexure 1.6
+main,Meghalaya,2022,notified,4961,flag,denominator_a1_6_sex_sum;plan_12.1,data_raw/india_tb_report/ITR2023.pdf,222,Annexure 1.6
+main,Mizoram,2022,notified,2106,flag,denominator_a1_6_sex_sum;plan_12.1,data_raw/india_tb_report/ITR2023.pdf,222,Annexure 1.6
+main,Nagaland,2022,notified,4184,flag,denominator_a1_6_sex_sum;plan_12.1,data_raw/india_tb_report/ITR2023.pdf,222,Annexure 1.6
+main,Odisha,2022,notified,59955,flag,denominator_a1_6_sex_sum;plan_12.1,data_raw/india_tb_report/ITR2023.pdf,222,Annexure 1.6
+main,Puducherry,2022,notified,1527,flag,denominator_a1_6_sex_sum;plan_12.1,data_raw/india_tb_report/ITR2023.pdf,222,Annexure 1.6
+main,Punjab,2022,notified,57562,flag,denominator_a1_6_sex_sum;plan_12.1,data_raw/india_tb_report/ITR2023.pdf,222,Annexure 1.6
+main,Rajasthan,2022,notified,170248,flag,denominator_a1_6_sex_sum;plan_12.1,data_raw/india_tb_report/ITR2023.pdf,222,Annexure 1.6
+main,Sikkim,2022,notified,1415,flag,denominator_a1_6_sex_sum;plan_12.1,data_raw/india_tb_report/ITR2023.pdf,222,Annexure 1.6
+main,Tamil Nadu,2022,notified,95968,flag,denominator_a1_6_sex_sum;plan_12.1,data_raw/india_tb_report/ITR2023.pdf,222,Annexure 1.6
+main,Telangana,2022,notified,73220,flag,denominator_a1_6_sex_sum;plan_12.1,data_raw/india_tb_report/ITR2023.pdf,222,Annexure 1.6
+main,Tripura,2022,notified,3297,flag,denominator_a1_6_sex_sum;plan_12.1,data_raw/india_tb_report/ITR2023.pdf,222,Annexure 1.6
+main,Uttar Pradesh,2022,notified,535854,flag,denominator_a1_6_sex_sum;plan_12.1,data_raw/india_tb_report/ITR2023.pdf,222,Annexure 1.6
+main,Uttarakhand,2022,notified,27357,flag,denominator_a1_6_sex_sum;plan_12.1,data_raw/india_tb_report/ITR2023.pdf,222,Annexure 1.6
+main,West Bengal,2022,notified,101879,flag,denominator_a1_6_sex_sum;plan_12.1,data_raw/india_tb_report/ITR2023.pdf,222,Annexure 1.6
+main,Andaman and Nicobar Islands,2023,notified,582,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/ITR2024.pdf,191,Annexure 1.4
+main,Andhra Pradesh,2023,notified,89911,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/ITR2024.pdf,191,Annexure 1.4
+main,Arunachal Pradesh,2023,notified,2820,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/ITR2024.pdf,191,Annexure 1.4
+main,Assam,2023,notified,51911,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/ITR2024.pdf,191,Annexure 1.4
+main,Bihar,2023,notified,191122,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/ITR2024.pdf,191,Annexure 1.4
+main,Chandigarh,2023,notified,4243,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/ITR2024.pdf,191,Annexure 1.4
+main,Chhattisgarh,2023,notified,38981,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/ITR2024.pdf,191,Annexure 1.4
+main,Delhi,2023,notified,88981,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/ITR2024.pdf,191,Annexure 1.4
+main,Goa,2023,notified,2034,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/ITR2024.pdf,191,Annexure 1.4
+main,Gujarat,2023,notified,141485,flag,denominator_a1_4_net_current_phi;plan_12.1;merged:Gujarat+Dadra and Nagar Haveli and Daman and Diu,data_raw/india_tb_report/ITR2024.pdf,191,Annexure 1.4
+main,Gujarat,2023,known_status,136233,flag,merged:Gujarat+Dadra and Nagar Haveli and Daman and Diu,data_raw/india_tb_report/ITR2024.pdf,211,Annexure 2.10
+main,Gujarat,2023,diabetic,7062,flag,merged:Gujarat+Dadra and Nagar Haveli and Daman and Diu,data_raw/india_tb_report/ITR2024.pdf,211,Annexure 2.10
+main,Gujarat,2023,initiated,5275,flag,merged:Gujarat+Dadra and Nagar Haveli and Daman and Diu,data_raw/india_tb_report/ITR2024.pdf,211,Annexure 2.10
+main,Haryana,2023,notified,80600,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/ITR2024.pdf,191,Annexure 1.4
+main,Himachal Pradesh,2023,notified,16046,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/ITR2024.pdf,191,Annexure 1.4
+main,Jammu and Kashmir,2023,notified,12093,flag,denominator_a1_4_net_current_phi;plan_12.1;merged:Jammu and Kashmir+Ladakh,data_raw/india_tb_report/ITR2024.pdf,191,Annexure 1.4
+main,Jammu and Kashmir,2023,known_status,11506,flag,merged:Jammu and Kashmir+Ladakh,data_raw/india_tb_report/ITR2024.pdf,211,Annexure 2.10
+main,Jammu and Kashmir,2023,diabetic,858,flag,merged:Jammu and Kashmir+Ladakh,data_raw/india_tb_report/ITR2024.pdf,211,Annexure 2.10
+main,Jammu and Kashmir,2023,initiated,610,flag,merged:Jammu and Kashmir+Ladakh,data_raw/india_tb_report/ITR2024.pdf,211,Annexure 2.10
+main,Jharkhand,2023,notified,63137,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/ITR2024.pdf,191,Annexure 1.4
+main,Karnataka,2023,notified,80352,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/ITR2024.pdf,191,Annexure 1.4
+main,Kerala,2023,notified,21826,flag,denominator_a1_4_net_current_phi;plan_12.1;merged:Kerala+Lakshadweep,data_raw/india_tb_report/ITR2024.pdf,191,Annexure 1.4
+main,Kerala,2023,known_status,21035,flag,merged:Kerala+Lakshadweep,data_raw/india_tb_report/ITR2024.pdf,211,Annexure 2.10
+main,Kerala,2023,diabetic,7078,flag,merged:Kerala+Lakshadweep,data_raw/india_tb_report/ITR2024.pdf,211,Annexure 2.10
+main,Kerala,2023,initiated,6206,flag,merged:Kerala+Lakshadweep,data_raw/india_tb_report/ITR2024.pdf,211,Annexure 2.10
+main,Madhya Pradesh,2023,notified,186883,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/ITR2024.pdf,191,Annexure 1.4
+main,Maharashtra,2023,notified,224265,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/ITR2024.pdf,192,Annexure 1.4
+main,Manipur,2023,notified,2567,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/ITR2024.pdf,192,Annexure 1.4
+main,Meghalaya,2023,notified,4912,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/ITR2024.pdf,192,Annexure 1.4
+main,Mizoram,2023,notified,2310,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/ITR2024.pdf,192,Annexure 1.4
+main,Nagaland,2023,notified,4369,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/ITR2024.pdf,192,Annexure 1.4
+main,Odisha,2023,notified,61874,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/ITR2024.pdf,192,Annexure 1.4
+main,Puducherry,2023,notified,1610,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/ITR2024.pdf,192,Annexure 1.4
+main,Punjab,2023,notified,57683,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/ITR2024.pdf,192,Annexure 1.4
+main,Rajasthan,2023,notified,166098,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/ITR2024.pdf,192,Annexure 1.4
+main,Sikkim,2023,notified,1405,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/ITR2024.pdf,192,Annexure 1.4
+main,Tamil Nadu,2023,notified,100455,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/ITR2024.pdf,192,Annexure 1.4
+main,Telangana,2023,notified,75065,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/ITR2024.pdf,192,Annexure 1.4
+main,Tripura,2023,notified,3583,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/ITR2024.pdf,192,Annexure 1.4
+main,Uttar Pradesh,2023,notified,642774,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/ITR2024.pdf,192,Annexure 1.4
+main,Uttarakhand,2023,notified,26720,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/ITR2024.pdf,192,Annexure 1.4
+main,West Bengal,2023,notified,103560,flag,denominator_a1_4_net_current_phi;plan_12.1,data_raw/india_tb_report/ITR2024.pdf,192,Annexure 1.4
+denominator_a1_2_registered,Andaman and Nicobar Islands,2021,notified,507,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2
+denominator_a1_2_registered,Andhra Pradesh,2021,notified,86832,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2
+denominator_a1_2_registered,Arunachal Pradesh,2021,notified,2724,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2
+denominator_a1_2_registered,Assam,2021,notified,37641,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2
+denominator_a1_2_registered,Bihar,2021,notified,131703,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2
+denominator_a1_2_registered,Chandigarh,2021,notified,4720,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2
+denominator_a1_2_registered,Chhattisgarh,2021,notified,32416,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2
+denominator_a1_2_registered,Delhi,2021,notified,103038,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2
+denominator_a1_2_registered,Goa,2021,notified,2018,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2
+denominator_a1_2_registered,Gujarat,2021,notified,145744,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis;merged:Gujarat+Dadra and Nagar Haveli and Daman and Diu,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2
+denominator_a1_2_registered,Haryana,2021,notified,69083,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2
+denominator_a1_2_registered,Himachal Pradesh,2021,notified,14492,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis;NA:C1:known_status_exceeds_notified,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2
+denominator_a1_2_registered,Jammu and Kashmir,2021,notified,11117,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis;merged:Jammu and Kashmir+Ladakh,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2
+denominator_a1_2_registered,Jharkhand,2021,notified,52179,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2
+denominator_a1_2_registered,Karnataka,2021,notified,72435,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2
+denominator_a1_2_registered,Kerala,2021,notified,21884,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis;merged:Kerala+Lakshadweep,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2
+denominator_a1_2_registered,Madhya Pradesh,2021,notified,166346,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2
+denominator_a1_2_registered,Maharashtra,2021,notified,199976,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2
+denominator_a1_2_registered,Manipur,2021,notified,1793,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2
+denominator_a1_2_registered,Meghalaya,2021,notified,4152,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2
+denominator_a1_2_registered,Mizoram,2021,notified,1749,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2
+denominator_a1_2_registered,Nagaland,2021,notified,3648,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2
+denominator_a1_2_registered,Odisha,2021,notified,52381,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2
+denominator_a1_2_registered,Puducherry,2021,notified,3444,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2
+denominator_a1_2_registered,Punjab,2021,notified,50142,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2
+denominator_a1_2_registered,Rajasthan,2021,notified,149225,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2
+denominator_a1_2_registered,Sikkim,2021,notified,1373,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2
+denominator_a1_2_registered,Tamil Nadu,2021,notified,82823,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2
+denominator_a1_2_registered,Telangana,2021,notified,60714,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2
+denominator_a1_2_registered,Tripura,2021,notified,2543,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis;NA:C1:known_status_exceeds_notified,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2
+denominator_a1_2_registered,Uttar Pradesh,2021,notified,453712,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2
+denominator_a1_2_registered,Uttarakhand,2021,notified,22789,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2
+denominator_a1_2_registered,West Bengal,2021,notified,90487,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/TBAnnaulReport2022.pdf,89,Annexure 1.2
+denominator_a1_2_registered,Andaman and Nicobar Islands,2022,notified,534,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2023.pdf,213,Annexure 1.2
+denominator_a1_2_registered,Andhra Pradesh,2022,notified,92187,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2023.pdf,213,Annexure 1.2
+denominator_a1_2_registered,Arunachal Pradesh,2022,notified,2863,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2023.pdf,213,Annexure 1.2
+denominator_a1_2_registered,Assam,2022,notified,47822,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2023.pdf,213,Annexure 1.2
+denominator_a1_2_registered,Bihar,2022,notified,161165,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2023.pdf,213,Annexure 1.2
+denominator_a1_2_registered,Chandigarh,2022,notified,6066,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2023.pdf,213,Annexure 1.2
+denominator_a1_2_registered,Chhattisgarh,2022,notified,38521,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2023.pdf,213,Annexure 1.2
+denominator_a1_2_registered,Delhi,2022,notified,106731,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2023.pdf,213,Annexure 1.2
+denominator_a1_2_registered,Goa,2022,notified,2091,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2023.pdf,213,Annexure 1.2
+denominator_a1_2_registered,Gujarat,2022,notified,153311,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis;merged:Gujarat+Dadra and Nagar Haveli and Daman and Diu,data_raw/india_tb_report/ITR2023.pdf,213,Annexure 1.2
+denominator_a1_2_registered,Haryana,2022,notified,75838,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2023.pdf,213,Annexure 1.2
+denominator_a1_2_registered,Himachal Pradesh,2022,notified,16089,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis;NA:C1:known_status_exceeds_notified,data_raw/india_tb_report/ITR2023.pdf,213,Annexure 1.2
+denominator_a1_2_registered,Jammu and Kashmir,2022,notified,12124,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis;merged:Jammu and Kashmir+Ladakh,data_raw/india_tb_report/ITR2023.pdf,213,Annexure 1.2
+denominator_a1_2_registered,Jharkhand,2022,notified,57320,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2023.pdf,213,Annexure 1.2
+denominator_a1_2_registered,Karnataka,2022,notified,80416,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2023.pdf,213,Annexure 1.2
+denominator_a1_2_registered,Kerala,2022,notified,23399,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis;merged:Kerala+Lakshadweep,data_raw/india_tb_report/ITR2023.pdf,213;214,Annexure 1.2
+denominator_a1_2_registered,Madhya Pradesh,2022,notified,186293,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2
+denominator_a1_2_registered,Maharashtra,2022,notified,234105,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2
+denominator_a1_2_registered,Manipur,2022,notified,2554,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2
+denominator_a1_2_registered,Meghalaya,2022,notified,4989,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2
+denominator_a1_2_registered,Mizoram,2022,notified,2085,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2
+denominator_a1_2_registered,Nagaland,2022,notified,4125,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2
+denominator_a1_2_registered,Odisha,2022,notified,60372,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2
+denominator_a1_2_registered,Puducherry,2022,notified,3835,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2
+denominator_a1_2_registered,Punjab,2022,notified,55150,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2
+denominator_a1_2_registered,Rajasthan,2022,notified,169522,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2
+denominator_a1_2_registered,Sikkim,2022,notified,1395,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2
+denominator_a1_2_registered,Tamil Nadu,2022,notified,93879,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2
+denominator_a1_2_registered,Telangana,2022,notified,72941,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2
+denominator_a1_2_registered,Tripura,2022,notified,3024,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis;NA:C1:known_status_exceeds_notified,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2
+denominator_a1_2_registered,Uttar Pradesh,2022,notified,522850,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2
+denominator_a1_2_registered,Uttarakhand,2022,notified,27553,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2
+denominator_a1_2_registered,West Bengal,2022,notified,100972,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2023.pdf,214,Annexure 1.2
+denominator_a1_2_registered,Andaman and Nicobar Islands,2023,notified,561,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2
+denominator_a1_2_registered,Andhra Pradesh,2023,notified,89064,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2
+denominator_a1_2_registered,Arunachal Pradesh,2023,notified,2604,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2
+denominator_a1_2_registered,Assam,2023,notified,51862,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2
+denominator_a1_2_registered,Bihar,2023,notified,186974,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2
+denominator_a1_2_registered,Chandigarh,2023,notified,6721,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2
+denominator_a1_2_registered,Chhattisgarh,2023,notified,38924,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2
+denominator_a1_2_registered,Delhi,2023,notified,100523,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2
+denominator_a1_2_registered,Goa,2023,notified,2082,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2
+denominator_a1_2_registered,Gujarat,2023,notified,145674,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis;merged:Gujarat+Dadra and Nagar Haveli and Daman and Diu,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2
+denominator_a1_2_registered,Haryana,2023,notified,80490,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2
+denominator_a1_2_registered,Himachal Pradesh,2023,notified,15648,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis;NA:C1:known_status_exceeds_notified,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2
+denominator_a1_2_registered,Jammu and Kashmir,2023,notified,12074,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis;merged:Jammu and Kashmir+Ladakh,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2
+denominator_a1_2_registered,Jharkhand,2023,notified,61717,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2
+denominator_a1_2_registered,Karnataka,2023,notified,81862,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2
+denominator_a1_2_registered,Kerala,2023,notified,21805,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis;merged:Kerala+Lakshadweep,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2
+denominator_a1_2_registered,Madhya Pradesh,2023,notified,184691,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2
+denominator_a1_2_registered,Maharashtra,2023,notified,227664,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2024.pdf,187,Annexure 1.2
+denominator_a1_2_registered,Manipur,2023,notified,2495,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2024.pdf,188,Annexure 1.2
+denominator_a1_2_registered,Meghalaya,2023,notified,4908,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2024.pdf,188,Annexure 1.2
+denominator_a1_2_registered,Mizoram,2023,notified,2273,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2024.pdf,188,Annexure 1.2
+denominator_a1_2_registered,Nagaland,2023,notified,4287,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2024.pdf,188,Annexure 1.2
+denominator_a1_2_registered,Odisha,2023,notified,62387,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2024.pdf,188,Annexure 1.2
+denominator_a1_2_registered,Puducherry,2023,notified,4169,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2024.pdf,188,Annexure 1.2
+denominator_a1_2_registered,Punjab,2023,notified,55224,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2024.pdf,188,Annexure 1.2
+denominator_a1_2_registered,Rajasthan,2023,notified,165123,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2024.pdf,188,Annexure 1.2
+denominator_a1_2_registered,Sikkim,2023,notified,1391,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2024.pdf,188,Annexure 1.2
+denominator_a1_2_registered,Tamil Nadu,2023,notified,98251,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2024.pdf,188,Annexure 1.2
+denominator_a1_2_registered,Telangana,2023,notified,74994,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2024.pdf,188,Annexure 1.2
+denominator_a1_2_registered,Tripura,2023,notified,3386,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis;NA:C1:known_status_exceeds_notified,data_raw/india_tb_report/ITR2024.pdf,188,Annexure 1.2
+denominator_a1_2_registered,Uttar Pradesh,2023,notified,632872,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2024.pdf,188,Annexure 1.2
+denominator_a1_2_registered,Uttarakhand,2023,notified,26829,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2024.pdf,188,Annexure 1.2
+denominator_a1_2_registered,West Bengal,2023,notified,102728,flag,denominator_a1_2_diagnosing_phi;plan_12.1_registered_basis,data_raw/india_tb_report/ITR2024.pdf,188,Annexure 1.2
+denominator_2022_from_percent,Andaman and Nicobar Islands,2022,notified,548,flag,derived_from_percent;plan_12.1_sensitivity,data_raw/india_tb_report/ITR2023.pdf,239,Annexure 2.10
+denominator_2022_from_percent,Andhra Pradesh,2022,notified,93143,flag,derived_from_percent;plan_12.1_sensitivity,data_raw/india_tb_report/ITR2023.pdf,239,Annexure 2.10
+denominator_2022_from_percent,Arunachal Pradesh,2022,notified,3014,flag,derived_from_percent;plan_12.1_sensitivity,data_raw/india_tb_report/ITR2023.pdf,239,Annexure 2.10
+denominator_2022_from_percent,Assam,2022,notified,47956,flag,derived_from_percent;plan_12.1_sensitivity,data_raw/india_tb_report/ITR2023.pdf,239,Annexure 2.10
+denominator_2022_from_percent,Bihar,2022,notified,165865,flag,derived_from_percent;plan_12.1_sensitivity,data_raw/india_tb_report/ITR2023.pdf,239,Annexure 2.10
+denominator_2022_from_percent,Chandigarh,2022,notified,3782,flag,derived_from_percent;plan_12.1_sensitivity,data_raw/india_tb_report/ITR2023.pdf,239,Annexure 2.10
+denominator_2022_from_percent,Chhattisgarh,2022,notified,38714,flag,derived_from_percent;plan_12.1_sensitivity,data_raw/india_tb_report/ITR2023.pdf,239,Annexure 2.10
+denominator_2022_from_percent,Delhi,2022,notified,88277,flag,derived_from_percent;plan_12.1_sensitivity,data_raw/india_tb_report/ITR2023.pdf,239,Annexure 2.10
+denominator_2022_from_percent,Goa,2022,notified,2073,flag,derived_from_percent;plan_12.1_sensitivity,data_raw/india_tb_report/ITR2023.pdf,239,Annexure 2.10
+denominator_2022_from_percent,Gujarat,2022,notified,149079,flag,derived_from_percent;plan_12.1_sensitivity;merged:Gujarat+Dadra and Nagar Haveli and Daman and Diu,data_raw/india_tb_report/ITR2023.pdf,239,Annexure 2.10
+denominator_2022_from_percent,Haryana,2022,notified,78665,flag,derived_from_percent;plan_12.1_sensitivity,data_raw/india_tb_report/ITR2023.pdf,239,Annexure 2.10
+denominator_2022_from_percent,Himachal Pradesh,2022,notified,16505,flag,derived_from_percent;plan_12.1_sensitivity,data_raw/india_tb_report/ITR2023.pdf,239,Annexure 2.10
+denominator_2022_from_percent,Jammu and Kashmir,2022,notified,12302,flag,derived_from_percent;plan_12.1_sensitivity;merged:Jammu and Kashmir+Ladakh,data_raw/india_tb_report/ITR2023.pdf,239;240,Annexure 2.10
+denominator_2022_from_percent,Jharkhand,2022,notified,58435,flag,derived_from_percent;plan_12.1_sensitivity,data_raw/india_tb_report/ITR2023.pdf,239,Annexure 2.10
+denominator_2022_from_percent,Karnataka,2022,notified,79166,flag,derived_from_percent;plan_12.1_sensitivity,data_raw/india_tb_report/ITR2023.pdf,239,Annexure 2.10
+denominator_2022_from_percent,Kerala,2022,notified,23543,flag,derived_from_percent;plan_12.1_sensitivity;merged:Kerala+Lakshadweep,data_raw/india_tb_report/ITR2023.pdf,239;240,Annexure 2.10
+denominator_2022_from_percent,Madhya Pradesh,2022,notified,188982,flag,derived_from_percent;plan_12.1_sensitivity,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10
+denominator_2022_from_percent,Maharashtra,2022,notified,229726,flag,derived_from_percent;plan_12.1_sensitivity,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10
+denominator_2022_from_percent,Manipur,2022,notified,2626,flag,derived_from_percent;plan_12.1_sensitivity,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10
+denominator_2022_from_percent,Meghalaya,2022,notified,4962,flag,derived_from_percent;plan_12.1_sensitivity,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10
+denominator_2022_from_percent,Mizoram,2022,notified,2105,flag,derived_from_percent;plan_12.1_sensitivity,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10
+denominator_2022_from_percent,Nagaland,2022,notified,4178,flag,derived_from_percent;plan_12.1_sensitivity,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10
+denominator_2022_from_percent,Odisha,2022,notified,59956,flag,derived_from_percent;plan_12.1_sensitivity,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10
+denominator_2022_from_percent,Puducherry,2022,notified,1527,flag,derived_from_percent;plan_12.1_sensitivity,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10
+denominator_2022_from_percent,Punjab,2022,notified,57564,flag,derived_from_percent;plan_12.1_sensitivity,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10
+denominator_2022_from_percent,Rajasthan,2022,notified,170352,flag,derived_from_percent;plan_12.1_sensitivity,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10
+denominator_2022_from_percent,Sikkim,2022,notified,1411,flag,derived_from_percent;plan_12.1_sensitivity,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10
+denominator_2022_from_percent,Tamil Nadu,2022,notified,95951,flag,derived_from_percent;plan_12.1_sensitivity,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10
+denominator_2022_from_percent,Telangana,2022,notified,73240,flag,derived_from_percent;plan_12.1_sensitivity,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10
+denominator_2022_from_percent,Tripura,2022,notified,3297,flag,derived_from_percent;plan_12.1_sensitivity,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10
+denominator_2022_from_percent,Uttar Pradesh,2022,notified,536005,flag,derived_from_percent;plan_12.1_sensitivity,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10
+denominator_2022_from_percent,Uttarakhand,2022,notified,27354,flag,derived_from_percent;plan_12.1_sensitivity,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10
+denominator_2022_from_percent,West Bengal,2022,notified,101864,flag,derived_from_percent;plan_12.1_sensitivity,data_raw/india_tb_report/ITR2023.pdf,240,Annexure 2.10
+denominator_a1_2_registered,Himachal Pradesh,2021,C1,,NA,K > N,,,
+denominator_a1_2_registered,Himachal Pradesh,2022,C1,,NA,K > N,,,
+denominator_a1_2_registered,Himachal Pradesh,2023,C1,,NA,K > N,,,
+denominator_a1_2_registered,Tripura,2021,C1,,NA,K > N,,,
+denominator_a1_2_registered,Tripura,2022,C1,,NA,K > N,,,
+denominator_a1_2_registered,Tripura,2023,C1,,NA,K > N,,,

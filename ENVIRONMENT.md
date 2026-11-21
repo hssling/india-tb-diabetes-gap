@@ -31,3 +31,9 @@ repository root: `python -I src/extract/itr_dm.py`, then
 cross-read the ITR 2019 Annexure 1.2 rows and the NFHS-5 indicator lines, and to
 render the pages read by eye for `tests/test_known_cells.py`; no committed code
 imports it.
+
+Task 4 (analysis, 21 Nov 2026) used Python 3.14.0, numpy 2.3.5, scipy 1.16.3 and the
+installed tbprio 1.0.1 (its src/tbprio byte-identical to tag v1.0.1; checked by
+`tests/test_analysis.py::test_tbprio_pinned_version`). Run, from the repository root:
+`python -I src/run_all.py` (about two minutes; writes `outputs/*.csv`, byte-identical on
+rerun). `python -I src/run_all.py --out DIR` writes to another directory.

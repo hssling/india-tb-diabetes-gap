@@ -1,0 +1,207 @@
+kind,year,omitted,value,lo,hi,n,k_b,changed_units,act_now
+H1_beta1,2019+2021,Andaman and Nicobar Islands,1.7009747734766538,,,,,,
+H1_beta1,2019+2021,Andhra Pradesh,1.8271587353530587,,,,,,
+H1_beta1,2019+2021,Arunachal Pradesh,1.6999029288701855,,,,,,
+H1_beta1,2019+2021,Assam,1.701106617915547,,,,,,
+H1_beta1,2019+2021,Bihar,1.691192724937022,,,,,,
+H1_beta1,2019+2021,Chandigarh,1.702446755545635,,,,,,
+H1_beta1,2019+2021,Chhattisgarh,1.7477952806274575,,,,,,
+H1_beta1,2019+2021,Delhi,1.7183102176871972,,,,,,
+H1_beta1,2019+2021,Goa,1.7012053342695155,,,,,,
+H1_beta1,2019+2021,Gujarat,1.7426905673976418,,,,,,
+H1_beta1,2019+2021,Haryana,1.7111397777803987,,,,,,
+H1_beta1,2019+2021,Himachal Pradesh,1.7012622761202776,,,,,,
+H1_beta1,2019+2021,Jammu and Kashmir,1.7168213019221978,,,,,,
+H1_beta1,2019+2021,Jharkhand,1.6980214580121598,,,,,,
+H1_beta1,2019+2021,Karnataka,1.711214035520947,,,,,,
+H1_beta1,2019+2021,Kerala,1.5943534288852552,,,,,,
+H1_beta1,2019+2021,Madhya Pradesh,1.702578719764758,,,,,,
+H1_beta1,2019+2021,Maharashtra,1.690489424263178,,,,,,
+H1_beta1,2019+2021,Manipur,1.7012338699922829,,,,,,
+H1_beta1,2019+2021,Meghalaya,1.7006808058820346,,,,,,
+H1_beta1,2019+2021,Mizoram,1.7010530844034284,,,,,,
+H1_beta1,2019+2021,Nagaland,1.7009427427868435,,,,,,
+H1_beta1,2019+2021,Odisha,1.7044961415688504,,,,,,
+H1_beta1,2019+2021,Puducherry,1.6959507738007116,,,,,,
+H1_beta1,2019+2021,Punjab,1.7097406331694807,,,,,,
+H1_beta1,2019+2021,Rajasthan,1.7202803856627715,,,,,,
+H1_beta1,2019+2021,Sikkim,1.7013840040142247,,,,,,
+H1_beta1,2019+2021,Tamil Nadu,1.4137090398683791,,,,,,
+H1_beta1,2019+2021,Telangana,1.7177049422823898,,,,,,
+H1_beta1,2019+2021,Tripura,1.7000643862005331,,,,,,
+H1_beta1,2019+2021,Uttar Pradesh,1.731454078051301,,,,,,
+H1_beta1,2019+2021,Uttarakhand,1.702988551475215,,,,,,
+H1_beta1,2019+2021,West Bengal,1.7362616093039358,,,,,,
+H1_beta1_min,,Tamil Nadu,1.4137090398683791,,,,,,
+H1_beta1_max,,Andhra Pradesh,1.8271587353530587,,,,,,
+spearman_rho,2019+2021,Andaman and Nicobar Islands,0.782258064516129,0.5892002890407804,0.8908203364565213,32,,,
+spearman_rho,2019+2021,Andhra Pradesh,0.7870234604105572,0.5972360291185927,0.8933519636926006,32,,,
+spearman_rho,2019+2021,Arunachal Pradesh,0.7877565982404692,0.5984756877905174,0.8937408466256449,32,,,
+spearman_rho,2019+2021,Assam,0.7969208211143695,0.6140482785911112,0.8985884792159914,32,,,
+spearman_rho,2019+2021,Bihar,0.8163489736070382,0.6475398655344395,0.9087840349123344,32,,,
+spearman_rho,2019+2021,Chandigarh,0.7914222873900293,0.604687607141716,0.8956828746885295,32,,,
+spearman_rho,2019+2021,Chhattisgarh,0.8240469208211144,0.6609929964051986,0.9127934821602249,32,,,
+spearman_rho,2019+2021,Delhi,0.8090175953079178,0.6348244485960386,0.9049495783605626,32,,,
+spearman_rho,2019+2021,Goa,0.7796920821114369,0.5848891131856331,0.8894543547503327,32,,,
+spearman_rho,2019+2021,Gujarat,0.8357771260997068,0.6816965594345092,0.918870400155126,32,,,
+spearman_rho,2019+2021,Haryana,0.8016862170087976,0.622202688341076,0.9010994783885297,32,,,
+spearman_rho,2019+2021,Himachal Pradesh,0.8027859237536656,0.624090022467104,0.901677994414635,32,,,
+spearman_rho,2019+2021,Jammu and Kashmir,0.8082844574780058,0.6335580751500501,0.9045652738939317,32,,,
+spearman_rho,2019+2021,Jharkhand,0.7969208211143695,0.6140482785911112,0.8985884792159914,32,,,
+spearman_rho,2019+2021,Karnataka,0.7994868035190615,0.6184342687924724,0.899941383609478,32,,,
+spearman_rho,2019+2021,Kerala,0.7785923753665689,0.5830448296313305,0.8888683330729398,32,,,
+spearman_rho,2019+2021,Madhya Pradesh,0.7877565982404692,0.5984756877905174,0.8937408466256449,32,,,
+spearman_rho,2019+2021,Maharashtra,0.8024193548387096,0.6234606793172451,0.9014851950674109,32,,,
+spearman_rho,2019+2021,Manipur,0.7994868035190615,0.6184342687924724,0.899941383609478,32,,,
+spearman_rho,2019+2021,Meghalaya,0.7884897360703812,0.5997162535325112,0.8941295703215668,32,,,
+spearman_rho,2019+2021,Mizoram,0.8163489736070382,0.6475398655344395,0.9087840349123344,32,,,
+spearman_rho,2019+2021,Nagaland,0.7877565982404692,0.5984756877905174,0.8937408466256449,32,,,
+spearman_rho,2019+2021,Odisha,0.8024193548387096,0.6234606793172451,0.9014851950674109,32,,,
+spearman_rho,2019+2021,Puducherry,0.7796920821114369,0.5848891131856331,0.8894543547503327,32,,,
+spearman_rho,2019+2021,Punjab,0.8082844574780058,0.6335580751500501,0.9045652738939317,32,,,
+spearman_rho,2019+2021,Rajasthan,0.782624633431085,0.589817069969409,0.891015316628699,32,,,
+spearman_rho,2019+2021,Sikkim,0.8049853372434017,0.6278709567108094,0.9028339653643649,32,,,
+spearman_rho,2019+2021,Tamil Nadu,0.7796920821114369,0.5848891131856331,0.8894543547503327,32,,,
+spearman_rho,2019+2021,Telangana,0.8229472140762464,0.6590646817021902,0.9122217493406669,32,,,
+spearman_rho,2019+2021,Tripura,0.782258064516129,0.5892002890407804,0.8908203364565213,32,,,
+spearman_rho,2019+2021,Uttar Pradesh,0.7884897360703812,0.5997162535325112,0.8941295703215668,32,,,
+spearman_rho,2019+2021,Uttarakhand,0.8027859237536656,0.624090022467104,0.901677994414635,32,,,
+spearman_rho,2019+2021,West Bengal,0.7870234604105572,0.5972360291185927,0.8933519636926006,32,,,
+spearman_rho_min,,Kerala,0.7785923753665689,,,,,,
+spearman_rho_max,,Gujarat,0.8357771260997068,,,,,,
+act_now_E1,2023,Andaman and Nicobar Islands,0,,,,0.7989507697022409,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2023,Andaman and Nicobar Islands,0,,,,0.7989507697022409,,Bihar;Gujarat;Maharashtra;Rajasthan;Uttar Pradesh
+act_now_E1,2023,Andhra Pradesh,0,,,,0.8260921771619807,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2023,Andhra Pradesh,0,,,,0.8260921771619807,,Bihar;Gujarat;Maharashtra;Rajasthan;Uttar Pradesh
+act_now_E1,2023,Arunachal Pradesh,0,,,,0.8260665023091773,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2023,Arunachal Pradesh,0,,,,0.8260665023091773,,Bihar;Gujarat;Maharashtra;Rajasthan;Uttar Pradesh
+act_now_E1,2023,Assam,0,,,,0.8260831319183635,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2023,Assam,0,,,,0.8260831319183635,,Bihar;Gujarat;Maharashtra;Rajasthan;Uttar Pradesh
+act_now_E1,2023,Bihar,1,,,,0.8260664859840889,Rajasthan,Delhi;Madhya Pradesh;Rajasthan;Uttar Pradesh;West Bengal
+act_now_E2,2023,Bihar,1,,,,0.8260664859840889,Telangana,Gujarat;Maharashtra;Rajasthan;Telangana;Uttar Pradesh
+act_now_E1,2023,Chandigarh,0,,,,0.826082776970356,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2023,Chandigarh,0,,,,0.826082776970356,,Bihar;Gujarat;Maharashtra;Rajasthan;Uttar Pradesh
+act_now_E1,2023,Chhattisgarh,0,,,,0.798959261604253,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2023,Chhattisgarh,0,,,,0.798959261604253,,Bihar;Gujarat;Maharashtra;Rajasthan;Uttar Pradesh
+act_now_E1,2023,Delhi,1,,,,0.8260842625890379,Rajasthan,Bihar;Madhya Pradesh;Rajasthan;Uttar Pradesh;West Bengal
+act_now_E2,2023,Delhi,0,,,,0.8260842625890379,,Bihar;Gujarat;Maharashtra;Rajasthan;Uttar Pradesh
+act_now_E1,2023,Goa,0,,,,0.7989512770887632,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2023,Goa,0,,,,0.7989512770887632,,Bihar;Gujarat;Maharashtra;Rajasthan;Uttar Pradesh
+act_now_E1,2023,Gujarat,0,,,,0.8260597291842773,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2023,Gujarat,1,,,,0.8260597291842773,Telangana,Bihar;Maharashtra;Rajasthan;Telangana;Uttar Pradesh
+act_now_E1,2023,Haryana,0,,,,0.8260799137378216,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2023,Haryana,0,,,,0.8260799137378216,,Bihar;Gujarat;Maharashtra;Rajasthan;Uttar Pradesh
+act_now_E1,2023,Himachal Pradesh,0,,,,0.8260832704705123,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2023,Himachal Pradesh,0,,,,0.8260832704705123,,Bihar;Gujarat;Maharashtra;Rajasthan;Uttar Pradesh
+act_now_E1,2023,Jammu and Kashmir,0,,,,0.8260813233205566,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2023,Jammu and Kashmir,0,,,,0.8260813233205566,,Bihar;Gujarat;Maharashtra;Rajasthan;Uttar Pradesh
+act_now_E1,2023,Jharkhand,0,,,,0.82607770089093,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2023,Jharkhand,0,,,,0.82607770089093,,Bihar;Gujarat;Maharashtra;Rajasthan;Uttar Pradesh
+act_now_E1,2023,Karnataka,0,,,,0.7989477756454716,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2023,Karnataka,0,,,,0.7989477756454716,,Bihar;Gujarat;Maharashtra;Rajasthan;Uttar Pradesh
+act_now_E1,2023,Kerala,0,,,,0.7988918295833658,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2023,Kerala,0,,,,0.7988918295833658,,Bihar;Gujarat;Maharashtra;Rajasthan;Uttar Pradesh
+act_now_E1,2023,Madhya Pradesh,1,,,,0.8260644400441629,Rajasthan,Bihar;Delhi;Rajasthan;Uttar Pradesh;West Bengal
+act_now_E2,2023,Madhya Pradesh,0,,,,0.8260644400441629,,Bihar;Gujarat;Maharashtra;Rajasthan;Uttar Pradesh
+act_now_E1,2023,Maharashtra,0,,,,0.826066431634814,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2023,Maharashtra,1,,,,0.826066431634814,Telangana,Bihar;Gujarat;Rajasthan;Telangana;Uttar Pradesh
+act_now_E1,2023,Manipur,0,,,,0.7989557505776635,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2023,Manipur,0,,,,0.7989557505776635,,Bihar;Gujarat;Maharashtra;Rajasthan;Uttar Pradesh
+act_now_E1,2023,Meghalaya,0,,,,0.8260796504574303,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2023,Meghalaya,0,,,,0.8260796504574303,,Bihar;Gujarat;Maharashtra;Rajasthan;Uttar Pradesh
+act_now_E1,2023,Mizoram,0,,,,0.8260817882387083,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2023,Mizoram,0,,,,0.8260817882387083,,Bihar;Gujarat;Maharashtra;Rajasthan;Uttar Pradesh
+act_now_E1,2023,Nagaland,0,,,,0.8260788374593402,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2023,Nagaland,0,,,,0.8260788374593402,,Bihar;Gujarat;Maharashtra;Rajasthan;Uttar Pradesh
+act_now_E1,2023,Odisha,0,,,,0.8260819994483269,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2023,Odisha,0,,,,0.8260819994483269,,Bihar;Gujarat;Maharashtra;Rajasthan;Uttar Pradesh
+act_now_E1,2023,Puducherry,0,,,,0.7989193921938584,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2023,Puducherry,0,,,,0.7989193921938584,,Bihar;Gujarat;Maharashtra;Rajasthan;Uttar Pradesh
+act_now_E1,2023,Punjab,0,,,,0.826085638597524,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2023,Punjab,0,,,,0.826085638597524,,Bihar;Gujarat;Maharashtra;Rajasthan;Uttar Pradesh
+act_now_E1,2023,Rajasthan,0,,,,0.8260403146514098,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2023,Rajasthan,1,,,,0.8260403146514098,Telangana,Bihar;Gujarat;Maharashtra;Telangana;Uttar Pradesh
+act_now_E1,2023,Sikkim,0,,,,0.8260827599580257,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2023,Sikkim,0,,,,0.8260827599580257,,Bihar;Gujarat;Maharashtra;Rajasthan;Uttar Pradesh
+act_now_E1,2023,Tamil Nadu,0,,,,0.7989048167717439,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2023,Tamil Nadu,0,,,,0.7989048167717439,,Bihar;Gujarat;Maharashtra;Rajasthan;Uttar Pradesh
+act_now_E1,2023,Telangana,0,,,,0.8260764233635565,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2023,Telangana,0,,,,0.8260764233635565,,Bihar;Gujarat;Maharashtra;Rajasthan;Uttar Pradesh
+act_now_E1,2023,Tripura,0,,,,0.8028185713036353,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2023,Tripura,0,,,,0.8028185713036353,,Bihar;Gujarat;Maharashtra;Rajasthan;Uttar Pradesh
+act_now_E1,2023,Uttar Pradesh,1,,,,0.8260155945838727,Rajasthan,Bihar;Delhi;Madhya Pradesh;Rajasthan;West Bengal
+act_now_E2,2023,Uttar Pradesh,0,,,,0.8260155945838727,,Bihar;Gujarat;Maharashtra;Rajasthan
+act_now_E1,2023,Uttarakhand,0,,,,0.8260819396914467,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2023,Uttarakhand,0,,,,0.8260819396914467,,Bihar;Gujarat;Maharashtra;Rajasthan;Uttar Pradesh
+act_now_E1,2023,West Bengal,1,,,,0.8260914532223308,Rajasthan,Bihar;Delhi;Madhya Pradesh;Rajasthan;Uttar Pradesh
+act_now_E2,2023,West Bengal,0,,,,0.8260914532223308,,Bihar;Gujarat;Maharashtra;Rajasthan;Uttar Pradesh
+act_now_E1_max_changes,2023,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal,1,,,,,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2_max_changes,2023,Bihar;Gujarat;Maharashtra;Rajasthan,1,,,,,,Bihar;Gujarat;Maharashtra;Rajasthan;Uttar Pradesh
+act_now_E1,2022,Andaman and Nicobar Islands,0,,,,0.7989507697022409,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2022,Andaman and Nicobar Islands,0,,,,0.7989507697022409,,Bihar;Gujarat;Maharashtra;Uttar Pradesh
+act_now_E1,2022,Andhra Pradesh,0,,,,0.8260921771619807,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2022,Andhra Pradesh,0,,,,0.8260921771619807,,Bihar;Gujarat;Maharashtra;Uttar Pradesh
+act_now_E1,2022,Arunachal Pradesh,0,,,,0.8260665023091773,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2022,Arunachal Pradesh,0,,,,0.8260665023091773,,Bihar;Gujarat;Maharashtra;Uttar Pradesh
+act_now_E1,2022,Assam,0,,,,0.8260831319183635,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2022,Assam,0,,,,0.8260831319183635,,Bihar;Gujarat;Maharashtra;Uttar Pradesh
+act_now_E1,2022,Bihar,1,,,,0.8260664859840889,Rajasthan,Delhi;Madhya Pradesh;Rajasthan;Uttar Pradesh;West Bengal
+act_now_E2,2022,Bihar,2,,,,0.8260664859840889,Madhya Pradesh;Rajasthan,Gujarat;Madhya Pradesh;Maharashtra;Rajasthan;Uttar Pradesh
+act_now_E1,2022,Chandigarh,0,,,,0.826082776970356,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2022,Chandigarh,0,,,,0.826082776970356,,Bihar;Gujarat;Maharashtra;Uttar Pradesh
+act_now_E1,2022,Chhattisgarh,0,,,,0.798959261604253,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2022,Chhattisgarh,0,,,,0.798959261604253,,Bihar;Gujarat;Maharashtra;Uttar Pradesh
+act_now_E1,2022,Delhi,1,,,,0.8260842625890379,Rajasthan,Bihar;Madhya Pradesh;Rajasthan;Uttar Pradesh;West Bengal
+act_now_E2,2022,Delhi,0,,,,0.8260842625890379,,Bihar;Gujarat;Maharashtra;Uttar Pradesh
+act_now_E1,2022,Goa,0,,,,0.7989512770887632,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2022,Goa,0,,,,0.7989512770887632,,Bihar;Gujarat;Maharashtra;Uttar Pradesh
+act_now_E1,2022,Gujarat,0,,,,0.8260597291842773,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2022,Gujarat,2,,,,0.8260597291842773,Madhya Pradesh;Rajasthan,Bihar;Madhya Pradesh;Maharashtra;Rajasthan;Uttar Pradesh
+act_now_E1,2022,Haryana,0,,,,0.8260799137378216,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2022,Haryana,0,,,,0.8260799137378216,,Bihar;Gujarat;Maharashtra;Uttar Pradesh
+act_now_E1,2022,Himachal Pradesh,0,,,,0.8260832704705123,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2022,Himachal Pradesh,0,,,,0.8260832704705123,,Bihar;Gujarat;Maharashtra;Uttar Pradesh
+act_now_E1,2022,Jammu and Kashmir,0,,,,0.8260813233205566,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2022,Jammu and Kashmir,0,,,,0.8260813233205566,,Bihar;Gujarat;Maharashtra;Uttar Pradesh
+act_now_E1,2022,Jharkhand,0,,,,0.82607770089093,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2022,Jharkhand,0,,,,0.82607770089093,,Bihar;Gujarat;Maharashtra;Uttar Pradesh
+act_now_E1,2022,Karnataka,0,,,,0.7989477756454716,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2022,Karnataka,0,,,,0.7989477756454716,,Bihar;Gujarat;Maharashtra;Uttar Pradesh
+act_now_E1,2022,Kerala,0,,,,0.7988918295833658,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2022,Kerala,0,,,,0.7988918295833658,,Bihar;Gujarat;Maharashtra;Uttar Pradesh
+act_now_E1,2022,Madhya Pradesh,1,,,,0.8260644400441629,Rajasthan,Bihar;Delhi;Rajasthan;Uttar Pradesh;West Bengal
+act_now_E2,2022,Madhya Pradesh,1,,,,0.8260644400441629,Rajasthan,Bihar;Gujarat;Maharashtra;Rajasthan;Uttar Pradesh
+act_now_E1,2022,Maharashtra,0,,,,0.826066431634814,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2022,Maharashtra,2,,,,0.826066431634814,Madhya Pradesh;Rajasthan,Bihar;Gujarat;Madhya Pradesh;Rajasthan;Uttar Pradesh
+act_now_E1,2022,Manipur,0,,,,0.7989557505776635,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2022,Manipur,0,,,,0.7989557505776635,,Bihar;Gujarat;Maharashtra;Uttar Pradesh
+act_now_E1,2022,Meghalaya,0,,,,0.8260796504574303,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2022,Meghalaya,0,,,,0.8260796504574303,,Bihar;Gujarat;Maharashtra;Uttar Pradesh
+act_now_E1,2022,Mizoram,0,,,,0.8260817882387083,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2022,Mizoram,0,,,,0.8260817882387083,,Bihar;Gujarat;Maharashtra;Uttar Pradesh
+act_now_E1,2022,Nagaland,0,,,,0.8260788374593402,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2022,Nagaland,0,,,,0.8260788374593402,,Bihar;Gujarat;Maharashtra;Uttar Pradesh
+act_now_E1,2022,Odisha,0,,,,0.8260819994483269,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2022,Odisha,0,,,,0.8260819994483269,,Bihar;Gujarat;Maharashtra;Uttar Pradesh
+act_now_E1,2022,Puducherry,0,,,,0.7989193921938584,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2022,Puducherry,0,,,,0.7989193921938584,,Bihar;Gujarat;Maharashtra;Uttar Pradesh
+act_now_E1,2022,Punjab,0,,,,0.826085638597524,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2022,Punjab,0,,,,0.826085638597524,,Bihar;Gujarat;Maharashtra;Uttar Pradesh
+act_now_E1,2022,Rajasthan,0,,,,0.8260403146514098,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2022,Rajasthan,1,,,,0.8260403146514098,Madhya Pradesh,Bihar;Gujarat;Madhya Pradesh;Maharashtra;Uttar Pradesh
+act_now_E1,2022,Sikkim,0,,,,0.8260827599580257,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2022,Sikkim,0,,,,0.8260827599580257,,Bihar;Gujarat;Maharashtra;Uttar Pradesh
+act_now_E1,2022,Tamil Nadu,0,,,,0.7989048167717439,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2022,Tamil Nadu,0,,,,0.7989048167717439,,Bihar;Gujarat;Maharashtra;Uttar Pradesh
+act_now_E1,2022,Telangana,0,,,,0.8260764233635565,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2022,Telangana,0,,,,0.8260764233635565,,Bihar;Gujarat;Maharashtra;Uttar Pradesh
+act_now_E1,2022,Tripura,0,,,,0.8028185713036353,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2022,Tripura,0,,,,0.8028185713036353,,Bihar;Gujarat;Maharashtra;Uttar Pradesh
+act_now_E1,2022,Uttar Pradesh,1,,,,0.8260155945838727,Rajasthan,Bihar;Delhi;Madhya Pradesh;Rajasthan;West Bengal
+act_now_E2,2022,Uttar Pradesh,2,,,,0.8260155945838727,Madhya Pradesh;Rajasthan,Bihar;Gujarat;Madhya Pradesh;Maharashtra;Rajasthan
+act_now_E1,2022,Uttarakhand,0,,,,0.8260819396914467,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2,2022,Uttarakhand,0,,,,0.8260819396914467,,Bihar;Gujarat;Maharashtra;Uttar Pradesh
+act_now_E1,2022,West Bengal,1,,,,0.8260914532223308,Rajasthan,Bihar;Delhi;Madhya Pradesh;Rajasthan;Uttar Pradesh
+act_now_E2,2022,West Bengal,0,,,,0.8260914532223308,,Bihar;Gujarat;Maharashtra;Uttar Pradesh
+act_now_E1_max_changes,2022,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal,1,,,,,,Bihar;Delhi;Madhya Pradesh;Uttar Pradesh;West Bengal
+act_now_E2_max_changes,2022,Bihar;Gujarat;Maharashtra;Uttar Pradesh,2,,,,,,Bihar;Gujarat;Maharashtra;Uttar Pradesh
