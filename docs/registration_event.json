@@ -1,0 +1,9 @@
+{
+  "repository": "https://github.com/hssling/india-tb-diabetes-gap",
+  "registered_document": "docs/analysis_plan.md",
+  "registered_commit": "7c7ba61787623cb988293d0d884d221b25fa0283",
+  "pushed_at": "2026-11-21T15:05:56Z",
+  "source_of_timestamp": "GitHub REST API, GET /repos/hssling/india-tb-diabetes-gap (pushed_at), first push of the repository",
+  "estimates_computed_before": false,
+  "note": "No src/dmgap/ module, no outputs/ file and no data/extracted/ file existed at the registration commit."
+}
