@@ -74,6 +74,8 @@ class Analysis:
         self.trend_rows, self.phis = trend.run(
             self.pan, {SPEC_REG: self.bases[REG], SPEC_FROM: self.bases[FROM]})
         self.falling = trend.falling(self.trend_rows)
+        self.falling_by_spec = {SPEC_REG: trend.falling(self.trend_rows, SPEC_REG),
+                                SPEC_FROM: trend.falling(self.trend_rows, SPEC_FROM)}
         self.out: dict[str, list[dict]] = {}
 
     # ---- specifications of the gaps and priorities (§5.7, §6.1, §8.11) ----------------
@@ -178,13 +180,10 @@ class Analysis:
 
     def gaps_priority(self):
         gap_rows, prio_rows = [], []
-        self.main_draws = {}
         for sp in self.gap_specs():
             for t in sp["years"]:
                 ds = self.DS[(t, sp["prior"], sp["basis"])]
                 g = gaps.draw_gaps(ds, sp["p"], sp["k"])
-                if sp["spec"] == "main" and t in LOO_YEARS:
-                    self.main_draws[t] = g
                 for gap in ("E1", "E2", "total"):
                     res = priority.run(g[gap])
                     for u in sorted(g[gap]):
@@ -201,7 +200,8 @@ class Analysis:
                         prio_rows.append({**base, "mean": m, "lo": lo, "hi": hi,
                                           "per_100k_notified": per,
                                           "p_top5": res[u]["p_top5"], "tier": res[u]["tier"],
-                                          "falling_coverage": self.falling[u]})
+                                          "falling_coverage": self.falling_by_spec.get(
+                                              sp["spec"], self.falling)[u]})
         for t, cs in self.C3.items():
             res = priority.run(cs.e3)
             for u in cs.units:
@@ -302,9 +302,10 @@ class Analysis:
             {"estimate": "H1_iterations", "spec": "main", "value": f.iterations},
         ]
         for factor in (0.8, 1.2):
-            fs = validate.fit_h1(validate.h1_data(self.pan, reference.scaled(ps, factor)))
+            fs = validate.h1(self.pan, reference.scaled(ps, factor))
             hs.append({"estimate": "H1_point_nfhs_scaled", "spec": f"p_x{factor:g}",
-                       "value": fs.b1})
+                       "value": fs.b1,
+                       "note": f"NFHS scaling p_u x{factor:g} (§8.11), main basis only"})
         sp_specs = [("sex_weighted 2019+2021", ps, (2019, 2021)),
                     ("simple 2019+2021", psimple, (2019, 2021)),
                     ("sex_weighted 2021+2022 (fixed H1 years)", ps, (2021, 2022))]
@@ -337,7 +338,8 @@ class Analysis:
                            "n": nat[b][t]["C1"]["units"],
                            "note": f"K={nat[b][t]['C1']['x']}; N={nat[b][t]['C1']['n']}"})
         for b, (t1, t2) in ((MAIN, (2018, 2022)), (MAIN, (2019, 2022)), (MAIN, (2018, 2023)),
-                            (REG, (2018, 2022)), (FROM, (2018, 2022))):
+                            (REG, (2018, 2022)), (REG, (2019, 2022)), (REG, (2018, 2023)),
+                            (FROM, (2018, 2022))):
             dd, dlo, dhi = cascade.newcombe(wil(b, t1), wil(b, t2))
             hs.append({"estimate": "H2_difference", "spec": BASIS_SPEC.get(b, MAIN),
                        "year": f"{t2} vs {t1}", "value": dd, "lo": dlo, "hi": dhi,
@@ -374,15 +376,20 @@ class Analysis:
                 below = validate.below_units(jeff, kp)
                 fixed = validate.fixed_rule_units(jeff, kp)
                 in_pool = " (in-sample: a k_b pool year)" if t in benchmark.POOL_MAIN else ""
+                scal = ""
+                if name.startswith("p_x"):
+                    f = name.split()[0][3:]
+                    scal = (f"; NFHS scaling p_u x{f} (§8.11): R scales exactly by 1/{f}; "
+                            "under k_b the scaling cancels and is not rerun")
                 hs.append({"estimate": "count_P(R<1)>=0.95", "spec": name, "year": t,
                            "value": len(below), "n": len(jeff.units_y), "units": below,
-                           "note": "below the benchmark at k_b" + in_pool
-                           if "k_b" in name or name.startswith("kb_") else
-                           "P(R_k < 1) >= 0.95 at a fixed k"})
+                           "note": ("below the benchmark at k_b" + in_pool
+                                    if "k_b" in name or name.startswith("kb_") else
+                                    "P(R_k < 1) >= 0.95 at a fixed k") + scal})
                 hs.append({"estimate": "count_fixed_rule_R97.5<1", "spec": name, "year": t,
                            "value": len(fixed), "n": len(jeff.units_y), "units": fixed,
-                           "note": "likely under-detection" if name == "k=1" else
-                           "the fixed rule as a sensitivity (no phrase)"})
+                           "note": ("likely under-detection" if name == "k=1" else
+                                    "the fixed rule as a sensitivity (no phrase)") + scal})
         # trend summaries
         for model in sorted(self.phis):
             rows_m = [r for r in self.trend_rows if r["model"] == model]
@@ -399,7 +406,7 @@ class Analysis:
 
     def funnel_rows(self):
         ps = self.P[SEX]
-        f23 = validate.fit_h1(validate.h1_data(self.pan, ps, "2023", validate.TESTED))
+        f23 = validate.h1(self.pan, ps, "2023", validate.TESTED)
         rows = validate.funnel(self.pan, ps, f23, 2023, (), "2023 alone regression")
         for t in (2019, 2021):
             rows += validate.funnel(self.pan, ps, self.h1["fit"], t, (2021,),
@@ -467,7 +474,7 @@ class Analysis:
         vals = {}
         for u in d.units:
             try:
-                vals[u] = validate.fit_h1(validate.h1_data(self.pan, ps, omit=u)).b1
+                vals[u] = validate.h1(self.pan, ps, omit=u).b1
             except validate.Undefined:
                 vals[u] = None
             rows.append({"kind": "H1_beta1", "year": "2019+2021", "omitted": u,
@@ -489,28 +496,36 @@ class Analysis:
         umax = max(ok, key=lambda u: (ok[u], u))
         rows.append({"kind": "spearman_rho_min", "omitted": umin, "value": ok[umin]})
         rows.append({"kind": "spearman_rho_max", "omitted": umax, "value": ok[umax]})
-        for t in LOO_YEARS:
-            base = {gap: priority.act_now(priority.run(self.main_draws[t][gap]))
-                    for gap in ("E1", "E2")}
-            changes = {gap: {} for gap in base}
-            for o in panel.UNITS:
-                kb_o = benchmark.k_b(self.pan, ps, omit=o).value
-                ds_o = draws.build(self.pan, t, EB, MAIN, omit=o)
-                g = gaps.draw_gaps(ds_o, ps, kb_o)
+        # The act-now chain runs on the main basis (E1, E2) and, for the C1-dependent E1,
+        # also on the A1.2 registered basis (plan §12.1, §12.3 note 1). The k-grid, the
+        # NFHS x0.8/1.2 scaling and the p_u perturbation stay main-basis only.
+        chains = [("main", MAIN, ("E1", "E2")), (SPEC_REG, REG, ("E1",))]
+        for spec, b, gap_list in chains:
+            pan_b = self.panels[b]
+            for t in LOO_YEARS:
+                g0 = gaps.draw_gaps(self.DS[(t, EB, b)], ps, self.KB)
+                base = {gap: priority.act_now(priority.run(g0[gap])) for gap in gap_list}
+                changes = {gap: {} for gap in base}
+                for o in panel.UNITS:
+                    kb_o = benchmark.k_b(self.pan, ps, omit=o).value
+                    ds_o = draws.build(pan_b, t, EB, b, omit=o)
+                    g = gaps.draw_gaps(ds_o, ps, kb_o)
+                    for gap in base:
+                        act = priority.act_now(priority.run(g[gap]))
+                        remaining = set(g[gap])
+                        changed = sorted((act ^ (base[gap] - {o})) & remaining)
+                        changes[gap][o] = changed
+                        rows.append({"kind": f"act_now_{gap}", "spec": spec, "year": t,
+                                     "omitted": o, "k_b": kb_o, "value": len(changed),
+                                     "changed_units": changed, "act_now": sorted(act)})
                 for gap in base:
-                    act = priority.act_now(priority.run(g[gap]))
-                    remaining = set(g[gap])
-                    changed = sorted((act ^ (base[gap] - {o})) & remaining)
-                    changes[gap][o] = changed
-                    rows.append({"kind": f"act_now_{gap}", "year": t, "omitted": o,
-                                 "k_b": kb_o, "value": len(changed), "changed_units": changed,
-                                 "act_now": sorted(act)})
-            for gap in base:
-                mx = max(len(v) for v in changes[gap].values())
-                who = [o for o in panel.UNITS if len(changes[gap][o]) == mx]
-                rows.append({"kind": f"act_now_{gap}_max_changes", "year": t,
-                             "omitted": who, "value": mx,
-                             "act_now": sorted(base[gap])})
+                    mx = max(len(v) for v in changes[gap].values())
+                    who = [o for o in panel.UNITS if len(changes[gap][o]) == mx]
+                    rows.append({"kind": f"act_now_{gap}_max_changes", "spec": spec,
+                                 "year": t, "omitted": who, "value": mx,
+                                 "act_now": sorted(base[gap])})
+        for r in rows:
+            r.setdefault("spec", "main")
         self.out["leave_one_out"] = rows
 
     def na_rows(self):

@@ -154,6 +154,12 @@ def fit_h1(d: H1Data) -> GLMFit:
     return irls(d.X, d.y, d.a)
 
 
+def h1(pan: dict, p: dict[str, float], year_set: str = MAIN_YEAR_SET,
+       weights: str = TESTED, omit: str | None = None) -> GLMFit:
+    """The H1 fit (§8.2) under one specification: h1_data then fit_h1. Raises Undefined."""
+    return fit_h1(h1_data(pan, p, year_set, weights, omit))
+
+
 def kish(d: H1Data) -> float:
     """(sum w_u)^2 / sum w_u^2, w_u = the unit's total prior weight (§8.3)."""
     w = np.array([d.a[r].sum() for r in d.rows_of])

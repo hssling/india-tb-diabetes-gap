@@ -88,6 +88,6 @@ def run(pan: dict, bases: dict[str, dict] | None = None) -> tuple[list[dict], di
     return rows, phis
 
 
-def falling(rows: list[dict]) -> dict[str, bool | None]:
-    """unit -> the main falling-coverage flag (None when not estimable)."""
-    return {r["unit"]: r.get("falling_coverage") for r in rows if r["model"] == MAIN}
+def falling(rows: list[dict], model: str = MAIN) -> dict[str, bool | None]:
+    """unit -> the model's falling-coverage flag (None when not estimable)."""
+    return {r["unit"]: r.get("falling_coverage") for r in rows if r["model"] == model}

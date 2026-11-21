@@ -344,7 +344,6 @@ def test_decomposition_small_total_shortfall():
 
 def test_scenario_formula():
     units = [f"U{j}" for j in range(6)]
-    n = 3
     cells = {u: panel.Cell(u, 2023, 100 * (j + 1), 0, 0, 0) for j, u in enumerate(units)}
     c = {u: np.array([0.5, 0.9, 1.0]) for u in units}
     y = {u: np.array([0.1, 0.3, 0.05]) * (1 + 0.1 * j) for j, u in enumerate(units)}
@@ -365,7 +364,6 @@ def test_scenario_formula():
     top = sorted(units, key=lambda u: (-means[u], u))[:5]
     assert s["top5"] == top and "U0" not in top
     assert s["share"] == pytest.approx(sum(means[u] for u in top) / sum(means.values()))
-    assert n == 3
 
 
 # ---- IRLS (§8.2) ----------------------------------------------------------------------
@@ -444,6 +442,71 @@ def test_outputs_structure():
         assert (OUTPUTS / f"{name}.csv").exists(), name
     raw = (OUTPUTS / "headline.csv").read_bytes()
     assert b"\r\n" not in raw
+
+
+def _read_out(name):
+    import csv
+    with open(OUTPUTS / name, encoding="utf-8", newline="") as f:
+        return list(csv.DictReader(f))
+
+
+def test_registered_basis_covers_c1_e1_outputs():
+    reg = "denominator_a1_2_registered"
+    for name, key, need in (("cascade.csv", "spec", None), ("gaps.csv", "spec", "E1"),
+                            ("priority.csv", "spec", "E1"), ("decomposition.csv", "spec", None),
+                            ("scenario.csv", "spec", None), ("trend.csv", "model", None)):
+        rows = [r for r in _read_out(name) if r[key] == reg]
+        assert rows, name
+        if need:
+            assert any(r["gap"] == need for r in rows), name
+            assert {r["year"] for r in rows if r["gap"] == need} == {"2021", "2022", "2023"}
+    pr = [r for r in _read_out("priority.csv") if r["spec"] == reg]
+    assert any(r["gap"] == "total" for r in pr)
+    # the basis's own falling-coverage flag: HP and Tripura are not estimable on A1.2
+    for r in pr:
+        if r["unit"] in ("Himachal Pradesh", "Tripura"):
+            assert r["falling_coverage"] == ""
+    loo = [r for r in _read_out("leave_one_out.csv")
+           if r["spec"] == reg and r["kind"] == "act_now_E1"]
+    assert {r["year"] for r in loo} == {"2022", "2023"} and len(loo) == 66
+    assert any(r["spec"] == reg and r["kind"] == "act_now_E1_max_changes"
+               for r in _read_out("leave_one_out.csv"))
+    hs = _read_out("headline_sensitivity.csv")
+    assert {r["year"] for r in hs if r["estimate"] == "H2_difference" and r["spec"] == reg} == {
+        "2022 vs 2018", "2022 vs 2019", "2023 vs 2018"}
+    assert {r["year"] for r in hs if r["estimate"] == "H2_national_coverage"
+            and r["spec"] == reg} == {"2021", "2022", "2023"}
+    scal = [r for r in hs if r["spec"].startswith("p_x0.8") and r["estimate"].startswith("count")]
+    assert scal and all("R scales exactly by 1/0.8" in r["note"] for r in scal)
+
+
+def test_funnel_and_perturbation_wiring():
+    fu = _read_out("funnel.csv")
+    assert len(fu) == 99
+    assert {(r["funnel_year"], sum(1 for x in fu if x["funnel_year"] == r["funnel_year"]))
+            for r in fu} == {("2023", 33), ("2019", 33), ("2021", 33)}
+    guj = [r for r in fu if r["unit"] == "Gujarat" and r["funnel_year"] == "2023"][0]
+    assert guj["position"] == "below the 99.8% limit"
+    assert guj["flag"] == validate.FLAG_LOW
+    assert float(guj["z"]) < float(guj["lower_998"])
+    assert len({r["phi_f"] for r in fu if r["funnel_year"] == "2023"}) == 1
+    pt = _read_out("perturbation.csv")
+    assert [r["unit"] for r in pt] == list(panel.UNITS)
+    for r in pt:
+        assert r["n_replicates"] == "1000"
+        for k in ("share_tier_E1_unchanged", "share_tier_E2_unchanged",
+                  "share_tier_total_unchanged", "share_h3_unchanged", "share_class_unchanged"):
+            assert 0.0 <= float(r[k]) <= 1.0
+            assert float(r[k]) * 1000 == round(float(r[k]) * 1000)
+    # the baseline matches the main 2023 outputs
+    pr = {(r["unit"], r["gap"]): r["tier"] for r in _read_out("priority.csv")
+          if r["spec"] == "main" and r["year"] == "2023"}
+    de = {r["unit"]: r["class"] for r in _read_out("decomposition.csv")
+          if r["spec"] == "main" and r["year"] == "2023"}
+    h3 = [r for r in _read_out("headline_sensitivity.csv") if r["estimate"] == "H3_units"][0]
+    for r in pt:
+        assert r["tier_E1"] == pr[(r["unit"], "E1")] and r["class"] == de[r["unit"]]
+        assert (r["h3_member"] == "True") == (r["unit"] in h3["units"].split(";"))
 
 
 def test_outputs_byte_identical_on_rerun(tmp_path):
