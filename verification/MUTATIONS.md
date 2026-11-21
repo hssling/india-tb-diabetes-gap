@@ -238,5 +238,31 @@ which runs in the pytest step of check_all:
   an edit smaller than about five Monte Carlo standard errors passes check_outputs and is
   caught only by check_rerun. Classifications whose exact value lies within that
   tolerance of the threshold are reported as borderline (in 2023, Goa on the k = 1 rule).
-- check_manuscript_numbers and check_docx_tie do not exist yet; check_all reports them as
-  SKIP until `manuscript/manuscript.md` exists (and as FAIL if it exists without them).
+- The manuscript checks (below) run only where the private `manuscript/` folder exists; in a
+  clone without it, check_all reports them as SKIP.
+
+## Manuscript checks (Task 6)
+
+`verification/mutate_manuscript.py` copies the private, git-ignored `manuscript/` folder into
+`manuscript/_mutations/` for every break (the real files are never written), applies one
+named mutation, and runs check_manuscript_numbers and check_docx_tie on the copy. The
+anchors that quote the manuscript are kept in the private `section_phrases.json`. Run on
+21 November 2026 against the built Primary Care Diabetes set: **52 of 52 named mutations
+caught**, and with `--sweep` every number token was caught: 325 of 325 in `manuscript.md`
+(outside the References and the title-page block) and 751 of 751 in `02_manuscript.docx`
+(tables and references included). The sweep first found one escape, a digit of the cited
+tbprio Zenodo DOI in the .docx, because the tie normalised every Zenodo DOI; the tie now
+normalises only the release DOI (the placeholder, or the DOI that `--doi` fills), and the
+rerun caught it.
+
+The named mutations cover: numbers changed in the .docx only (H1, Word's abstract count, a
+Table S7 cell) and in the Markdown only (H2, a count in the abstract and in the highlights,
+the registration time, the benchmark multiplier); the title page that a single-anonymized
+manuscript must carry (the e-mail, the ORCID, the abbreviations footnote, a corresponding-
+author line differing from the title page); reference numbers and order; table cells, the
+figure data and the graphical-abstract data; the H1 label; a sign; internal identifiers;
+wording ("newly diagnosed", "detection-led", "widespread", causal and ranking language,
+"under-detection" without the k = 1 rule, American spelling); the highlight, abstract and
+main-text limits and Word's counts; the AI declaration, the declaration of interest and the
+caveats; a figure PDF, a low-resolution TIFF, an undersized graphical abstract and a sixth
+display item; the cover letter's related manuscripts; and the file set.
