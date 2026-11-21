@@ -716,3 +716,12 @@ Analyses read these names.
 3. The decomposition share S is summarised over draws with E1 + E2 > 0. In the data, every draw met this.
 4. The cumulative C1·C2·C3 is not formed for 2018, whose C3 definition differs.
 5. Outputs label the detection-led class "identification-led", following the §1.3 wording.
+
+**12.4 (21 November 2026), the scope of §12.3 note 1 stated exactly, with no change to any estimate.**
+- **On both bases.** The §12.1 sensitivities (the A1.2 basis for 2021–2023, and the 2022 N derived from the printed %) run through:
+  - the cascade, the gaps and the priorities;
+  - the decomposition and the scenario;
+  - the trend and each basis's own falling-coverage flag;
+  - H2, including the 2019 vs 2022 and 2018 vs 2023 companions;
+  - the leave-one-out E1 act-now sets for 2022 and 2023.
+- **Main basis only.** The k-grid, the NFHS ×0.8/×1.2 scaling and the State-specific p_u perturbation. This is stated in outputs/README.md.
