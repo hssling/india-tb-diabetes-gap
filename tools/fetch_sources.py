@@ -44,6 +44,12 @@ SOURCES: list[tuple[str, str | None, str, str]] = [
      "tb_priority_tool/data_raw/india_tb_report/India-TB-Report-2019.pdf",
      "https://tbcindia.mohfw.gov.in/wp-content/uploads/2023/05/India-TB-Report-2019.pdf",
      "87e546751372ba157cb9eba1620173d54aad0fb99abc1b99f4302e9a2005c03b"),
+    # ITR 2020 (data year 2019), added before extraction by the ruling of plan
+    # section 3.2 (21 Nov 2026); digest as in the sibling manifest.
+    ("data_raw/india_tb_report/ITR2020.pdf",
+     "tb_priority_tool/data_raw/india_tb_report/ITR2020.pdf",
+     "https://tbcindia.mohfw.gov.in/wp-content/uploads/2023/05/India-TB-Report-2020.pdf",
+     "63b9408015dae510858e0eef2711e809d398bfe3149dd21c94390b258c007e7e"),
     ("data_raw/india_tb_report/TBAnnaulReport2022.pdf",
      "tb_priority_tool/data_raw/india_tb_report/TBAnnaulReport2022.pdf",
      "https://tbcindia.mohfw.gov.in/wp-content/uploads/2023/05/TBAnnaulReport2022.pdf",

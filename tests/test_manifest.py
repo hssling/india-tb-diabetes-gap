@@ -1,6 +1,7 @@
 """Every source in data/source_manifest.csv is present in data_raw/ with the
 recorded size and SHA-256 (the copies made by tools/fetch_sources.py), and the
-manifest lists exactly the sources the plan names, with the NFHS-5 digests
+manifest lists exactly the sources the plan names (seven files, plan
+section 3.1, ITR 2020 included), with the NFHS-5 digests
 given in the design (section 3)."""
 import csv
 import hashlib
@@ -14,6 +15,7 @@ COLUMNS = ["path", "origin", "bytes", "sha256"]
 
 EXPECTED_PATHS = {
     "data_raw/india_tb_report/India-TB-Report-2019.pdf",
+    "data_raw/india_tb_report/ITR2020.pdf",
     "data_raw/india_tb_report/TBAnnaulReport2022.pdf",
     "data_raw/india_tb_report/ITR2023.pdf",
     "data_raw/india_tb_report/ITR2024.pdf",
@@ -49,6 +51,7 @@ def test_manifest_has_rows_and_unique_paths():
     paths = [r["path"] for r in rows]
     assert len(paths) == len(set(paths))
     assert set(paths) == EXPECTED_PATHS
+    assert len(paths) == 7
     for r in rows:
         assert r["path"].startswith("data_raw/"), r["path"]
         assert len(r["sha256"]) == 64 and r["origin"], r
@@ -68,3 +71,9 @@ def test_manifest_digests_match():
         assert path.is_file(), f"missing: {r['path']}"
         assert path.stat().st_size == int(r["bytes"]), r["path"]
         assert _sha256(path) == r["sha256"], r["path"]
+
+
+def test_manifest_itr2020_digest_is_the_plans():
+    by_path = {r["path"]: r["sha256"] for r in _rows()}
+    assert by_path["data_raw/india_tb_report/ITR2020.pdf"] == (
+        "63b9408015dae510858e0eef2711e809d398bfe3149dd21c94390b258c007e7e")
