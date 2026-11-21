@@ -1,0 +1,23 @@
+# The analysis package (src/dmgap/, from Task 4) imports the author's released
+# TB priority tool at the pinned version v1.0.1 (DOI 10.5281/zenodo.24411057).
+# Install once from the repository root:
+#     python -I -m pip install "tbprio @ git+https://github.com/hssling/india-tb-priority-tool@v1.0.1"
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dmgap"
+version = "0.1.0"
+description = "The diabetes-TB gap in India's States: screening and detection gaps (registered analysis plan)"
+requires-python = ">=3.14"
+license = "MIT"
+dependencies = [
+    "tbprio @ git+https://github.com/hssling/india-tb-priority-tool@v1.0.1",
+    "numpy==2.3.5",
+    "scipy==1.16.3",
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+packages = []
