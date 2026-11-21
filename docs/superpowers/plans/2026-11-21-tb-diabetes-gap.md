@@ -82,6 +82,27 @@
 
 **H1 grid** (12 entries): reference {sex-weighted, simple} × year set {2021, 2022, pooled} × weights {tested, unweighted}.
 
+**Controller rulings after Task 1 (21 Nov 2026; fixed BEFORE registration; these supersede earlier values)**
+
+- **Data years: five.**
+
+  | Data year | Source |
+  |---|---|
+  | 2018 | ITR 2019 A1.2 |
+  | 2019 | ITR 2020 A2.5, pp. 216–217 |
+  | 2021 | TBAR 2022 A2.5 |
+  | 2022 | ITR 2023 A2.10 |
+  | 2023 | ITR 2024 A2.10, pp. 211–212 |
+
+  2020 is dropped (ITR 2021 is a scan). ITR 2020 is added to the manifest from the tb_priority_tool copy. ITR 2020 A2.6 is titled "TB - Tobacco" but carries diabetes headers with different values; A2.5 is used and the discrepancy is recorded.
+- **Main years.** The main priority year is 2023, the latest. The trend uses 2018, 2019, 2021, 2022 and 2023, with tbprio's empirical-logit WLS, φ, and the 2021 indicator, exactly as in the priority tool. H1 pools 2019 and 2021, the data years matching NFHS-5 fieldwork (2019–21). The H1 grid's year-set axis becomes {2019 + 2021 (main), 2021–2023, 2023 alone}.
+- **C2 meaning.** The ITR TB–DM count includes "already existing" diabetes (ITR 2019 narrative, p. 65). C2 is therefore "diabetes identified among screened TB patients, newly diagnosed or known". It is comparable with NFHS-5, which also counts people taking medicine. The wording is "identified", never "newly diagnosed".
+- **Denominators.** Coverage C1 uses notified from each year's own table where printed. Otherwise it uses A1.2 (diagnosing PHI) for 2021–2023. 2018 uses current PHI (flagged). 2019 is per its table (Task 3 records it). The flag is carried; the sensitivity analysis drops 2018.
+- **C3 definitions.** C3 linkage is "linked to NCD clinic" in 2018 and "initiated on anti-diabetic treatment" from 2021 (2019: Task 3 records the header). The main C3 uses the years with the "initiated on treatment" definition. 2018 is shown separately and flagged.
+- **NFHS-5 inputs.** NFHS-5 totals are used. There is no population in the fact sheets, so unit merging uses ITR 2023 A1.1 population. The DNH&DD sheet is already merged.
+- **tbprio.** The installed tbprio was refreshed to 1.0.1 from the local tb_priority_tool checkout; its src/tbprio is byte-identical to tag v1.0.1, and no download was involved. Task 4's pin test asserts the version is 1.0.1, and that src/tbprio file hashes match those recorded from tag v1.0.1.
+- **Extraction method.** Task 3 reads rotated ITR 2019 cells by cell position (pdfplumber words with coordinates) or whole rows, not line text.
+
 ## Review Focus
 1. **A unit with known > notified, or diabetic > tested** (a reporting artefact). Expected: NA for that measure, listed. Pinned in Task 3: `test_impossible_counts_become_na`.
 2. **An NFHS unit with no TB unit match, or an ITR unit with no NFHS match.** Expected: an explicit crosswalk; an unmatched name raises an error naming it. Pinned in Task 3: `test_unmatched_nfhs_unit_raises`.
