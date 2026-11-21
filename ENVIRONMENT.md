@@ -37,3 +37,24 @@ installed tbprio 1.0.1 (its src/tbprio byte-identical to tag v1.0.1; checked by
 `tests/test_analysis.py::test_tbprio_pinned_version`). Run, from the repository root:
 `python -I src/run_all.py` (about two minutes; writes `outputs/*.csv`, byte-identical on
 rerun). `python -I src/run_all.py --out DIR` writes to another directory.
+
+Task 5 (verification, 21 Nov 2026) used the same Python 3.14.0, numpy 2.3.5, scipy
+1.16.3, tbprio 1.0.1, pdfplumber 0.11.8 (pdfminer.six 20251107) and pytest 9.0.0, with
+git 2.51.0 for `check_plan_order`. `verification/check_outputs.py` and
+`verification/check_deviations.py` use the standard library only (no numpy, scipy,
+tbprio or `src/` import; checked by
+`tests/test_verification.py::test_check_outputs_is_standard_library_only`). Run, from the
+repository root: `python -I verification/check_all.py` (about five minutes: pytest about
+two, `check_rerun` about one, the other checks seconds).
+
+| Component | Version |
+|---|---|
+| Operating system | Windows 11 Pro (64-bit) |
+| Python | 3.14.0 |
+| numpy | 2.3.5 |
+| scipy | 1.16.3 |
+| tbprio | 1.0.1 (hssling/india-tb-priority-tool, tag v1.0.1) |
+| pdfplumber | 0.11.8 |
+| pdfminer.six | 20251107 |
+| pytest | 9.0.0 |
+| git | 2.51.0 |
