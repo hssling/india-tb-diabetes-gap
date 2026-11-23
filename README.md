@@ -275,7 +275,8 @@ every row.
 
 ## Citation and licences
 
-Cite as in [`CITATION.cff`](CITATION.cff). Version 1.0.0 is archived on Zenodo:
+Cite as in [`CITATION.cff`](CITATION.cff). Version 1.1.0 (with the online material) is archived on Zenodo:
+[10.5281/zenodo.24475024](https://doi.org/10.5281/zenodo.24475024); version 1.0.0:
 [10.5281/zenodo.24425259](https://doi.org/10.5281/zenodo.24425259) (all versions:
 [10.5281/zenodo.24425258](https://doi.org/10.5281/zenodo.24425258)). Author: Siddalingaiah H S
 (ORCID [0000-0002-4771-8285](https://orcid.org/0000-0002-4771-8285)), Department of
