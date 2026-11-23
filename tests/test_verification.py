@@ -345,11 +345,13 @@ def test_check_all_steps_and_manuscript_skips(tmp_path, monkeypatch):
     names = [n for n, _ in check_all.STEPS]
     assert names == ["pytest -q", "check_plan_order", "check_deviations",
                      "check_extraction_totals", "check_implied_denominator", "check_outputs",
-                     "check_rerun", "check_manuscript_numbers", "check_docx_tie"]
+                     "check_rerun", "check_online_material", "check_manuscript_numbers", "check_docx_tie",
+                     "mutate_manuscript"]
     monkeypatch.setattr(check_all, "ROOT", tmp_path)
     for name in check_all.MANUSCRIPT_STEPS:
         assert check_all.skip_reason(name).startswith("SKIPPED")
     assert check_all.skip_reason("check_outputs") is None
-    (tmp_path / "manuscript").mkdir()
-    (tmp_path / "manuscript" / "manuscript.md").write_text("x", encoding="utf-8")
+    (tmp_path / "manuscript" / "v2").mkdir(parents=True)
+    (tmp_path / "manuscript" / "v2" / "manuscript.md").write_text("x", encoding="utf-8")
     assert check_all.skip_reason("check_docx_tie") is None
+    assert check_all.skip_reason("mutate_manuscript") is None
