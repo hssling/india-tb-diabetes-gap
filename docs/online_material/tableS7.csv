@@ -1,0 +1,34 @@
+Unit,E1 (95% interval),E1 P(top-5) (tier),E2 (95% interval),E2 P(top-5) (tier),Total (95% interval),Total P(top-5) (tier),"Total per 100,000 notified"
+Andaman and Nicobar Islands,9 (7 to 12),0 (lower priority),0 (0 to 0),0 (lower priority),9 (7 to 12),0 (lower priority),"1,590"
+Andhra Pradesh,290 (276 to 304),0 (lower priority),"4,171 (3,977 to 4,361)",0 (lower priority),"4,462 (4,269 to 4,650)",0 (lower priority),"4,962"
+Arunachal Pradesh,75 (71 to 79),0 (lower priority),109 (94 to 122),0 (lower priority),184 (169 to 198),0 (lower priority),"6,537"
+Assam,714 (697 to 731),0 (lower priority),"1,937 (1,821 to 2,050)",0 (lower priority),"2,651 (2,533 to 2,766)",0 (lower priority),"5,106"
+Bihar,"5,389 (5,344 to 5,435)",1 (act now),"9,202 (9,024 to 9,378)",1 (act now),"14,591 (14,407 to 14,774)",1 (act now),"7,635"
+Chandigarh,91 (85 to 98),0 (lower priority),133 (96 to 169),0 (lower priority),224 (186 to 261),0 (lower priority),"5,274"
+Chhattisgarh,296 (287 to 306),0 (lower priority),3 (0 to 40),0 (lower priority),299 (287 to 336),0 (lower priority),768
+Delhi,"1,868 (1,842 to 1,893)",1 (act now),"2,074 (1,930 to 2,215)",0 (lower priority),"3,941 (3,794 to 4,083)",0 (lower priority),"4,429"
+Goa,24 (20 to 28),0 (lower priority),0 (0 to 0),0 (lower priority),24 (20 to 29),0 (lower priority),"1,193"
+Gujarat,712 (693 to 731),0 (lower priority),"11,400 (11,240 to 11,559)",1 (act now),"12,112 (11,950 to 12,271)",1 (act now),"8,560"
+Haryana,301 (290 to 312),0 (lower priority),"2,864 (2,728 to 2,999)",0 (lower priority),"3,165 (3,028 to 3,300)",0 (lower priority),"3,927"
+Himachal Pradesh,22 (19 to 25),0 (lower priority),529 (460 to 598),0 (lower priority),551 (482 to 620),0 (lower priority),"3,436"
+Jammu and Kashmir,40 (37 to 43),0 (lower priority),0 (0 to 0),0 (lower priority),40 (37 to 43),0 (lower priority),331
+Jharkhand,530 (517 to 545),0 (lower priority),"2,720 (2,610 to 2,829)",0 (lower priority),"3,250 (3,139 to 3,360)",0 (lower priority),"5,148"
+Karnataka,542 (527 to 558),0 (lower priority),0 (0 to 0),0 (lower priority),542 (527 to 558),0 (lower priority),675
+Kerala,171 (159 to 183),0 (lower priority),0 (0 to 0),0 (lower priority),171 (159 to 183),0 (lower priority),781
+Madhya Pradesh,"1,650 (1,627 to 1,673)",1 (act now),"5,424 (5,234 to 5,613)",0 (lower priority),"7,073 (6,881 to 7,266)",0 (lower priority),"3,785"
+Maharashtra,"1,206 (1,184 to 1,227)",0 (lower priority),"10,071 (9,859 to 10,287)",1 (act now),"11,276 (11,061 to 11,492)",1 (act now),"5,028"
+Manipur,68 (63 to 73),0 (lower priority),0 (0 to 0),0 (lower priority),68 (63 to 73),0 (lower priority),"2,635"
+Meghalaya,71 (66 to 76),0 (lower priority),234 (207 to 260),0 (lower priority),305 (277 to 331),0 (lower priority),"6,215"
+Mizoram,10 (8 to 13),0 (lower priority),146 (125 to 166),0 (lower priority),157 (135 to 177),0 (lower priority),"6,786"
+Nagaland,53 (49 to 57),0 (lower priority),160 (133 to 185),0 (lower priority),213 (185 to 238),0 (lower priority),"4,869"
+Odisha,232 (221 to 243),0 (lower priority),"3,209 (3,081 to 3,334)",0 (lower priority),"3,441 (3,312 to 3,567)",0 (lower priority),"5,561"
+Puducherry,6 (4 to 8),0 (lower priority),0 (0 to 0),0 (lower priority),6 (4 to 8),0 (lower priority),353
+Punjab,585 (570 to 601),0 (lower priority),562 (423 to 701),0 (lower priority),"1,148 (1,008 to 1,285)",0 (lower priority),"1,990"
+Rajasthan,"1,237 (1,220 to 1,254)",0 (lower priority),"6,319 (6,199 to 6,435)",1 (act now),"7,556 (7,434 to 7,672)",1 (act now),"4,549"
+Sikkim,8 (6 to 10),0 (lower priority),40 (20 to 59),0 (lower priority),48 (27 to 67),0 (lower priority),"3,433"
+Tamil Nadu,611 (590 to 631),0 (lower priority),0 (0 to 0),0 (lower priority),611 (590 to 631),0 (lower priority),608
+Telangana,776 (756 to 796),0 (lower priority),"5,549 (5,426 to 5,670)",0 (lower priority),"6,325 (6,200 to 6,448)",0 (lower priority),"8,426"
+Tripura,24 (21 to 28),0 (lower priority),48 (8 to 88),0 (lower priority),73 (32 to 113),0 (lower priority),"2,034"
+Uttar Pradesh,"2,016 (1,991 to 2,042)",1 (act now),"27,099 (26,781 to 27,422)",1 (act now),"29,116 (28,795 to 29,440)",1 (act now),"4,530"
+Uttarakhand,121 (114 to 128),0 (lower priority),682 (596 to 767),0 (lower priority),803 (716 to 888),0 (lower priority),"3,007"
+West Bengal,"1,375 (1,347 to 1,404)",1 (act now),"2,831 (2,620 to 3,032)",0 (lower priority),"4,206 (3,991 to 4,407)",0 (lower priority),"4,062"

@@ -1,0 +1,34 @@
+Unit,Class,E1 tier,E2 tier,E3 tier,C3 below 50%,Step to strengthen first,Then
+Andaman and Nicobar Islands,screening-led,lower priority,lower priority,lower priority,no (63.4%),screening: reach those still unscreened,—
+Andhra Pradesh,identification-led,lower priority,lower priority,act now,no (63.3%),"identification: check the test, confirmation and recording",—
+Arunachal Pradesh,identification-led,lower priority,lower priority,lower priority,yes (40.7%),linkage: start treatment for those identified,"identification: check the test, confirmation and recording"
+Assam,identification-led,lower priority,lower priority,lower priority,yes (47.1%),linkage: start treatment for those identified,"identification: check the test, confirmation and recording"
+Bihar,identification-led,act now,act now,act now,yes (30.9%),linkage: start treatment for those identified,"identification: check the test, confirmation and recording"
+Chandigarh,identification-led,lower priority,lower priority,lower priority,no (81.0%),"identification: check the test, confirmation and recording",—
+Chhattisgarh,screening-led,lower priority,lower priority,lower priority,yes (39.1%),linkage: start treatment for those identified,screening: reach those still unscreened
+Delhi,identification-led,act now,lower priority,lower priority,yes (46.5%),linkage: start treatment for those identified,"identification: check the test, confirmation and recording"
+Goa,screening-led,lower priority,lower priority,lower priority,no (73.8%),screening: reach those still unscreened,—
+Gujarat,identification-led,lower priority,act now,lower priority,no (74.7%),"identification: check the test, confirmation and recording",—
+Haryana,identification-led,lower priority,lower priority,lower priority,no (78.4%),"identification: check the test, confirmation and recording",—
+Himachal Pradesh,identification-led,lower priority,lower priority,lower priority,no (73.4%),"identification: check the test, confirmation and recording",—
+Jammu and Kashmir,screening-led,lower priority,lower priority,lower priority,no (71.1%),screening: reach those still unscreened,—
+Jharkhand,identification-led,lower priority,lower priority,lower priority,no (55.3%),"identification: check the test, confirmation and recording",—
+Karnataka,screening-led,lower priority,lower priority,lower priority,no (77.4%),screening: reach those still unscreened,—
+Kerala,screening-led,lower priority,lower priority,lower priority,no (87.7%),screening: reach those still unscreened,—
+Madhya Pradesh,identification-led,act now,lower priority,act now,yes (36.9%),linkage: start treatment for those identified,"identification: check the test, confirmation and recording"
+Maharashtra,identification-led,lower priority,act now,act now,no (69.8%),"identification: check the test, confirmation and recording",—
+Manipur,screening-led,lower priority,lower priority,lower priority,yes (39.1%),linkage: start treatment for those identified,screening: reach those still unscreened
+Meghalaya,identification-led,lower priority,lower priority,lower priority,no (50.3%),"identification: check the test, confirmation and recording",—
+Mizoram,identification-led,lower priority,lower priority,lower priority,no (87.0%),"identification: check the test, confirmation and recording",—
+Nagaland,identification-led,lower priority,lower priority,lower priority,yes (27.9%),linkage: start treatment for those identified,"identification: check the test, confirmation and recording"
+Odisha,identification-led,lower priority,lower priority,lower priority,no (74.9%),"identification: check the test, confirmation and recording",—
+Puducherry,screening-led,lower priority,lower priority,lower priority,no (86.4%),screening: reach those still unscreened,—
+Punjab,mixed,lower priority,lower priority,lower priority,no (50.4%),screening and identification,—
+Rajasthan,identification-led,lower priority,act now,lower priority,no (58.7%),"identification: check the test, confirmation and recording",—
+Sikkim,identification-led,lower priority,lower priority,lower priority,no (85.1%),"identification: check the test, confirmation and recording",—
+Tamil Nadu,screening-led,lower priority,lower priority,lower priority,no (91.3%),screening: reach those still unscreened,—
+Telangana,identification-led,lower priority,lower priority,lower priority,no (72.8%),"identification: check the test, confirmation and recording",—
+Tripura,mixed,lower priority,lower priority,lower priority,no (80.0%),screening and identification,—
+Uttar Pradesh,identification-led,act now,act now,act now,yes (35.6%),linkage: start treatment for those identified,"identification: check the test, confirmation and recording"
+Uttarakhand,identification-led,lower priority,lower priority,lower priority,yes (40.8%),linkage: start treatment for those identified,"identification: check the test, confirmation and recording"
+West Bengal,identification-led,act now,lower priority,lower priority,no (75.1%),"identification: check the test, confirmation and recording",—

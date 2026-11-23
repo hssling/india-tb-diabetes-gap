@@ -1,12 +1,12 @@
 cff-version: 1.2.0
 message: "If you use this analysis, its data or its analysis plan, please cite it as below."
-title: "The diabetes-TB gap in India's States: a pre-registered analysis of the TB-diabetes care cascade"
+title: "The diabetes-TB gap in India's States: code, extracted data, outputs, analysis plan and online material"
 abstract: >-
-  Code, extracted data, outputs and a pre-registered analysis plan for a State-level
-  analysis of the TB-diabetes care cascade in India: screening of notified TB patients
-  for diabetes, diabetes identified among those screened relative to a benchmark built
+  Code, extracted data, outputs, online material and an analysis plan time-stamped in a
+  public repository before estimation, for a State-level analysis of the TB-diabetes care
+  cascade in India: screening of people notified with TB for diabetes, diabetes identified among those screened relative to a benchmark built
   from the NFHS-5 State prevalence of raised or treated blood sugar, and initiation of
-  anti-diabetic treatment. It counts the TB patients with diabetes expected among those
+  anti-diabetic treatment. It counts the people with TB and diabetes expected among those
   not screened and among those screened but not identified, gives tiers rather than
   ranks, classes each unit's shortfall as screening-led or identification-led, and tests
   whether identification follows the diabetes burden across units. It uses published,
@@ -33,4 +33,4 @@ keywords:
   - care cascade
   - NFHS-5
   - empirical Bayes
-  - pre-registration
+  - time-stamped analysis plan

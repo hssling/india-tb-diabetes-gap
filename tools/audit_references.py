@@ -23,6 +23,15 @@ Run as: python -I tools/audit_references.py [--manuscript-dir DIR]   (default: m
 - A reference without a DOI: its URL must be the upstream address of a file in
   data/source_manifest.csv, whose SHA-256 is re-verified when data_raw/ holds the file.
 Nothing is downloaded except Crossref's JSON records. Exit 1 if any reference fails.
+
+An IJTLD folder (section_phrases.json "journal": "ijtld"; manuscript/v2) prints no DOIs: entries
+are "n\\. Authors. Title. Journal Year; Volume: pages." and each article's DOI is kept in
+<folder>/reference_dois.json. The same Crossref checks apply, and the authors follow the journal's
+rule: when the entry lists its authors, Crossref has at most three and every one is listed; when it
+gives "First et al.", Crossref has more than three and the first is named. A web reference
+("URL Accessed d Month yyyy.") is either an upstream file of data/source_manifest.csv or an
+official page recorded, read-only, in <folder>/official_pages.json (what the page showed, the
+date read, and the strings the entry must contain).
 """
 from __future__ import annotations
 
@@ -211,6 +220,105 @@ def secondary_check(n: int, entry: str, sec, man: list[dict], root: Path) -> tup
             f"{cited_year.group(1) if cited_year else '(none)'} | — | {'yes' if ok else 'NO'} |"), ok
 
 
+# --------------------------------------------------------------------------------------
+# IJTLD style
+# --------------------------------------------------------------------------------------
+def journal(ms_dir: Path) -> str:
+    p = ms_dir / "section_phrases.json"
+    return json.loads(p.read_text(encoding="utf-8")).get("journal", "pcd") if p.exists() else "pcd"
+
+
+def ijtld_doi_check(n: int, entry: str, doi: str) -> tuple[str, bool]:
+    sys.path.insert(0, str(ROOT))
+    from verification import ijtld
+    m = crossref(doi)
+    title = (m.get("title") or [""])[0]
+    container = (m.get("container-title") or [""])[0]
+    short = m.get("short-container-title") or []
+    t_ok = compact(title) in compact(entry)
+    e = ijtld.ARTICLE.search(entry)
+    cj = e.group("journal") if e else ""
+    y_ok = bool(e) and int(e.group("year")) in years(m)
+    j_ok = bool(e) and (norm(cj) == norm(container) or abbrev_ok(cj, container) or any(abbrev_ok(cj, x) for x in short))
+    if e:
+        first = e.group("pages").split("–")[0]
+        if e.group("supp") and first.startswith("S"):
+            first = first[1:]
+        cr_first = (m.get("page") or "").split("-")[0] or (m.get("article-number") or "")
+        v_ok = (not m.get("volume") or e.group("vol") == m["volume"]) and (not cr_first or first == cr_first)
+    else:
+        v_ok = False
+    people = [a for a in (m.get("author") or []) if a.get("family")]
+    fams = [a["family"] for a in people]
+    head = entry.split(". ", 1)[0]
+    if head.endswith(", et al"):
+        a_ok = len(people) > 3 and norm(fams[0]) in norm(head)
+        rule = f"et al. ({len(people)} authors in Crossref)"
+    else:
+        a_ok = len(people) <= 3 and all(norm(f) in norm(head) for f in fams)
+        rule = f"all {len(people)} listed" if people else "group or no personal author"
+    ok = t_ok and y_ok and j_ok and v_ok and a_ok
+    meta = "; ".join(x for x in [html.unescape(container), "/".join(str(y) for y in sorted(years(m))),
+                                 f"vol {m['volume']}" if m.get("volume") else "", f"pp {m['page']}" if m.get("page") else "",
+                                 f"art {m['article-number']}" if m.get("article-number") else "",
+                                 f"authors {', '.join(fams[:3])}{' ...' if len(fams) > 3 else ''}" if fams else ""] if x)
+    flags = (f"title {'yes' if t_ok else 'NO'}, year {'yes' if y_ok else 'NO'}, journal '{cj}' {'yes' if j_ok else 'NO'}, "
+             f"volume/page {'yes' if v_ok else 'NO'}, authors {rule} {'yes' if a_ok else 'NO'}")
+    clean = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", html.unescape(title))).strip()
+    return f"| {n} | {doi} (Crossref) | {clean} | {meta} | {flags} | {'yes' if ok else 'NO'} |", ok
+
+
+def ijtld_web_check(n: int, entry: str, ms_dir: Path, root: Path) -> tuple[str, bool]:
+    m = re.search(r"(?P<url>https?://\S+?) Accessed (?P<date>\d{1,2} [A-Z][a-z]+ \d{4})\.$", entry)
+    if not m:
+        return f"| {n} | none | {entry[:70]} | no URL with an access date | — | NO |", False
+    url, date = m.group("url"), m.group("date")
+    op = ms_dir / "official_pages.json"
+    pages = json.loads(op.read_text(encoding="utf-8"))["pages"] if op.exists() else {}
+    if url in pages:
+        rec = pages[url]
+        missing = [x for x in rec["must_contain"] if x not in entry]
+        ok = not missing and rec["read"] == date
+        return (f"| {n} | none | official page, read-only | {rec['shows']} Read {rec['read']}. | entry contains the "
+                f"verified title and year: {'yes' if not missing else 'NO ' + str(missing)}; access date = date read: "
+                f"{'yes' if rec['read'] == date else 'NO'} | {'yes' if ok else 'NO'} |"), ok
+    return non_doi_check(n, entry.replace(f" Accessed {date}.", f" (accessed {date})."), root)
+
+
+def ijtld_zenodo_check(n: int, entry: str, doi: str) -> tuple[str, bool]:
+    kind = "dataset" if "[dataset]" in entry else "software" if "[software]" in entry else ""
+    ver = re.search(r"Version (\d+\.\d+\.\d+)", entry)
+    ok = bool(kind) and bool(ver) and ("XXXXXXX" in doi if kind == "dataset" else doi.split(".")[-1].isdigit())
+    state = ("release placeholder (filled with --doi at the v" + ver.group(1) + " release)") if "XXXXXXX" in doi and ver \
+        else "Zenodo version DOI"
+    return (f"| {n} | {doi} | [{kind}] version {ver.group(1) if ver else '(none)'} | {state}; DataCite, not looked up | — | "
+            f"{'yes' if ok else 'NO'} |"), ok
+
+
+def ijtld_audit(ms_dir: Path) -> tuple[list[str], int]:
+    sys.path.insert(0, str(ROOT))
+    from verification import ijtld
+    ms = (ms_dir / MS_NAME).read_text(encoding="utf-8")
+    refs = ms.split("\n## References", 1)[1].split("\n## ", 1)[0]
+    entries = {int(m.group(1)): m.group(2).strip() for m in ijtld.REF_LINE.finditer(refs)}
+    dois = json.loads((ms_dir / "reference_dois.json").read_text(encoding="utf-8"))
+    rows, bad = [], 0
+    for n, entry in sorted(entries.items()):
+        kind = ijtld.entry_kind(entry)
+        if kind == "article" and str(n) in dois:
+            line, ok = ijtld_doi_check(n, entry, dois[str(n)])
+            time.sleep(1)
+        elif kind == "zenodo":
+            line, ok = ijtld_zenodo_check(n, entry, ijtld.ZENODO.search(entry).group("doi"))
+        elif kind == "web":
+            line, ok = ijtld_web_check(n, entry, ms_dir, ROOT)
+        else:
+            line, ok = f"| {n} | none | {entry[:70]} | not in the journal's style, or an article without a DOI | — | NO |", False
+        rows.append(line)
+        bad += not ok
+    return rows, bad
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0], allow_abbrev=False)
     ap.add_argument("--manuscript-dir", default="manuscript")
@@ -218,7 +326,10 @@ def main(argv: list[str] | None = None) -> int:
     ms_dir = Path(a.manuscript_dir)
     ms_dir = ms_dir if ms_dir.is_absolute() else ROOT / ms_dir
     rows, bad = [], 0
-    for n, entry in sorted(cited(ms_dir).items()):
+    ijtld_style = journal(ms_dir) == "ijtld"
+    if ijtld_style:
+        rows, bad = ijtld_audit(ms_dir)
+    for n, entry in ([] if ijtld_style else sorted(cited(ms_dir).items())):
         d = re.search(r"https://doi\.org/(\S+?)\.?$", entry)
         if d and d.group(1).startswith("10.5281/zenodo."):
             line, ok = zenodo_check(n, entry, d.group(1))
@@ -232,7 +343,10 @@ def main(argv: list[str] | None = None) -> int:
     out = ["# Reference audit", "",
            "Written by tools/audit_references.py. DOIs resolved through the Crossref REST API "
            "(api.crossref.org/works/<doi>; generic User-Agent, no e-mail); Zenodo (DataCite) DOIs not looked up; "
-           "non-DOI sources checked against data/source_manifest.csv. Nothing else was downloaded.", "",
+           "non-DOI sources checked against data/source_manifest.csv" + (
+               ", or against official pages read once, read-only, and recorded in official_pages.json; IJTLD style "
+               "(DOIs kept in reference_dois.json, not printed)" if ijtld_style else "") +
+           ". Nothing else was downloaded.", "",
            "| Ref | DOI | Crossref title (or source) | Crossref metadata (or verification) | Checks | Pass |",
            "|---|---|---|---|---|---|", *rows, "", f"Problems: {bad}."]
     (ms_dir / "reference_audit.md").write_text("\n".join(out) + "\n", encoding="utf-8", newline="\n")

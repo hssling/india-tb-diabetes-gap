@@ -34,6 +34,18 @@ ElementTree (the TIFF checks use Pillow when it is installed).
    TIFF is at least 1328 x 531 pixels.
 
 Prints "SKIPPED" and exits 0 when <folder>/ or <folder>/submission/ is absent. Exit 1 on any problem.
+
+An IJTLD folder (section_phrases.json "journal": "ijtld", manuscript/v2) is checked against the
+IJTLD set instead (ijtld_problems): the cover letter, ONE manuscript file (title page, abstract,
+text without an Introduction heading, references, Table 1, Figures 1 and 2 embedded with their
+legends) and the declarations are tied unit for unit to their Markdown; the IJTLD hard limits are
+checked on the .docx itself (Word's counts: abstract at most 200 and main text at most 2500 words;
+the abstract free of abbreviations; at most 35 references; exactly one table and two embedded
+figures, at most three display items; the title at most 110 characters without abbreviations; the
+running head at most 45 characters; 3 to 5 keywords not in the title; no "pre-registered" and no
+stigmatising terms); the layout (double or 1.5 spacing, continuous line numbers, no justified
+text); and the figures (each TIFF at least 500 dpi, and each TIFF, embedded image and source PDF
+equal to the build record).
 """
 from __future__ import annotations
 
@@ -213,9 +225,9 @@ def docx_all_text(path: Path) -> str:
 # --------------------------------------------------------------------------------------
 # Expected units
 # --------------------------------------------------------------------------------------
-def expected(ms_dir: Path, name: str) -> list[str]:
+def expected(ms_dir: Path, name: str, spec: dict | None = None) -> list[str]:
     out: list[str] = []
-    for part in SPEC[name]:
+    for part in (SPEC if spec is None else spec)[name]:
         if part[0] == "builder":
             out.append(norm(part[1]))
         elif part[0] == "first":
@@ -233,6 +245,221 @@ def expected(ms_dir: Path, name: str) -> list[str]:
             if len(part) > 4 and part[4] == "drop-first":
                 units = units[1:]
             out += units
+    return out
+
+
+# --------------------------------------------------------------------------------------
+# The IJTLD set (manuscript/v2)
+# --------------------------------------------------------------------------------------
+def drop_introduction_heading(md: str) -> str:
+    """The journal's Introduction has no heading: the '## Introduction' line is dropped (the build
+    and this tie use the same function)."""
+    lines = md.splitlines()
+    if not lines or lines[0].strip() != "## Introduction":
+        raise ValueError("expected the text to start with '## Introduction'")
+    return "\n".join(lines[1:]).lstrip("\n") + ("\n" if md.endswith("\n") else "")
+
+
+def spec_ijtld() -> dict[str, list[tuple]]:
+    from verification import ijtld
+    return {
+        ijtld.COVER: [("md", cmn.COVER, "# Cover letter", None, "drop-first")],
+        ijtld.MANUSCRIPT: [
+            ("md", TP, None, None),
+            ("md", MS, "## Abstract", "## Introduction"),
+            ("md", MS, "## Introduction", "## Figure legends", "drop-first"),
+            ("md", "exhibits/tables.md", "## Table 1.", None),
+            ("md", MS, "## Figure legends", None, "drop-first"),
+        ],
+        ijtld.DECLARATIONS: [
+            ("builder", "Declarations"),
+            *[("first", TP, f"**{k}:**") for k in ("Title", "Author", "Funding", "Conflicts of interest", "Ethics",
+                                                    "Data availability", "Use of artificial intelligence",
+                                                    "Author contribution")],
+        ],
+    }
+
+
+def ijtld_files() -> set[str]:
+    from verification import ijtld
+    return {ijtld.COVER, ijtld.MANUSCRIPT, ijtld.DECLARATIONS} | set(ijtld.FIGURE_FILES.values())
+
+
+def docx_part(path: Path, part: str) -> str:
+    with zipfile.ZipFile(path) as z:
+        return z.read(part).decode("utf-8") if part in z.namelist() else ""
+
+
+def docx_media(path: Path) -> list[str]:
+    with zipfile.ZipFile(path) as z:
+        return [hashlib.sha256(z.read(n)).hexdigest() for n in z.namelist() if n.startswith("word/media/")]
+
+
+def unit_field(units: list[str], label: str) -> str:
+    hits = [u for u in units if u.startswith(label + ":")]
+    return hits[0].split(":", 1)[1].strip() if len(hits) == 1 else ""
+
+
+def ijtld_layout_problems(path: Path) -> list[str]:
+    from verification import ijtld
+    doc, styles = docx_part(path, "word/document.xml"), docx_part(path, "word/styles.xml")
+    out = []
+    ln = re.findall(r"<w:lnNumType [^>]*/>", doc)
+    if not ln or not all('w:restart="continuous"' in x and 'w:countBy="1"' in x for x in ln):
+        out.append("LAYOUT: 02 has no continuous line numbering in every section")
+    if re.search(r'<w:jc w:val="(?:both|distribute)"', doc + styles):
+        out.append("LAYOUT: 02 has justified text (the journal asks for none)")
+    for sid in ("Normal", "BodyText", "FirstParagraph"):
+        m = re.search(r'<w:style [^>]*w:styleId="' + sid + r'"[^>]*>.*?</w:style>', styles, re.S)
+        sp = re.search(r'<w:spacing [^>]*w:line="(\d+)"', m.group()) if m else None
+        if not sp or int(sp.group(1)) not in ijtld.LINE_SPACINGS:
+            out.append(f"LAYOUT: 02's {sid} text is not 1.5 or double spaced (w:line {sp.group(1) if sp else 'absent'})")
+    if re.search(r'<w:spacing [^>]*w:line="(?!360"|480")\d+"', doc.split("<w:tbl>")[0]):
+        out.append("LAYOUT: a paragraph of 02 outside the tables overrides the 1.5 or double spacing")
+    return out
+
+
+def ijtld_title_page_problems(units: list[str]) -> list[str]:
+    from verification import ijtld
+    head = units[:units.index("Abstract")] if "Abstract" in units else units
+    title = unit_field(head, "Title")
+    out = ijtld.title_problems(title) if title else ["TITLE PAGE: 02 has no title before its Abstract"]
+    out += ijtld.running_head_problems(unit_field(head, "Running head"))
+    kw = [x.strip().rstrip(".") for x in unit_field(head, "Keywords").split(";") if x.strip()]
+    out += ijtld.keyword_problems(kw, title)
+    flat = " ".join(head)
+    if not re.search(r"[\w.+-]+@[\w-]+\.[\w.]+", flat) or not re.search(r"\d{4}-\d{4}-\d{4}-\d{3}[\dX]", flat):
+        out.append("TITLE PAGE: 02 does not give the corresponding author's e-mail and ORCID before its Abstract")
+    for label in ("Author", "Affiliation", "Corresponding author", "Word counts", "Acknowledgements", "Funding",
+                  "Conflicts of interest"):
+        if not unit_field(head, label):
+            out.append(f"TITLE PAGE: 02 has no '{label}:' line before its Abstract")
+    return out
+
+
+def ijtld_word_problems(ms_dir: Path, units: list[str], n_abstract: int, n_refs: int) -> list[str]:
+    from exhibits.formats import count, si_thousands
+    from verification import ijtld
+    p = ms_dir / "word_counts_word.json"
+    if not p.exists():
+        return ["WORDS: word_counts_word.json missing (build with Word: python -I tools/build_submission.py --profile ijtld)"]
+    w = json.loads(p.read_text(encoding="utf-8"))
+    out = []
+    md5 = hashlib.md5((ms_dir / MS).read_text(encoding="utf-8").encode("utf-8")).hexdigest()
+    if w.get("source_md5") != md5:
+        out.append("WORDS: word_counts_word.json is stale (manuscript.md changed): rebuild")
+    if w["abstract"] > ijtld.LIMITS["abstract"]:
+        out.append(f"WORDS: Word counts {w['abstract']} words in the abstract, over the limit of {ijtld.LIMITS['abstract']}")
+    if w["main_text"] > ijtld.LIMITS["main"]:
+        out.append(f"WORDS: Word counts {w['main_text']} words in the main text, over the limit of {ijtld.LIMITS['main']}")
+    i = units.index("Abstract") if "Abstract" in units else -1
+    ab = units[i + 1:i + 1 + n_abstract] if i >= 0 else []
+    if sum(len(u.split()) for u in ab) > ijtld.LIMITS["abstract"]:
+        out.append(f"WORDS: the abstract of 02 has {sum(len(u.split()) for u in ab)} words, over {ijtld.LIMITS['abstract']}")
+    abbr = ijtld.abbreviations(" ".join(re.sub(r"^\w+: ", "", u) for u in ab))
+    if abbr:
+        out.append(f"ABSTRACT: 02's abstract holds abbreviations {sorted(set(abbr))}")
+    wc = unit_field(units[:i] if i >= 0 else units, "Word counts")
+    want = (f"summary (abstract) {si_thousands(count(w['abstract']))} words; text {si_thousands(count(w['main_text']))} "
+            f"words; references {n_refs}; tables {len(ijtld.TABLES)}; figures {len(ijtld.FIGURES)}")
+    if norm(want) not in wc:
+        out.append(f"WORDS: the title page does not quote Word's counts {norm(want)!r} (it has {wc!r})")
+    return out
+
+
+def ijtld_reference_count(units: list[str]) -> int:
+    try:
+        i = units.index("References")
+    except ValueError:
+        return 0
+    n = 0
+    for u in units[i + 1:]:
+        if not re.match(r"\d+\. ", u):
+            break
+        n += 1
+    return n
+
+
+def ijtld_figure_problems(ms_dir: Path, path02: Path) -> list[str]:
+    from verification import ijtld
+    out = []
+    rec_p = ms_dir / ijtld.BUILD_RECORD
+    if not rec_p.exists():
+        return [f"FIGURES: {ijtld.BUILD_RECORD} missing (rebuild)"]
+    rec = json.loads(rec_p.read_text(encoding="utf-8"))
+    media = docx_media(path02)
+    sub = ms_dir / "submission"
+    for k, tif in ijtld.FIGURE_FILES.items():
+        r = rec.get("figures", {}).get(str(k))
+        if r is None:
+            out.append(f"FIGURES: the build record has no Figure {k}")
+            continue
+        pdf = ms_dir / r["pdf"]
+        if not pdf.exists() or hashlib.sha256(pdf.read_bytes()).hexdigest() != r["pdf_sha256"]:
+            out.append(f"FIGURES: exhibits/figure{k}.pdf changed since the build (rebuild)")
+        if (sub / tif).exists():
+            if hashlib.sha256((sub / tif).read_bytes()).hexdigest() != r["tif_sha256"]:
+                out.append(f"FIGURES: {tif} differs from the TIFF the build rendered from exhibits/figure{k}.pdf")
+            info = tiff_info(sub / tif)
+            if info is not None and min(float(info[0][0]), float(info[0][1])) < ijtld.MIN_DPI:
+                out.append(f"FIGURES: {tif} is {info[0]} dpi, below {ijtld.MIN_DPI}")
+        if r["embedded_sha256"] not in media:
+            out.append(f"FIGURES: 02 does not embed Figure {k} as built")
+    n_pic = len(re.findall(r"<pic:pic\b", docx_part(path02, "word/document.xml")))
+    if n_pic != len(ijtld.FIGURES):
+        out.append(f"DISPLAY: 02 embeds {n_pic} figures, the manuscript has {len(ijtld.FIGURES)}")
+    return out
+
+
+def ijtld_wording_problems(name: str, units: list[str]) -> list[str]:
+    from verification import ijtld
+    text = "\n".join(units).replace(ijtld.ONLINE_URL, "<online material>")
+    if name == ijtld.MANUSCRIPT:
+        text = text.split("\nReferences\n", 1)[0]
+    out = []
+    for pat, what in cmn.BANNED + cmn.WORDING:
+        for m in re.finditer(pat, text, re.I if (pat, what) in cmn.WORDING else 0):
+            out.append(f"WORDING in {name}: {what}: {m.group()!r}")
+    out += [f"WORDING in {name}: {h}" for h in ijtld.wording_hits(text)]
+    return out
+
+
+def ijtld_problems(ms_dir: Path, root: Path = ROOT) -> list[str]:
+    from verification import ijtld
+    sub = ms_dir / "submission"
+    spec = spec_ijtld()
+    out: list[str] = [f"EXTRA: {p.name} is not part of the submission set" for p in sorted(sub.iterdir())
+                      if p.is_file() and p.name not in ijtld_files() and not SUBMITTED.fullmatch(p.name)]
+    units_of: dict[str, list[str]] = {}
+    for name in spec:
+        path = sub / name
+        if not path.exists():
+            out.append(f"MISSING: {name}")
+            continue
+        got = docx_units(path)
+        units_of[name] = got
+        out += compare(name, got, expected(ms_dir, name, spec))
+        out += ijtld_wording_problems(name, got)
+    for name in ijtld.FIGURE_FILES.values():
+        if not (sub / name).exists():
+            out.append(f"MISSING: {name}")
+    p02 = sub / ijtld.MANUSCRIPT
+    if ijtld.MANUSCRIPT in units_of:
+        u = units_of[ijtld.MANUSCRIPT]
+        n_abs = len(md_units(md_slice((ms_dir / MS).read_text(encoding="utf-8"), "## Abstract", "## Introduction"))) - 1
+        n_refs = ijtld_reference_count(u)
+        out += ijtld_title_page_problems(u)
+        out += ijtld_word_problems(ms_dir, u, n_abs, n_refs)
+        if n_refs > ijtld.LIMITS["references"]:
+            out.append(f"REFERENCES: 02 lists {n_refs} references, more than {ijtld.LIMITS['references']}")
+        n_tab = docx_tables(p02)
+        if n_tab != len(ijtld.TABLES):
+            out.append(f"DISPLAY: 02 holds {n_tab} tables, the manuscript has {len(ijtld.TABLES)}")
+        n_pic = len(re.findall(r"<pic:pic\b", docx_part(p02, "word/document.xml")))
+        if n_tab + n_pic > ijtld.LIMITS["display_items"]:
+            out.append(f"DISPLAY: {n_tab} tables and {n_pic} figures, more than {ijtld.LIMITS['display_items']} display items")
+        out += ijtld_layout_problems(p02)
+        out += ijtld_figure_problems(ms_dir, p02)
     return out
 
 
@@ -377,6 +604,8 @@ def figure_problems(ms_dir: Path) -> list[str]:
 
 def problems(ms_dir: Path | None = None, root: Path = ROOT) -> list[str]:
     ms_dir = ms_dir or root / cmn.DEFAULT_MS_DIR
+    if cmn.journal_of(ms_dir) == "ijtld":
+        return ijtld_problems(ms_dir, root)
     sub = ms_dir / "submission"
     out: list[str] = []
     units_of: dict[str, list[str]] = {}
@@ -407,7 +636,11 @@ def problems(ms_dir: Path | None = None, root: Path = ROOT) -> list[str]:
 
 def notes(ms_dir: Path) -> list[str]:
     out = []
-    for name in ("01_title_page.docx", "02_manuscript.docx"):
+    names = ("01_title_page.docx", "02_manuscript.docx")
+    if cmn.journal_of(ms_dir) == "ijtld":
+        from verification import ijtld
+        names = (ijtld.MANUSCRIPT, ijtld.DECLARATIONS)
+    for name in names:
         p = ms_dir / "submission" / name
         if p.exists() and "zenodo.XXXXXXX" in docx_all_text(p):
             out.append(f"note: {name} still holds the Zenodo DOI placeholder (rebuild with --doi at release)")
@@ -431,6 +664,16 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
         print(ln)
     for ln in notes(ms_dir):
         print(ln)
+    if cmn.journal_of(ms_dir) == "ijtld":
+        from verification import ijtld
+        sp = spec_ijtld()
+        n_units = sum(len(docx_units(ms_dir / "submission" / n)) for n in sp if (ms_dir / "submission" / n).exists())
+        print(f"docx tie (IJTLD): {len(ijtld_files())} files; {len(sp)} .docx, {n_units} paragraphs and table rows tied "
+              f"to the Markdown; one manuscript file with the title page; Word's counts within abstract "
+              f"{ijtld.LIMITS['abstract']} and main text {ijtld.LIMITS['main']}; at most {ijtld.LIMITS['references']} "
+              f"references and {ijtld.LIMITS['display_items']} display items; title, running head and keywords; spacing, "
+              f"line numbers, alignment; figures tied to the build record; {len(found)} problem(s)")
+        return 1 if found else 0
     n_units = sum(len(docx_units(ms_dir / "submission" / n)) for n in SPEC if (ms_dir / "submission" / n).exists())
     print(f"docx tie: {len(all_files())} files; {len(SPEC)} .docx, {n_units} paragraphs and table rows tied to the "
           f"Markdown; title page in the manuscript; highlights, abstract and main-text limits; at most "

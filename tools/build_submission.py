@@ -4,10 +4,27 @@
 # anonymised file: the manuscript carries its title page, and a separate title page, the highlights,
 # the four figures, the supplement, the cover letter, the declaration of interest and the optional
 # graphical abstract complete the set; --doi fills the Zenodo DOI everywhere; the build refuses to
-# write into a submitted (SUBMITTED_*) folder and rejects unknown options.
-"""Build the Primary Care Diabetes submission set into <manuscript folder>/submission/.
+# write into a submitted (SUBMITTED_*) folder and rejects unknown options. Added: --profile ijtld,
+# the International Journal of Tuberculosis and Lung Disease set of manuscript/v2 (see below).
+"""Build the submission set into <manuscript folder>/submission/.
 
-Run as: python -I tools/build_submission.py [--manuscript-dir DIR] [--doi 10.5281/zenodo.NNNNNNN] [--no-word]
+Run as: python -I tools/build_submission.py [--manuscript-dir DIR] [--profile pcd|ijtld]
+                                            [--doi 10.5281/zenodo.NNNNNNN] [--no-word]
+
+--profile pcd (the default) builds the Primary Care Diabetes set described below. --profile ijtld
+builds the IJTLD set of an IJTLD folder (its section_phrases.json says "journal": "ijtld"; the
+profile must match the folder) into <folder>/submission/:
+
+  01_cover_letter.docx    the cover letter to the Editors-in-Chief
+  02_manuscript.docx      ONE file: the title page (title_page_src.md), the abstract, the text
+                          (the Introduction without a heading), the references, Table 1, then
+                          Figures 1 and 2 embedded, each with its legend; double spacing,
+                          continuous line numbers, left-aligned; headings in Arial
+  03_declarations.docx    the title page's declarations, for the submission portal
+  Figure_1.tif, Figure_2.tif   the figures (LZW, 600 dpi) rendered from exhibits/figureN.pdf
+
+and records in <folder>/build_record.json the SHA-256 of each figure PDF, TIFF and embedded image,
+which verification/check_docx_tie.py checks. Exhibits come from exhibits/make_ijtld.py.
 
 The manuscript folder is DIR (default manuscript/; git-ignored and private); a relative DIR is taken
 from the repository root. Unknown options are rejected (argparse, no abbreviations). The build
@@ -89,6 +106,17 @@ SUBMITTED = re.compile(r"^SUBMITTED_")
 PAGEBREAK = '\n\n```{=openxml}\n<w:p><w:r><w:br w:type="page"/></w:r></w:p>\n```\n\n'
 PANDOC_FROM = ("markdown+pipe_tables+superscript+fenced_divs+raw_attribute-smart-subscript-citations"
                "-tex_math_dollars-raw_html-auto_identifiers-implicit_figures-link_attributes")
+
+
+PROFILES = ("pcd", "ijtld")
+
+
+def folder_journal(ms_dir: Path) -> str | None:
+    """The journal a manuscript folder declares in section_phrases.json ("pcd" when it names none)."""
+    p = ms_dir / "section_phrases.json"
+    if not p.exists():
+        return None
+    return json.loads(p.read_text(encoding="utf-8")).get("journal", "pcd")
 
 
 def configure(ms_dir: Path) -> None:
@@ -221,6 +249,124 @@ def declaration_md() -> str:
     return "# Declaration of interest\n\n" + "\n\n".join(keep) + "\n\n" + DOI_STATEMENT + "\n"
 
 
+# --------------------------------------------------------------------------------------
+# The IJTLD set (manuscript/v2)
+# --------------------------------------------------------------------------------------
+FIG_WIDTH_CM = 16.5
+EMBED_DPI = 300
+
+
+def ijtld_legends() -> list[str]:
+    """The figure legends: the paragraphs under '## Figure legends'."""
+    caps = between(read("manuscript.md"), "## Figure legends", None).split("\n", 1)[1]
+    return [b.strip() for b in re.split(r"\n\s*\n", caps) if b.strip()]
+
+
+def ijtld_manuscript_md(images: dict[int, Path]) -> str:
+    """Title page; abstract; the text from the Introduction (its heading dropped: the journal's
+    Introduction has none) to the Discussion; references; Table 1; each figure with its legend."""
+    from verification.check_docx_tie import drop_introduction_heading
+    tp = title_page_md()
+    ms = read("manuscript.md")
+    abstract = between(ms, "## Abstract", "## Introduction")
+    body = drop_introduction_heading(between(ms, "## Introduction", "## References"))
+    refs = between(ms, "## References", "## Figure legends")
+    parts = [tp.rstrip(), PAGEBREAK, abstract.rstrip(), PAGEBREAK, body.rstrip(), PAGEBREAK,
+             escape_dataset(refs).rstrip()]
+    for t in tables("## Table 1.", None):
+        parts += [PAGEBREAK, t]
+    legends = ijtld_legends()
+    if len(legends) != len(images):
+        raise SystemExit(f"{len(legends)} figure legends for {len(images)} figures")
+    for (k, png), leg in zip(sorted(images.items()), legends):
+        if not leg.startswith(f"**Figure {k}.**"):
+            raise SystemExit(f"legend {k} does not start with **Figure {k}.**")
+        parts += [PAGEBREAK, f"![]({png.as_posix()}){{width={FIG_WIDTH_CM}cm}}\n\n", leg, "\n"]
+    return "".join(parts)
+
+
+def ijtld_declarations_md() -> str:
+    tp = title_page_md()
+    keep = []
+    for key in ("Title", "Author", "Funding", "Conflicts of interest", "Ethics", "Data availability",
+                "Use of artificial intelligence", "Author contribution"):
+        hit = [ln for ln in tp.splitlines() if ln.startswith(f"**{key}:**")]
+        if len(hit) != 1:
+            raise SystemExit(f"title_page_src.md: expected one line starting **{key}:**")
+        keep.append(hit[0])
+    return "# Declarations\n\n" + "\n\n".join(keep) + "\n"
+
+
+def ijtld_reference_styles(path: Path) -> None:
+    """IJTLD headings: Arial 12 bold; the major (level-2) headings in capitals."""
+    doc = Document(str(path))
+    for name in ("Heading 1", "Heading 2", "Heading 3", "Title"):
+        st = doc.styles[name]
+        st.font.name = "Arial"
+        rpr = st.element.get_or_add_rPr()
+        rf = rpr.find(qn("w:rFonts"))
+        for a in ("w:ascii", "w:hAnsi", "w:cs", "w:eastAsia"):
+            rf.set(qn(a), "Arial")
+        st.font.size = Pt(12)
+    doc.styles["Heading 2"].font.all_caps = True
+    doc.styles["Heading 3"].font.bold = False
+    doc.styles["Heading 3"].font.italic = True
+    doc.save(str(path))
+
+
+def sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def render_png(pdf: Path, png: Path, dpi: int) -> None:
+    import fitz  # PyMuPDF
+    page = fitz.open(str(pdf))[0]
+    page.get_pixmap(dpi=dpi, alpha=False, colorspace=fitz.csGRAY).save(str(png))
+
+
+def ijtld_build(doi: str | None, no_word: bool) -> int:
+    from verification import ijtld
+    hl = not doi
+    record: dict = {"figures": {}}
+    with tempfile.TemporaryDirectory() as td:
+        tmp = Path(td)
+        ref = tmp / "reference.docx"
+        make_reference(ref)
+        ijtld_reference_styles(ref)
+        images = {}
+        for k, tif_name in ijtld.FIGURE_FILES.items():
+            pdf = EX / f"figure{k}.pdf"
+            tif = OUT / tif_name
+            print(render_tiff(pdf, tif, ijtld.TIFF_DPI, gray=True))
+            png = tmp / f"figure{k}_embed.png"
+            render_png(pdf, png, EMBED_DPI)
+            images[k] = png
+            record["figures"][str(k)] = {"pdf": f"exhibits/figure{k}.pdf", "pdf_sha256": sha256(pdf),
+                                         "tif": tif_name, "tif_sha256": sha256(tif), "embedded_sha256": sha256(png)}
+        jobs = [
+            (ijtld.COVER, letter_md("cover_letter.md"), {}),
+            (ijtld.MANUSCRIPT, ijtld_manuscript_md(images), dict(line_numbers=True, placeholder=hl, bold_header=False)),
+            (ijtld.DECLARATIONS, ijtld_declarations_md(), dict(placeholder=hl)),
+        ]
+        for name, md, kw in jobs:
+            out = OUT / name
+            run_pandoc(with_doi(md, doi), out, ref, tmp, links=True)
+            postprocess(out, **kw)
+            print("built", name)
+    names = {ijtld.COVER, ijtld.MANUSCRIPT, ijtld.DECLARATIONS} | set(ijtld.FIGURE_FILES.values())
+    record["files"] = {n: sha256(OUT / n) for n in sorted(names)}
+    (MS / ijtld.BUILD_RECORD).write_text(json.dumps(record, indent=1) + "\n", encoding="utf-8", newline="\n")
+    for f in sorted(OUT.iterdir()):
+        if f.is_file() and f.name not in names and not SUBMITTED.match(f.name):
+            print(f"note: {f.name} is not part of this set (left from an earlier build?); remove it")
+    if not no_word:
+        w = word_counts(OUT / ijtld.MANUSCRIPT)
+        print(f"Word counts: abstract {w['abstract']}, main text {w['main_text']} (with subsection headings "
+              f"{w['main_with_headings']}) (limits {ijtld.LIMITS['abstract']} and {ijtld.LIMITS['main']})")
+    print("built into", OUT)
+    return 0
+
+
 def with_doi(md: str, doi: str | None) -> str:
     return md.replace(DOI_PLACEHOLDER, doi) if doi else md
 
@@ -284,10 +430,11 @@ def make_reference(path: Path) -> None:
     doc.save(str(path))
 
 
-def run_pandoc(md: str, out: Path, ref: Path, tmp: Path) -> None:
+def run_pandoc(md: str, out: Path, ref: Path, tmp: Path, links: bool = False) -> None:
     src = tmp / (out.stem + ".md")
     src.write_text(md, encoding="utf-8")
-    subprocess.run(["pandoc", str(src), "-f", PANDOC_FROM, "--reference-doc", str(ref), "-o", str(out)], check=True)
+    fmt = PANDOC_FROM.replace("-link_attributes", "+link_attributes") if links else PANDOC_FROM
+    subprocess.run(["pandoc", str(src), "-f", fmt, "--reference-doc", str(ref), "-o", str(out)], check=True)
 
 
 # --------------------------------------------------------------------------------------
@@ -473,7 +620,7 @@ def merge_spanning_rows(tbl, total: int) -> None:
             set_cell_border(tcs[0], "top", "single", 4)
 
 
-def format_table(t, total: int, size: float, gap: float = 1) -> None:
+def format_table(t, total: int, size: float, gap: float = 1, bold_header: bool = True) -> None:
     """Top, header and bottom rules only (a thin rule above each block label); fixed widths over the
     text block; the header row repeated on each page; single-spaced cells at `size` pt."""
     tbl = t._tbl
@@ -535,8 +682,10 @@ def format_table(t, total: int, size: float, gap: float = 1) -> None:
                 mark_size(p, size)
                 for r in p.runs:
                     set_font(r, size)
-                    if i == 0:
+                    if i == 0 and bold_header:
                         r.font.bold = True
+                    elif i == 0:
+                        r.font.bold = False  # the IJTLD: no bolding in tables
 
 
 def mark_size(p, size: float) -> None:
@@ -606,14 +755,15 @@ def scrub_app_xml(path: Path) -> None:
 
 
 def postprocess(path: Path, *, landscape: bool = False, line_numbers: bool = False, table_pt: float = 10,
-                placeholder: bool = False) -> None:
+                placeholder: bool = False, bold_header: bool = True) -> None:
     doc = Document(str(path))
     page_setup(doc, landscape=landscape, line_numbers=line_numbers)
     move_page_breaks(doc)
     total = (16838 if landscape else 11906) - 2 * 1417
     for t in doc.tables:
         wide = not landscape and len(t.columns) >= 6
-        format_table(t, total, fit_size(t, total, table_pt - 1 if wide else table_pt), gap=0 if landscape else 1)
+        format_table(t, total, fit_size(t, total, table_pt - 1 if wide else table_pt), gap=0 if landscape else 1,
+                     bold_header=bold_header)
     if placeholder:
         highlight(doc, re.compile("(" + re.escape(DOI_PLACEHOLDER) + ")"))
     cp = doc.core_properties
@@ -628,7 +778,7 @@ def postprocess(path: Path, *, landscape: bool = False, line_numbers: bool = Fal
 # --------------------------------------------------------------------------------------
 # Figures and the graphical abstract
 # --------------------------------------------------------------------------------------
-def render_tiff(pdf: Path, tif: Path, dpi: int) -> str:
+def render_tiff(pdf: Path, tif: Path, dpi: int, gray: bool = False) -> str:
     import fitz  # PyMuPDF
     from PIL import Image
     Image.MAX_IMAGE_PIXELS = None
@@ -636,7 +786,9 @@ def render_tiff(pdf: Path, tif: Path, dpi: int) -> str:
     pix = page.get_pixmap(dpi=dpi, alpha=False, colorspace=fitz.csRGB)
     im = Image.frombytes("RGB", (pix.width, pix.height), pix.samples)
     r, g, b = im.split()
-    if r.tobytes() == g.tobytes() == b.tobytes():
+    if gray:
+        im = im.convert("L")  # the IJTLD figures are black and white
+    elif r.tobytes() == g.tobytes() == b.tobytes():
         im = r
     im.save(tif, format="TIFF", compression="tiff_lzw", dpi=(dpi, dpi))
     chk = Image.open(tif)
@@ -666,8 +818,10 @@ def word_counts(docx: Path) -> dict:
     subprocess.run(["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File",
                     str(ROOT / "tools" / "word_count_word.ps1"), str(docx), str(out)], check=True)
     w = json.loads(out.read_text(encoding="utf-8-sig"))
+    end = ("the first paragraph that starts a new page (the IJTLD Introduction has no heading)"
+           if folder_journal(MS) == "ijtld" else "the Keywords line")
     w["counted_by"] = ("Microsoft Word (ComputeStatistics) on 02_manuscript.docx: abstract = the paragraphs between the "
-                       "Abstract heading and the Keywords line; main text = Introduction to Discussion, headings "
+                       f"Abstract heading and {end}; main text = Introduction to Discussion, headings "
                        "excluded (main_with_headings includes the subsection headings); tables excluded")
     w["source_md5"] = hashlib.md5(read("manuscript.md").encode("utf-8")).hexdigest()
     out.write_text(json.dumps(w, indent=1) + "\n", encoding="utf-8", newline="\n")
@@ -687,6 +841,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--doi", help="the Zenodo version DOI (10.5281/zenodo.NNNNNNN), filled in every file")
     ap.add_argument("--no-word", action="store_true", help="skip Word's word counts")
     ap.add_argument("--manuscript-dir", default=DEFAULT_MS_DIR, help="the manuscript folder (default manuscript)")
+    ap.add_argument("--profile", choices=PROFILES, default="pcd",
+                    help="the journal set to build: pcd (default) or ijtld (manuscript/v2)")
     a = ap.parse_args(argv)  # an unknown option stops the build (argparse exits with status 2)
     if a.doi and not DOI_RE.match(a.doi):
         raise SystemExit(f"--doi must look like 10.5281/zenodo.NNNNNNN, not {a.doi!r}")
@@ -698,7 +854,13 @@ def main(argv: list[str] | None = None) -> int:
     if frozen:
         raise SystemExit(f"refusing to write: {', '.join(p.name for p in frozen)} marks {MS} as submitted; "
                          f"put post-submission changes in a new folder (for example a _v2 folder)")
+    declared = folder_journal(MS)
+    if declared is not None and declared != a.profile:
+        raise SystemExit(f"--profile {a.profile} does not match the folder, whose section_phrases.json says "
+                         f"journal {declared!r}")
     OUT.mkdir(exist_ok=True)
+    if a.profile == "ijtld":
+        return ijtld_build(a.doi, a.no_word)
     hl = not a.doi
     with tempfile.TemporaryDirectory() as td:
         tmp = Path(td)

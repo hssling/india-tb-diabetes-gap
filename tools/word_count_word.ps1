@@ -4,6 +4,8 @@
 # Opens its own Word instance (read-only, hidden) and quits only that instance.
 # Abstract: the paragraphs between the "Abstract" heading and the Keywords line (Keywords excluded;
 # the run-in labels Aims, Methods, Results and Conclusions included).
+# IJTLD (manuscript/v2): the Introduction has no heading; the abstract ends, and the Introduction
+# begins, at the first paragraph after the Abstract heading that starts a new page.
 # Main text: the text under the level-2 headings Introduction, Methods, Results and Discussion,
 # headings excluded; level-3 subsection headings stay inside the section and are counted only in
 # main_with_headings. It ends at any other level-2 heading (Acknowledgements). Tables are excluded.
@@ -28,6 +30,7 @@ try {
       continue
     }
     if ($t -like "Keywords:*") { $state = ""; continue }
+    if ($state -eq "abs" -and $p.Format.PageBreakBefore) { $state = "main"; $cur = "Introduction"; $sec[$cur] = 0 }
     if ($state -eq "abs") { $abs += $n }
     if ($state -eq "main") { $main += $n; $sec[$cur] += $n }
   }

@@ -266,3 +266,17 @@ wording ("newly diagnosed", "detection-led", "widespread", causal and ranking la
 main-text limits and Word's counts; the AI declaration, the declaration of interest and the
 caveats; a figure PDF, a low-resolution TIFF, an undersized graphical abstract and a sixth
 display item; the cover letter's related manuscripts; and the file set.
+
+## The IJTLD manuscript (manuscript/v2)
+
+`verification/mutate_manuscript.py --manuscript-dir manuscript/v2` (also a `check_all` step)
+applies 44 named breaks to copies of the private IJTLD manuscript folder and requires
+`check_manuscript_numbers` or `check_docx_tie` to report each: numbers and table cells in the
+Markdown and in the .docx, citation order and reference numbering, every IJTLD hard limit (title
+over 110 characters or with an abbreviation, running head over 45 characters, a keyword repeating
+the title, six keywords, an abbreviation in the abstract, an abstract over 200 words, a main text
+over 2500 words, 36 references, a fourth display item), "pre-registered", stigmatising, causal,
+American and drafting-process words, the online material (a missing table, a changed link, a
+file in the upload folder), the layout (line numbers, justification, single spacing), the
+figures (a 300 dpi TIFF, a swapped TIFF or embedded image) and the file set. The result table is
+in `manuscript/v2/STRENGTHEN_report.md`.

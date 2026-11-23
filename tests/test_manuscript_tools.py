@@ -180,3 +180,91 @@ def test_guidance_rule_uses_existing_outputs_only():
     dc = {r["unit"]: r["class"] for r in formats.read_csv(ROOT, "outputs/decomposition.csv")
           if r["spec"] == "main" and r["year"] == "2023"}
     assert {r[0]: r[1] for r in s14.rows} == dc
+
+
+# --------------------------------------------------------------------------------------
+# The IJTLD profile (manuscript/v2): hard limits, display items and online material
+# --------------------------------------------------------------------------------------
+def test_ijtld_title_running_head_and_keywords():
+    from verification import ijtld
+    title = "Beyond screening: the tuberculosis–diabetes care cascade across India's States, 2018–2023"
+    assert ijtld.title_problems(title) == []
+    assert any("characters" in p for p in ijtld.title_problems(title + " and" * 10))
+    assert any("abbreviations" in p for p in ijtld.title_problems(title.replace("tuberculosis", "TB")))
+    assert ijtld.running_head_problems("Tuberculosis–diabetes care cascade in India") == []
+    assert ijtld.running_head_problems("x" * 46) and ijtld.running_head_problems("")
+    kw = ["comorbidity", "benchmarking", "programme monitoring", "hyperglycaemia", "ecological study"]
+    assert ijtld.keyword_problems(kw, title) == []
+    assert any("repeats" in p for p in ijtld.keyword_problems(kw[:4] + ["screening"], title))
+    assert any("keywords" in p for p in ijtld.keyword_problems(kw[:2], title))
+    assert any("keywords" in p for p in ijtld.keyword_problems(kw + ["surveillance"], title))
+
+
+def test_ijtld_abstract_abbreviations_and_wording():
+    from verification import ijtld
+    assert ijtld.abbreviations("**Background:** People with tuberculosis in India's States.") == []
+    assert ijtld.abbreviations("People with TB (95% CI) and HbA1c in NFHS-5") == ["TB", "CI", "HbA1c", "NFHS-5"]
+    hits = " ".join(ijtld.wording_hits("TB patients, a defaulter, a TB suspect, a pre-registered plan, the referee"))
+    for what in ("person-first", "defaulter", "suspect", "pre-registered", "drafting-process"):
+        assert what in hits
+    assert ijtld.wording_hits("People with TB; the steps to strengthen.") == []
+
+
+def test_ijtld_reference_style():
+    from verification import ijtld
+    assert ijtld.entry_kind("Jeon CY, Murray MB. A title. PLoS Med 2008; 5: e152.") == "article"
+    assert ijtld.entry_kind("Nair S, et al. A title. Public Health Action 2013; 3 (Suppl 1): S38–S42.") == "article"
+    assert ijtld.entry_kind("X. A page. https://example.org/a Accessed 23 November 2026.") == "web"
+    assert ijtld.entry_kind("X. Data. Version 1.1.0 [dataset]. Zenodo, 2026. https://doi.org/10.5281/zenodo.XXXXXXX") == "zenodo"
+    assert ijtld.author_problems(1, "Brown LD, Cai TT, DasGupta A. Title. Stat Sci 2001; 16: 101–133.") == []
+    assert ijtld.author_problems(1, "Kiefe CI, Weissman NW, Allison JJ, Farmer R. Title. J 1998; 10: 1.")
+    assert ijtld.author_problems(1, "Kiefe CI, Weissman NW, et al. Title. J 1998; 10: 1.")
+
+
+def test_ijtld_number_style():
+    assert formats.ijtld_style("108,647 (107,967 to 109,333)") == "108 647 (107 967–109 333)"
+    assert formats.about_thousands(35506) == "36 000"
+    cat = cmn.catalogue_for(ROOT, "ijtld")
+    assert cat["scen.about"][0] == "109 000" and cat["scen.fold"][0] == "3–5-fold"
+    assert cat["H1.ci"][0] == "1.01–2.18"
+
+
+def test_ijtld_table_and_figures_from_outputs():
+    from exhibits import make_ijtld
+    (t1,) = make_ijtld.build(ROOT)
+    assert t1.label == "Table 1" and len(t1.rows) == 33 and len(t1.header) == 7
+    dc = {r["unit"]: r["class"] for r in formats.read_csv(ROOT, "outputs/decomposition.csv")
+          if r["spec"] == "main" and r["year"] == "2023"}
+    words = {"Identification": "identification-led", "Screening": "screening-led", "Mixed": "mixed"}
+    assert {r[0]: words[r[4]] for r in t1.rows} == dc
+    assert make_ijtld.render(ROOT) == make_ijtld.render(ROOT)
+    assert set(make_ijtld.FIGURES) == {1, 2}
+
+
+def test_online_material_is_person_first_and_complete():
+    from exhibits import make_online_material as mo
+    files = mo.text_files(ROOT)
+    assert {f"tableS{k}.csv" for k in range(1, 16)} <= set(files)
+    for name, data in files.items():
+        assert not mo.STIGMA.search(data.decode("utf-8")), name
+    assert mo.person_first("TB patients screened (log scale)") == "People with TB screened (log scale)"
+    assert files == mo.text_files(ROOT)
+
+
+def test_ijtld_introduction_heading_and_build_profile(tmp_path):
+    assert check_docx_tie.drop_introduction_heading("## Introduction\n\nText.\n") == "Text.\n"
+    with pytest.raises(ValueError):
+        check_docx_tie.drop_introduction_heading("## Methods\n\nText.\n")
+    (tmp_path / "section_phrases.json").write_text('{"journal": "ijtld", "sections": {"Abstract": ["x"]}}',
+                                                   encoding="utf-8")
+    with pytest.raises(SystemExit) as e:
+        build_submission.main(["--manuscript-dir", str(tmp_path), "--profile", "pcd", "--no-word"])
+    assert "does not match" in str(e.value.code)
+    with pytest.raises(SystemExit) as e:
+        build_submission.main(["--manuscript-dir", str(tmp_path), "--profile", "nejm"])
+    assert e.value.code == 2
+
+
+def test_ijtld_mutations_are_named_uniquely():
+    ids = [m[0] for m in mutate_manuscript.MUTATIONS_IJTLD]
+    assert len(set(ids)) == len(ids) and all(re.fullmatch(r"i\d+[a-z]", i) for i in ids)

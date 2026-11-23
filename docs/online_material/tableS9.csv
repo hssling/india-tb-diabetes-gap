@@ -1,0 +1,13 @@
+Specification,k,Units below 1,E1 act now,E2 act now,"Scenario, people per year (95% interval)"
+"Main: k_b, 75th percentile",0.822,24; 24,"Bihar, Delhi, Madhya Pradesh, Uttar Pradesh, West Bengal","Bihar, Gujarat, Maharashtra, Rajasthan, Uttar Pradesh","108,647 (107,967 to 109,333)"
+k = 1,1.000,28; 27,"Bihar, Delhi, Madhya Pradesh, Uttar Pradesh, West Bengal","Bihar, Gujarat, Madhya Pradesh, Maharashtra, Uttar Pradesh","162,003 (161,283 to 162,735)"
+k = 1.5,1.500,32; 32,"Bihar, Delhi, Madhya Pradesh, Uttar Pradesh, West Bengal","Bihar, Gujarat, Madhya Pradesh, Maharashtra, Uttar Pradesh","324,510 (323,734 to 325,287)"
+k = 2,2.000,33; 33,"Bihar, Delhi, Madhya Pradesh, Uttar Pradesh, West Bengal","Bihar, Gujarat, Madhya Pradesh, Maharashtra, Uttar Pradesh","493,011 (492,235 to 493,790)"
+"k_b, median",0.564,15; 15,"Bihar, Delhi, Madhya Pradesh, Uttar Pradesh, West Bengal","Bihar, Gujarat, Maharashtra, Rajasthan, Uttar Pradesh","35,506 (34,933 to 36,083)"
+"k_b, 90th percentile",1.084,28; 28,"Bihar, Delhi, Madhya Pradesh, Uttar Pradesh, West Bengal","Bihar, Gujarat, Madhya Pradesh, Maharashtra, Uttar Pradesh","190,465 (189,740 to 191,194)"
+"k_b, 2019 and 2021 pool",0.745,22; 22,"Bihar, Delhi, Madhya Pradesh, Uttar Pradesh, West Bengal","Bihar, Gujarat, Maharashtra, Rajasthan, Uttar Pradesh",—
+Simple reference p_u,0.839,24; 24,"Bihar, Delhi, Madhya Pradesh, Uttar Pradesh, West Bengal","Bihar, Gujarat, Maharashtra, Rajasthan, Uttar Pradesh",—
+Shrinkage off (Jeffreys),0.823,24; 24,"Bihar, Delhi, Madhya Pradesh, Uttar Pradesh, West Bengal","Bihar, Gujarat, Maharashtra, Rajasthan, Uttar Pradesh",—
+Annexure 1.2 basis (registered),0.822,—,"Bihar, Delhi, Gujarat, Madhya Pradesh, Maharashtra","Bihar, Gujarat, Maharashtra, Rajasthan, Uttar Pradesh","109,270 (108,570 to 109,962)"
+"p_u × 0.8, k = 1",1.000,23; 23,"Bihar, Delhi, Madhya Pradesh, Uttar Pradesh, West Bengal","Bihar, Gujarat, Maharashtra, Rajasthan, Uttar Pradesh",—
+"p_u × 1.2, k = 1",1.000,29; 29,"Bihar, Delhi, Madhya Pradesh, Uttar Pradesh, West Bengal","Bihar, Gujarat, Madhya Pradesh, Maharashtra, Uttar Pradesh",—

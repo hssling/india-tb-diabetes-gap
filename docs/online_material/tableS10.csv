@@ -1,0 +1,24 @@
+Reference or analysis,Data years,Weights,Unit-years,Estimate,Interval,Agrees in sign
+The 12-entry grid (β1 point estimates; the bootstrap interval is computed for the main entry only),,,,,,
+sex-weighted,2019 and 2021,tested,66,1.70,1.42 to 1.98,main entry
+sex-weighted,2019 and 2021,unweighted,66,1.89,1.59 to 2.19,yes
+sex-weighted,2021 to 2023,tested,99,1.78,1.54 to 2.01,yes
+sex-weighted,2021 to 2023,unweighted,99,1.92,1.66 to 2.18,yes
+sex-weighted,2023 alone,tested,33,1.83,1.42 to 2.24,yes
+sex-weighted,2023 alone,unweighted,33,1.96,1.49 to 2.43,yes
+simple,2019 and 2021,tested,66,1.72,1.44 to 1.99,yes
+simple,2019 and 2021,unweighted,66,1.89,1.59 to 2.18,yes
+simple,2021 to 2023,tested,99,1.79,1.56 to 2.03,yes
+simple,2021 to 2023,unweighted,99,1.92,1.67 to 2.18,yes
+simple,2023 alone,tested,33,1.85,1.44 to 2.25,yes
+simple,2023 alone,unweighted,33,1.97,1.51 to 2.43,yes
+Sensitivities and diagnostics of the main entry,,,,,,
+"Spearman ρ, sex-weighted",2019 and 2021,—,33 units,0.80,0.62 to 0.90,—
+"Spearman ρ, simple",2019 and 2021,—,33 units,0.79,0.61 to 0.90,—
+"Spearman ρ, sex-weighted",2021 and 2022 (fixed H1 years),—,33 units,0.74,0.52 to 0.87,—
+p_u × 0.8,2019 and 2021,tested,—,1.76,—,—
+p_u × 1.2,2019 and 2021,tested,—,1.64,—,—
+"Leave-one-out, lowest",without Tamil Nadu,tested,—,1.41,—,—
+"Leave-one-out, highest",without Andhra Pradesh,tested,—,1.83,—,—
+"Spearman leave-one-out, lowest",without Kerala,—,—,0.78,—,—
+"Spearman leave-one-out, highest",without Gujarat,—,—,0.84,—,—

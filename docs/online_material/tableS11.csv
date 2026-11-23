@@ -1,0 +1,21 @@
+Unit,"Screened, K","Identified, D",Expected,z,Position
+2023: expected from the 2023 alone regression; φ 318.0; limits ±35.0 (95%) and ±55.1 (99.8%) on the z scale,,,,,
+Chhattisgarh,"35,425","3,013","1,407",43.7,between the 95% and 99.8% limits (above)
+Gujarat,"136,233","7,062","14,086",−62.5,below the 99.8% limit
+Karnataka,"75,958","10,870","6,534",56.1,above the 99.8% limit
+Tamil Nadu,"97,022","25,260","17,076",69.0,above the 99.8% limit
+Telangana,"69,431","4,014","7,412",−41.8,between the 95% and 99.8% limits (below)
+2021: expected from the main H1 fit (2019 and 2021); φ 222.1; limits ±29.2 (95%) and ±46.0 (99.8%) on the z scale,,,,,
+Bihar,"104,223","5,904","9,177",−35.8,between the 95% and 99.8% limits (below)
+Chhattisgarh,"28,791","2,420","1,271",33.0,between the 95% and 99.8% limits (above)
+Gujarat,"136,877","7,538","14,629",−62.0,below the 99.8% limit
+Karnataka,"67,424","10,155","6,078",54.8,above the 99.8% limit
+Tamil Nadu,"80,541","21,836","14,097",71.8,above the 99.8% limit
+Telangana,"57,456","3,732","6,325",−34.6,between the 95% and 99.8% limits (below)
+2019: expected from the main H1 fit (2019 and 2021); φ 199.0; limits ±27.6 (95%) and ±43.6 (99.8%) on the z scale,,,,,
+Andhra Pradesh,"83,094","8,043","11,733",−36.8,between the 95% and 99.8% limits (below)
+Bihar,"64,870","2,823","4,804",−29.7,between the 95% and 99.8% limits (below)
+Chhattisgarh,"35,152","2,407","1,295",31.5,between the 95% and 99.8% limits (above)
+Gujarat,"135,082","7,283","12,183",−46.5,below the 99.8% limit
+Karnataka,"71,171","8,251","5,398",40.4,between the 95% and 99.8% limits (above)
+Tamil Nadu,"79,696","16,605","11,913",46.6,above the 99.8% limit

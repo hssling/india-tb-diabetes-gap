@@ -1,0 +1,13 @@
+Estimate,What it measures,Value (95% interval),n,Label
+H1,"Slope on logit(p_u) of the quasi-binomial regression of diabetes identified among people with TB screened, data years 2019 and 2021",1.70 (1.01 to 2.18),33 units (66 unit-years),supported (12 of 12 grid entries agree in sign)
+"H1, model-based interval","As H1, with the Wald interval scaled by the Pearson dispersion",1.70 (1.42 to 1.98),33 units,none (descriptive)
+"H1, Spearman sensitivity","Rank correlation of p_u with the pooled 2019 and 2021 yield (Fisher-z interval, Fieller–Hartley–Pearson variance)",0.80 (0.62 to 0.90),33 units,none (descriptive)
+"H1, leave-one-out",Each unit left out in turn (lowest without Tamil Nadu; highest without Andhra Pradesh),1.41 to 1.83,33 units,none (descriptive)
+H2,"National screening coverage, 2022 (91.5%) minus 2018 (28.8%)",62.72 (62.65 to 62.79) percentage points,33 units each year,none (descriptive)
+"H2, without 2018","National screening coverage, 2022 minus 2019 (63.8%)",27.66 (27.59 to 27.73) percentage points,33 units each year,none (descriptive)
+H3,Units with identification below the benchmark in 2023 (P(C2 < 1) at least 0.95),24 of 33,33 units,none (descriptive)
+"H3, by construction",Units whose pooled 2021 and 2022 identification lies below k_b (the 75th percentile),24 of 33,33 units,none (descriptive)
+Fixed rule at k = 1,"Units with ""likely under-detection"" (97.5th percentile of R at k = 1 below 1), 2023 and 2022",27 and 28 of 33,33 units,none (descriptive)
+Scenario,"Additional people with TB and diabetes identified per year if every unit reached the benchmark coverage (96.3%) and yield (k_b p_u), 2023; an illustration, not a forecast","108,647 (107,967 to 109,333)",33 units,none (descriptive)
+"Scenario, five units","Share contributed by Bihar, Gujarat, Maharashtra, Rajasthan and Uttar Pradesh",64.2% (63.9% to 64.5%),5 units,none (descriptive)
+"Scenario, other benchmarks","As the scenario, at k = 1 and at the median benchmark","162,003 (161,283 to 162,735); 35,506 (34,933 to 36,083)",33 units,none (descriptive)

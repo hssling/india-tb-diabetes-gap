@@ -61,8 +61,9 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from exhibits.formats import (MINUS, MONTHS, NATIONAL, and_list, count, day, num, one, patients,  # noqa: E402
-                              pct, ratio, read_csv, rng, state_rows)
+from exhibits.formats import (MINUS, MONTHS, NATIONAL, about_thousands, and_list, count, day,  # noqa: E402
+                              ijtld_style, num, one, patients, pct, ratio, read_csv, rng, state_rows)
+from verification import ijtld  # noqa: E402
 
 DEFAULT_MS_DIR = "manuscript"
 MS_NAME = "manuscript.md"
@@ -254,7 +255,32 @@ def catalogue(root: Path) -> dict[str, tuple[str, str]]:
     put("pert.thr", "90%", "fixed: the share threshold of the pert.range count")
     put("pert.range", f"between {count(min(ks))} and {count(max(ks))} of {count(len(pt))}",
         "outputs/perturbation.csv: units with each share >= 0.90, min and max over the five results")
+
+    # ---- values written only in the IJTLD manuscript (manuscript/v2) ---------------------------
+    put("lit.dm", "13–32%", "literature: abstracts of refs 8 (1,084 of 8,109, 13%) and 9 (298 of 920, 32.4%), via "
+        "Crossref; ref 7 (25.3%) lies within")
+    put("plan.k_words", "1, 1.5 and 2", "docs/analysis_plan.md §5.2 (k = 1, 1.5 and 2)")
+    put("plan.k_lit", "1.5–2", "docs/analysis_plan.md §5.2 (literature ratios k = 1.5 and 2)")
+    put("scen.about", about_thousands(s["main"]["mean"]), "outputs/scenario.csv: main national mean, nearest thousand")
+    put("scen.choices", f"{about_thousands(min(allnat))}–{about_thousands(max(allnat))}",
+        "outputs/scenario.csv: national mean, min and max over specs, nearest thousand")
+    main_n = float(s["main"]["mean"])
+    put("scen.fold", f"{round(float(s['k=1.5']['mean']) / main_n)}–{round(float(s['k=2']['mean']) / main_n)}-fold",
+        "outputs/scenario.csv: k=1.5 and k=2 national mean over main, rounded")
+    for g in ("E1", "E2", "E3"):
+        top = sorted((r for r in main if r["gap"] == g), key=lambda r: -float(r["mean"]))[:5]
+        put(f"{g}.big", f"{and_list([r['unit'] for r in top])} ({and_list([count(r['per_100k_notified']) for r in top])} "
+            f"per 100,000 notified)", f"outputs/priority.csv: main 2023 {g}, five largest means, per_100k_notified")
+    put("E3.top_n", f"{big['unit']} alone had {count(big['mean'])}", "outputs/priority.csv: main 2023 largest E3 mean")
     return c
+
+
+def catalogue_for(root: Path, journal: str = "pcd") -> dict[str, tuple[str, str]]:
+    """The catalogue as printed in the journal's style (IJTLD: no-break-space thousands, en-dash ranges)."""
+    cat = catalogue_cached(root)
+    if journal != "ijtld":
+        return cat
+    return {k: (ijtld_style(v), src) for k, (v, src) in cat.items()}
 
 
 @lru_cache(maxsize=4)
@@ -327,6 +353,15 @@ def claims(root: Path) -> list[str]:
                  f"{u} lies above the 99.8% limit in {y}")
     need(not any(r["position"] == "below the 99.8% limit" and r["unit"] != "Gujarat" for r in fu),
          "Gujarat is the only unit below the 99.8% limit")
+    need(all(float(r["p_top5"]) in (0.0, 1.0) for r in pr), "every 2023 P(top-5) is 0 or 1 (tiers = the five largest)")
+    for g in ("E1", "E2", "E3"):
+        rs = [r for r in pr if r["gap"] == g]
+        top = {r["unit"] for r in sorted(rs, key=lambda r: -float(r["mean"]))[:5]}
+        need(top == {r["unit"] for r in rs if r["tier"] == "act now"}, f"the {g} act-now tier is the five largest means")
+    sc = read_csv(root, "outputs/scenario.csv")
+    need(float(one(sc, "k=1.5", spec="k=1.5", row="national")["mean"]) > float(one(sc, "main", spec="main", row="national")["mean"]),
+         "the scenario grows at the literature ratio 1.5")
+    need(float(one(b, "c_b", kind="c_b", is_main="True")["value"]) > 0.95, "the benchmark coverage is above 95%")
     return out
 
 
@@ -365,7 +400,7 @@ FIXED: list[tuple[str, str]] = [
     ("year", r"(?<![\d.,])20(?:1[7-9]|2[0-6])(?![\d]|[.,]\d)"),
     ("doi", r"10\.5281/zenodo\.(?:\d+|X+)"),
 ]
-NUMBER = re.compile(r"\d+(?:,\d{3}(?!\d))*(?:\.\d+)?")
+NUMBER = re.compile(r"\d+(?:[,\u00a0]\d{3}(?!\d))*(?:\.\d+)?")
 
 
 def sections(text: str) -> dict[str, str]:
@@ -383,7 +418,7 @@ def sections(text: str) -> dict[str, str]:
             out[cur] = []
         elif cur is not None:
             out[cur].append(ln)
-    return {k: re.sub(r"\s+", " ", "\n".join(v)).strip() for k, v in out.items() if k != "References"}
+    return {k: re.sub(r"[^\S\u00a0]+", " ", "\n".join(v)).strip() for k, v in out.items() if k != "References"}
 
 
 def fill(template: str, cat: dict) -> tuple[str, list[tuple[int, int, str]]]:
@@ -404,7 +439,8 @@ def _occurrences(body: str, phrase: str) -> list[int]:
     return [m.start() for m in pat.finditer(body)]
 
 
-def assign(name: str, body: str, cat: dict, required: list[str]) -> tuple[list[dict], list[str]]:
+def assign(name: str, body: str, cat: dict, required: list[str],
+           fixed: list[tuple[str, str]] | None = None) -> tuple[list[dict], list[str]]:
     """Label every number token of one section; return (skeleton entries, problems)."""
     probs: list[str] = []
     labels: dict[int, tuple[str, str]] = {}
@@ -425,7 +461,7 @@ def assign(name: str, body: str, cat: dict, required: list[str]) -> tuple[list[d
                     if at + ps <= s and e <= at + pe and s not in labels:
                         labels[s] = (lab, cat[lab][1])
     dates = {v[0]: k for k, v in cat.items() if k.startswith("date.")}
-    for kind, pat in FIXED:
+    for kind, pat in (FIXED if fixed is None else fixed):
         for m in re.finditer(pat, body):
             for s, e, _ in toks:
                 if m.start() <= s and e <= m.end() and s not in labels:
@@ -470,10 +506,10 @@ def skeleton(text: str, highlights: str | None, root: Path,
     return out, probs
 
 
-def skeleton_problems(now: dict, gold: dict | None, root: Path) -> list[str]:
+def skeleton_problems(now: dict, gold: dict | None, root: Path, cat: dict | None = None) -> list[str]:
     if gold is None:
         return [f"{SKELETON} missing: after review run python -I verification/check_manuscript_numbers.py --regenerate"]
-    cat = catalogue_cached(root)
+    cat = catalogue_cached(root) if cat is None else cat
     out = []
     for name in sorted(set(now) | set(gold)):
         a = [(x["token"], x["label"]) for x in gold.get(name, [])]
@@ -784,6 +820,283 @@ def caveat_problems(text: str, caveats: dict[str, list[str]]) -> list[str]:
 
 
 # --------------------------------------------------------------------------------------
+# The IJTLD profile (manuscript/v2; verification/ijtld.py holds the journal's rules)
+# --------------------------------------------------------------------------------------
+NB = chr(0xa0)
+FIXED_IJTLD: list[tuple[str, str]] = [
+    ("reference", r"\^\d+(?:[,–]\d+)*\^"),
+    ("online", r"\b(?:Tables?|Figures?) S\d{1,2}(?:(?:,| and|–) ?S\d{1,2})*\b"),
+    ("exhibit", r"\bTable 1\b|\bFigures? [12](?: and [12])?\b"),
+    ("name", r"\bH[1-3]\b|\bNFHS-5\b|\bHbA1c\b|\bper 100" + NB + r"000\b"),
+    ("ci_level", r"\b95%"),
+    ("plan_section", r"\bplan section 12\.\d\b"),
+    ("formula", r"\b(?:below|above|of) 1\b|\bexcluded 0\b|\b0 or 1\b|\bone half\b"),
+    ("date", r"\b\d{1,2} (?:" + "|".join(MONTHS) + r") 20\d\d\b"),
+    ("years", r"\b20(?:1[7-9]|2[0-6])–(?:20)?(?:1[7-9]|2[0-6])\b"),
+    ("year", r"(?<![\d.,])20(?:1[7-9]|2[0-6])(?![\d]|[.,]\d)"),
+]
+REF_DOIS = "reference_dois.json"
+
+
+def journal_of(ms_dir: Path) -> str:
+    """The folder's journal profile: section_phrases.json "journal" ("pcd" when absent)."""
+    try:
+        return load_phrase_file(ms_dir).get("journal", "pcd")
+    except (OSError, ValueError):
+        return "pcd"
+
+
+def assign_ijtld(name: str, body: str, cat: dict, required: list[str]) -> tuple[list[dict], list[str]]:
+    return assign(name, body, cat, required, FIXED_IJTLD)
+
+
+def skeleton_ijtld(text: str, root: Path, required: dict[str, list[str]]) -> tuple[dict[str, list[dict]], list[str]]:
+    cat = catalogue_for(root, "ijtld")
+    secs = sections(text)
+    out, probs = {}, []
+    for name in required:
+        if name not in secs:
+            probs.append(f"MISSING section {name!r}")
+    for name, body in secs.items():
+        entries, p = assign_ijtld(name, body, cat, required.get(name, []))
+        out[name] = entries
+        probs += p
+    return out, probs
+
+
+def skeleton_problems_ijtld(now: dict, gold: dict | None, root: Path) -> list[str]:
+    return skeleton_problems(now, gold, root, catalogue_for(root, "ijtld"))
+
+
+def online_text(text: str) -> str:
+    """The text with the online-material link removed (it is a URL, not a file path)."""
+    return text.replace(ijtld.ONLINE_URL, "<online material>")
+
+
+def exhibit_problems_ijtld(text: str, root: Path) -> list[str]:
+    secs = sections(text)
+    body = " ".join(v for k, v in secs.items() if k not in ("Title", "Abstract", "Figure legends"))
+    out = []
+    for kind, want, pat in (("Table", ijtld.TABLES, r"\bTables? ([1-9](?:(?:, | and )[1-9])*)\b(?! ?S)"),
+                            ("Figure", ijtld.FIGURES, r"\bFigures? ([1-9](?:(?:, | and )[1-9])*)\b")):
+        seen = []
+        for m in re.finditer(pat, body):
+            seen += [int(n) for n in re.findall(r"[1-9]", m.group(1))]
+        first = list(dict.fromkeys(seen))
+        if sorted(first) != want:
+            out.append(f"EXHIBITS: {kind}s cited {first}, expected each of {want}")
+        elif first != want:
+            out.append(f"EXHIBITS: first citations of {kind}s out of order: {first}")
+    n_disp = len(ijtld.TABLES) + len(ijtld.FIGURES)
+    if n_disp > ijtld.LIMITS["display_items"]:
+        out.append(f"EXHIBITS: {n_disp} display items, more than {ijtld.LIMITS['display_items']}")
+    leg = secs.get("Figure legends", "")
+    for n in ijtld.FIGURES:
+        if f"Figure {n}." not in leg:
+            out.append(f"EXHIBITS: no legend for Figure {n}")
+    if re.search(r"\bFigure [3-9]\b|\bTable [2-9]\b", body + " " + leg):
+        out.append("EXHIBITS: a display item beyond Table 1 and Figures 1 and 2 is cited")
+    online = (root / "docs" / "online_material" / "tables.md")
+    have = set(re.findall(r"(?m)^## Table (S\d+)\.", online.read_text(encoding="utf-8"))) if online.exists() else set()
+    have |= {f"S{k}" for k in range(1, 10) if (root / "docs" / "online_material" / f"figureS{k}.pdf").exists()}
+    for m in re.finditer(r"\b(Tables?|Figures?) (S\d{1,2}(?:(?:,| and|–) ?S\d{1,2})*)", body):
+        parts = re.findall(r"S(\d{1,2})", m.group(2))
+        if "–" in m.group(2) and len(parts) == 2:
+            parts = [str(k) for k in range(int(parts[0]), int(parts[1]) + 1)]
+        kind = "Table" if m.group(1).startswith("Table") else "Figure"
+        allowed = ijtld.ONLINE_TABLES if kind == "Table" else ijtld.ONLINE_FIGURES
+        for p in parts:
+            if f"S{p}" not in allowed or (kind == "Table" and f"S{p}" not in have):
+                out.append(f"EXHIBITS: online {kind} S{p} does not exist in docs/online_material")
+    if ijtld.ONLINE_URL not in text:
+        out.append(f"EXHIBITS: the text does not link the online material ({ijtld.ONLINE_URL})")
+    if not re.search(r"online material", body):
+        out.append("EXHIBITS: the text never cites the online material")
+    return out
+
+
+def regenerated_problems_ijtld(ms_dir: Path, root: Path) -> list[str]:
+    from exhibits import make_figures, make_ijtld
+    out = []
+    ex = ms_dir / "exhibits"
+    p = ex / "tables.md"
+    if not p.exists() or p.read_text(encoding="utf-8") != make_ijtld.render(root):
+        out.append("EXHIBITS: exhibits/tables.md differs from Table 1 regenerated from outputs/ (python -I exhibits/make_ijtld.py)")
+    for k, fn in make_ijtld.FIGURES.items():
+        q = ex / f"figure{k}_data.csv"
+        if not q.exists() or q.read_bytes() != make_figures.data_csv(fn(root)):
+            out.append(f"EXHIBITS: exhibits/figure{k}_data.csv differs from the data regenerated from outputs/")
+    return out
+
+
+def ref_list_ijtld(text: str) -> list[tuple[int, str]]:
+    part = text.split("\n## References", 1)
+    if len(part) != 2:
+        return []
+    body = part[1].split("\n## ", 1)[0]
+    return [(int(m.group(1)), m.group(2).strip()) for m in ijtld.REF_LINE.finditer(body)]
+
+
+def citations_ijtld(text: str) -> list[int]:
+    body = text.split("\n## References", 1)[0]
+    order: list[int] = []
+    for m in ijtld.CITE.finditer(body):
+        for part in m.group(1).split(","):
+            a, _, b = part.partition("–")
+            order += list(range(int(a), int(b or a) + 1))
+    return order
+
+
+def reference_dois(ms_dir: Path) -> dict[str, str]:
+    p = ms_dir / REF_DOIS
+    return json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
+
+
+def reference_problems_ijtld(text: str, ms_dir: Path) -> list[str]:
+    refs = ref_list_ijtld(text)
+    if not refs:
+        return ["REFERENCES: no '## References' section with entries 'n\\. ...'"]
+    n = len(refs)
+    out = []
+    if n > ijtld.LIMITS["references"]:
+        out.append(f"REFERENCES: {n} references, more than {ijtld.LIMITS['references']}")
+    if [k for k, _ in refs] != list(range(1, n + 1)):
+        out.append("REFERENCES: list not numbered 1..n")
+    order = citations_ijtld(text)
+    for k in sorted(set(order)):
+        if not 1 <= k <= n:
+            out.append(f"REFERENCES: citation {k} outside 1..{n}")
+    first = list(dict.fromkeys(order))
+    if first != sorted(first):
+        out.append(f"REFERENCES: not numbered in order of first citation: {first}")
+    never = sorted(set(range(1, n + 1)) - set(order))
+    if never:
+        out.append(f"REFERENCES: never cited: {never}")
+    if re.search(r"\[\d+(?:[,–]\d+)*\]", text.split("\n## References", 1)[0]):
+        out.append("REFERENCES: a bracketed citation [n] (IJTLD uses superscript numbers)")
+    dois = reference_dois(ms_dir)
+    for k, e in refs:
+        kind = ijtld.entry_kind(e)
+        if kind == "unknown":
+            out.append(f"REFERENCES: [{k}] is not in the journal's style (article, web page with access date, or Zenodo DOI)")
+        if kind == "article" and str(k) not in dois:
+            out.append(f"REFERENCES: [{k}] has no verified DOI in {REF_DOIS}")
+        if kind == "zenodo" and not re.search(r"Version \d+\.\d+\.\d+ \[(?:dataset|software)\]", e):
+            out.append(f"REFERENCES: [{k}] a data or software reference must name its version and [dataset] or [software]")
+        if "doi.org" in e and kind != "zenodo":
+            out.append(f"REFERENCES: [{k}] prints a DOI (the journal's style has none; it is kept in {REF_DOIS})")
+        out += ijtld.author_problems(k, e)
+    extra = sorted(set(dois) - {str(k) for k, e in refs if ijtld.entry_kind(e) == "article"}, key=int)
+    if extra:
+        out.append(f"REFERENCES: {REF_DOIS} holds DOIs for entries that are not articles: {extra}")
+    return out
+
+
+def abstract_ijtld(text: str) -> str:
+    return sections(text).get("Abstract", "")
+
+
+def length_problems_ijtld(text: str, title_page: str | None) -> list[str]:
+    out = []
+    ab = abstract_ijtld(text)
+    if words(ab) > ijtld.LIMITS["abstract"]:
+        out.append(f"LENGTH: abstract {words(ab)} words, limit {ijtld.LIMITS['abstract']}")
+    heads = re.findall(r"\*\*(\w+):\*\*", ab)
+    if heads != list(ijtld.ABSTRACT_PARTS):
+        out.append(f"LENGTH: abstract headings {heads}, expected {list(ijtld.ABSTRACT_PARTS)}")
+    if re.search(r"\^\d|\[\d", ab):
+        out.append("LENGTH: the abstract cites a reference")
+    ab_abbr = ijtld.abbreviations(ab)
+    if ab_abbr:
+        out.append(f"ABSTRACT: abbreviations {sorted(set(ab_abbr))} (none allowed)")
+    for name in MAIN_SECTIONS:
+        if name not in sections(text):
+            out.append(f"LENGTH: no '## {name}' section")
+    m = words(main_text(text))
+    if m > ijtld.LIMITS["main"]:
+        out.append(f"LENGTH: main text {m} words (Introduction to Discussion, headings excluded), limit {ijtld.LIMITS['main']}")
+    title = text.splitlines()[0][2:].strip() if text.startswith("# ") else ""
+    out += ijtld.title_problems(title)
+    if title_page is not None:
+        out += ijtld.running_head_problems(ijtld.field(title_page, "Running head") or "")
+        out += ijtld.keyword_problems(ijtld.keywords_of(title_page), title)
+    return out
+
+
+TP_FIELDS = ("Title", "Running head", "Author", "Affiliation", "Corresponding author", "Keywords", "Word counts",
+             "Acknowledgements", "Funding", "Conflicts of interest", "Ethics", "Data availability",
+             "Use of artificial intelligence")
+
+
+def title_page_problems_ijtld(text: str, title_page: str, n_refs: int) -> list[str]:
+    out = []
+    for f in TP_FIELDS:
+        if ijtld.field(title_page, f) is None:
+            out.append(f"TITLE PAGE: no single '**{f}:**' line in {TITLE_PAGE}")
+    title = text.splitlines()[0][2:].strip() if text.startswith("# ") else ""
+    if not title or title != (ijtld.field(title_page, "Title") or ""):
+        out.append("TITLE PAGE: the manuscript's title differs from title_page_src.md")
+    corr = ijtld.field(title_page, "Corresponding author") or ""
+    if not re.search(r"[\w.+-]+@[\w-]+\.[\w.]+", corr) or "India" not in corr or not re.search(r"\b\d{6}\b", corr):
+        out.append("TITLE PAGE: the corresponding author needs a full address (with postcode) and an e-mail")
+    if not re.search(r"\d{4}-\d{4}-\d{4}-\d{3}[\dX]", corr):
+        out.append("TITLE PAGE: the corresponding author has no ORCID")
+    wc = ijtld.field(title_page, "Word counts") or ""
+    for want in (f"references {n_refs}", f"tables {len(ijtld.TABLES)}", f"figures {len(ijtld.FIGURES)}"):
+        if want not in wc:
+            out.append(f"TITLE PAGE: the word-count line does not state {want!r}")
+    if "10.5281/zenodo." not in (ijtld.field(title_page, "Data availability") or ""):
+        out.append("TITLE PAGE: the data availability statement has no Zenodo DOI (or its placeholder)")
+    if "Claude" not in (ijtld.field(title_page, "Use of artificial intelligence") or "") or "Claude" not in sections(text).get("Methods", ""):
+        out.append("DECLARATION: the use of an AI assistant must be stated on the title page and in the Methods")
+    return out
+
+
+def wording_problems_ijtld(name: str, text: str) -> list[str]:
+    body = online_text(text.split("\n## References", 1)[0])
+    if name == "exhibits/tables.md":
+        body = "\n".join(ln for ln in body.splitlines() if not ln.startswith("# Tables (generated"))
+    out = wording_problems(name, body)
+    out += [f"WORDING in {name}: {h}" for h in ijtld.wording_hits(body)]
+    return out
+
+
+def problems_ijtld(root: Path, ms_dir: Path, text: str, gold: dict | None, required: dict,
+                   exhibits: bool = True) -> list[str]:
+    pf = load_phrase_file(ms_dir)
+    now, out = skeleton_ijtld(text, root, required)
+    out += skeleton_problems_ijtld(now, gold, root)
+    out += claims(root)
+    out += exhibit_problems_ijtld(text, root)
+    if exhibits:
+        out += regenerated_problems_ijtld(ms_dir, root)
+    caveats = pf.get("caveats", {})
+    if not caveats:
+        out.append(f"CAVEAT: no caveats listed in {PHRASES}")
+    out += caveat_problems(text, caveats)
+    out += reference_problems_ijtld(text, ms_dir)
+    tp = read_opt(ms_dir, TITLE_PAGE)
+    out += length_problems_ijtld(text, tp)
+    out += label_problems(text, root)
+    out += wording_problems_ijtld(MS_NAME, text)
+    tables = read_opt(ms_dir, "exhibits/tables.md")
+    if tables is not None:
+        out += wording_problems_ijtld("exhibits/tables.md", tables)
+    if tp is None:
+        out.append(f"MISSING: {TITLE_PAGE}")
+    else:
+        out += wording_problems_ijtld(TITLE_PAGE, tp)
+        out += title_page_problems_ijtld(text, tp, len(ref_list_ijtld(text)))
+    cover = read_opt(ms_dir, COVER)
+    out += cover_problems(cover, pf.get("cover_letter", []))
+    if cover is not None:
+        out += wording_problems_ijtld(COVER, cover)
+    if not pf.get("cover_letter"):
+        out.append(f"COVER LETTER: no related manuscripts listed in {PHRASES} 'cover_letter'")
+    return out
+
+
+# --------------------------------------------------------------------------------------
 # Driver
 # --------------------------------------------------------------------------------------
 def manuscript_dir(root: Path, argv: list[str]) -> tuple[Path, list[str]]:
@@ -821,6 +1134,8 @@ def problems(root: Path, ms_dir: Path, text: str | None = None, gold: dict | Non
     highlights = highlights if highlights is not None else read_opt(ms_dir, HIGHLIGHTS)
     if not required:
         return [f"PHRASES: no section phrases ({PHRASES} missing or empty)"]
+    if journal_of(ms_dir) == "ijtld":
+        return problems_ijtld(root, ms_dir, text, gold, required, exhibits)
     pf = load_phrase_file(ms_dir)
     now, out = skeleton(text, highlights, root, required)
     out += skeleton_problems(now, gold, root)
@@ -859,8 +1174,11 @@ def problems(root: Path, ms_dir: Path, text: str | None = None, gold: dict | Non
     return out
 
 
-def golden(text: str, highlights: str | None, root: Path, required: dict) -> dict:
-    now, probs = skeleton(text, highlights, root, required)
+def golden(text: str, highlights: str | None, root: Path, required: dict, journal: str = "pcd") -> dict:
+    if journal == "ijtld":
+        now, probs = skeleton_ijtld(text, root, required)
+    else:
+        now, probs = skeleton(text, highlights, root, required)
     if probs:
         raise SystemExit("cannot regenerate the skeleton while phrases or numbers fail:\n" + "\n".join(probs))
     return {"about": "Golden numeric skeleton of manuscript.md and highlights.md: for each section, every number token "
@@ -897,7 +1215,7 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
         return 1
     text = ms.read_text(encoding="utf-8")
     if "--regenerate" in rest:
-        g = golden(text, read_opt(ms_dir, HIGHLIGHTS), root, required)
+        g = golden(text, read_opt(ms_dir, HIGHLIGHTS), root, required, journal_of(ms_dir))
         (ms_dir / SKELETON).write_text(json.dumps(g, indent=1, ensure_ascii=False) + "\n", encoding="utf-8",
                                        newline="\n")
         print(f"wrote {name}/{SKELETON}: {sum(len(v) for v in g['sections'].values())} number tokens")
@@ -908,6 +1226,15 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
     gold = load_gold(ms_dir) or {}
     n_tok = sum(len(v) for v in gold.values())
     n_traced = sum(1 for v in gold.values() for x in v if not x["label"].startswith("fixed:"))
+    if journal_of(ms_dir) == "ijtld":
+        print(f"IJTLD profile: {n_tok} number tokens ({n_traced} traced to a source file, {n_tok - n_traced} fixed "
+              f"labels), {sum(len(v) for v in required.values())} section phrases, {len(catalogue_cached(root))} "
+              f"catalogue values, {len(ref_list_ijtld(text))} references; Table 1 and figure data regenerated from "
+              f"outputs/; hard limits (main {ijtld.LIMITS['main']}, abstract {ijtld.LIMITS['abstract']}, references "
+              f"{ijtld.LIMITS['references']}, display items {ijtld.LIMITS['display_items']}, title "
+              f"{ijtld.LIMITS['title_chars']}, running head {ijtld.LIMITS['running_head_chars']}, keywords 3-5) checked; "
+              f"{len(found)} problem(s)")
+        return 1 if found else 0
     print(f"{n_tok} number tokens ({n_traced} traced to a source file, {n_tok - n_traced} fixed labels), "
           f"{sum(len(v) for v in required.values())} section phrases, {len(catalogue_cached(root))} catalogue "
           f"values, {len(ref_list(text))} references; tables, figure and graphical-abstract data regenerated from "

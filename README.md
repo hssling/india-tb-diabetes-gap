@@ -1,7 +1,8 @@
 # The diabetes-TB gap in India's States
 
-Code, extracted data, outputs and a pre-registered analysis plan for a State-level
-analysis of the TB-diabetes care cascade in India: how many TB patients with diabetes are
+Code, extracted data, outputs, online material and an analysis plan time-stamped in this public
+repository before estimation, for a State-level analysis of the TB-diabetes care cascade in
+India: how many people with TB and diabetes are
 likely going unidentified in each State or UT, and whether the shortfall lies at the
 screening step or at the identification step. It uses only published, aggregate,
 official data: the India TB Report diabetes tables (data years 2018, 2019, 2021, 2022 and
@@ -12,18 +13,18 @@ National Programme for Prevention and Control of Non-Communicable Diseases (NP-N
 not a league table: results are given as tiers, not ranks, and they describe programme
 data, not the performance or effort of any State's staff. All associations reported here
 are observational; none is a causal estimate. A low identification ratio, a gap or a
-priority may reflect a truly lower diabetes prevalence among a State's TB patients, the
+priority may reflect a truly lower diabetes prevalence among a State's people with TB, the
 testing method or recording, and not only missed diabetes.
 
 ## The question
 
 The analysis plan, [`docs/analysis_plan.md`](docs/analysis_plan.md), asks (its section 2):
 
-- **Q1. The care cascade.** For each unit and year: what share of notified TB patients
+- **Q1. The care cascade.** For each unit and year: what share of people notified with TB
   had a known diabetes status (C1, screened); how does the share identified with diabetes
   among those screened compare with what the unit's diabetes burden implies (C2); and
   what share of those identified was started on anti-diabetic treatment (C3)?
-- **Q2. The two gaps and where to act.** How many TB patients with diabetes are expected
+- **Q2. The two gaps and where to act.** How many people with TB and diabetes are expected
   among those not screened (E1, the screening gap) and among those screened but not
   identified (E2, the identification gap)? Where would closing each gap identify the
   most, how certain is that, and is each unit's shortfall screening-led or
@@ -35,7 +36,7 @@ The analysis plan, [`docs/analysis_plan.md`](docs/analysis_plan.md), asks (its s
   units with identification below the benchmark (H3); and an illustrative national
   scenario.
 
-"Identified" means diabetes identified among screened TB patients, newly diagnosed or
+"Identified" means diabetes identified among people with TB who were screened, newly diagnosed or
 already known: the India TB Report count includes existing diabetes, as does NFHS-5.
 
 ## Registration
@@ -115,7 +116,7 @@ below 1).
 ## The TB-diabetes cascade, national figures
 
 Sums over the 33 units (main basis), with Wilson 95% intervals (all narrower than
-±0.5 percentage points). C1: known diabetes status among notified TB patients. y:
+±0.5 percentage points). C1: known diabetes status among people notified with TB. y:
 diabetes identified among those screened. C3: started on anti-diabetic treatment among
 those identified (2018: linked to an NCD clinic, a different definition, not compared
 with later years).
@@ -199,8 +200,12 @@ python -I verification/check_all.py
 recompute with the Python standard library only: p_u, k_b, the 2023 cascade with R, H3
 and the k = 1 count, E1 and E2, H1 by its own IRLS, the Spearman sensitivity, H2, the
 scenario and the label) and `check_rerun` (the extraction and the analysis rerun and
-compared byte for byte). The manuscript checks are skipped until the private manuscript
-exists. Each check was shown to fail on a deliberate break:
+compared byte for byte), then `check_online_material` (the online material regenerated from
+`outputs/` and compared byte for byte, with its wording checked) and the checks of the current,
+private manuscript (`manuscript/v2`, IJTLD): `check_manuscript_numbers` (every number traced to
+`outputs/`, and the journal's hard limits), `check_docx_tie` (the submission files tied to their
+sources) and `mutate_manuscript` (each check shown to catch deliberate breaks). The manuscript
+checks are skipped until the private manuscript exists. Each check was shown to fail on a deliberate break:
 [`verification/MUTATIONS.md`](verification/MUTATIONS.md). Without `data_raw/`, the
 extraction parts are skipped and everything else runs on the committed extracts.
 
@@ -237,7 +242,7 @@ every row.
 - **k_b is below 1 (0.822).** The benchmark is relative to the better quarter of units,
   and a quarter of units lie above it by construction. k = 1 is a reference point, not a
   guaranteed lower bound; k = 1.5 and 2 rest on published ratios and give much larger
-  gaps. TB patients differ from the adult population in age and sex; NFHS covers ages 15
+  gaps. People with TB differ from the adult population in age and sex; NFHS covers ages 15
   and over while notifications include children; and the 2022 sex shares are used for
   every year.
 - **The denominator bases differ by year.** 2018 uses current-facility notified from its
@@ -264,6 +269,9 @@ every row.
 - `src/extract/`: the extraction; `src/dmgap/` and `src/run_all.py`: the analysis, which
   imports the author's TB priority tool package `tbprio` pinned to v1.0.1.
 - `outputs/`: the results; `verification/`: the checks; `tests/`.
+- `docs/online_material/`: the manuscript's online material (Tables S1-S15 and Figures S1-S2,
+  aggregates only), written by `exhibits/make_online_material.py` from `outputs/`; `exhibits/`:
+  the code of every table and figure; `tools/`: the submission build and the reference audit.
 
 ## Citation and licences
 

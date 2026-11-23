@@ -11,6 +11,7 @@ always agree on how a value from outputs/ is written.
 from __future__ import annotations
 
 import csv
+import re
 from datetime import date
 from pathlib import Path
 
@@ -99,6 +100,33 @@ def and_list(items: list[str]) -> str:
     if not items:
         return "none"
     return items[0] if len(items) == 1 else ", ".join(items[:-1]) + " and " + items[-1]
+
+
+# --------------------------------------------------------------------------------------
+# The IJTLD style (manuscript/v2): thousands separated by a no-break space ("108 647",
+# "per 100 000") and intervals with an en dash ("1.01–2.18"). Applied to values already
+# formatted above, so the numbers themselves never change.
+# --------------------------------------------------------------------------------------
+NBSP = "\u00a0"
+
+
+def si_thousands(s: str) -> str:
+    """'108,647' -> '108 647' (no-break space); other commas are kept."""
+    return re.sub(r"(?<=\d),(?=\d{3}(?!\d))", NBSP, s)
+
+
+def en_ranges(s: str) -> str:
+    """'1.01 to 2.18' -> '1.01–2.18' (only between two numbers)."""
+    return re.sub(r"(\d%?) to ((?:" + MINUS + r")?\d)", r"\1–\2", s)
+
+
+def ijtld_style(s: str) -> str:
+    return en_ranges(si_thousands(s))
+
+
+def about_thousands(x: float | str) -> str:
+    """A count rounded to the nearest thousand, IJTLD style: 108647 -> '109 000'."""
+    return si_thousands(count(round(float(x) / 1000) * 1000))
 
 
 def read_csv(root: Path, rel: str) -> list[dict]:

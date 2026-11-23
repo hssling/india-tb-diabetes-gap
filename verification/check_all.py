@@ -15,8 +15,14 @@ Steps, each a `python -I ...` subprocess:
 5. check_implied_denominator the plan 12.1 match counts of printed percentages
 6. check_outputs             independent standard-library recompute
 7. check_rerun               byte-for-byte rerun of the extraction and of outputs/
-8. check_manuscript_numbers  }  SKIP until manuscript/manuscript.md exists (the manuscript
-9. check_docx_tie            }  is private and git-ignored)
+8. check_online_material     the online material regenerated from outputs/ (docs/online_material/)
+9. check_manuscript_numbers  }  the current manuscript, manuscript/v2 (IJTLD profile, with its hard
+10. check_docx_tie           }  limits); SKIP until manuscript/v2/manuscript.md exists (the
+11. mutate_manuscript        }  manuscript is private and git-ignored)
+
+The submitted Primary Care Diabetes set in manuscript/ is frozen and no longer checked here (its
+cover letter .docx was edited after the build and no longer ties to cover_letter.md); run
+check_manuscript_numbers and check_docx_tie with --manuscript-dir manuscript to check it.
 
 Each step prints PASS, FAIL or SKIP. A step that exits 0 and prints only lines beginning
 "SKIPPED" counts as skipped; one that also prints other lines passes, with the number of
@@ -29,7 +35,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PY = [sys.executable, "-I"]
-MANUSCRIPT_DIR = "manuscript"
+MANUSCRIPT_DIR = "manuscript/v2"
 MANUSCRIPT = Path(MANUSCRIPT_DIR) / "manuscript.md"
 
 STEPS = [
@@ -40,12 +46,15 @@ STEPS = [
     ("check_implied_denominator", PY + ["verification/check_implied_denominator.py"]),
     ("check_outputs", PY + ["verification/check_outputs.py"]),
     ("check_rerun", PY + ["verification/check_rerun.py"]),
+    ("check_online_material", PY + ["verification/check_online_material.py"]),
     ("check_manuscript_numbers", PY + ["verification/check_manuscript_numbers.py",
                                        "--manuscript-dir", MANUSCRIPT_DIR]),
     ("check_docx_tie", PY + ["verification/check_docx_tie.py",
                              "--manuscript-dir", MANUSCRIPT_DIR]),
+    ("mutate_manuscript", PY + ["verification/mutate_manuscript.py",
+                                "--manuscript-dir", MANUSCRIPT_DIR]),
 ]
-MANUSCRIPT_STEPS = ("check_manuscript_numbers", "check_docx_tie")
+MANUSCRIPT_STEPS = ("check_manuscript_numbers", "check_docx_tie", "mutate_manuscript")
 
 
 def run(cmd: list[str]) -> subprocess.CompletedProcess:

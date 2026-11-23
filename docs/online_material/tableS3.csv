@@ -1,0 +1,38 @@
+Percentile,Pool or year,Reference,Prior and basis,Value,Units
+Benchmark multiplier k_b (pooled identification relative to p_u),,,,,
+75th,2021 and 2022,sex-weighted,empirical Bayes (main),0.822,33
+75th,2021 and 2022,sex-weighted,Jeffreys (shrinkage off),0.823,33
+75th,2021 and 2022,simple,empirical Bayes,0.839,33
+75th,2021 and 2022,simple,Jeffreys (shrinkage off),0.841,33
+75th,2019 and 2021,sex-weighted,empirical Bayes,0.745,33
+75th,2019 and 2021,sex-weighted,Jeffreys (shrinkage off),0.745,33
+75th,2019 and 2021,simple,empirical Bayes,0.763,33
+75th,2019 and 2021,simple,Jeffreys (shrinkage off),0.763,33
+50th (median),2021 and 2022,sex-weighted,empirical Bayes,0.564,33
+50th (median),2021 and 2022,sex-weighted,Jeffreys (shrinkage off),0.564,33
+50th (median),2021 and 2022,simple,empirical Bayes,0.577,33
+50th (median),2021 and 2022,simple,Jeffreys (shrinkage off),0.577,33
+50th (median),2019 and 2021,sex-weighted,empirical Bayes,0.543,33
+50th (median),2019 and 2021,sex-weighted,Jeffreys (shrinkage off),0.543,33
+50th (median),2019 and 2021,simple,empirical Bayes,0.553,33
+50th (median),2019 and 2021,simple,Jeffreys (shrinkage off),0.553,33
+90th (best decile),2021 and 2022,sex-weighted,empirical Bayes,1.084,33
+90th (best decile),2021 and 2022,sex-weighted,Jeffreys (shrinkage off),1.092,33
+90th (best decile),2021 and 2022,simple,empirical Bayes,1.091,33
+90th (best decile),2021 and 2022,simple,Jeffreys (shrinkage off),1.099,33
+90th (best decile),2019 and 2021,sex-weighted,empirical Bayes,0.902,33
+90th (best decile),2019 and 2021,sex-weighted,Jeffreys (shrinkage off),0.910,33
+90th (best decile),2019 and 2021,simple,empirical Bayes,0.915,33
+90th (best decile),2019 and 2021,simple,Jeffreys (shrinkage off),0.920,33
+"Benchmark screening coverage c_b, 2023 (scenario)",,,,,
+75th,—,—,empirical Bayes; main basis,96.3%,33
+50th (median),—,—,empirical Bayes; main basis,93.7%,33
+90th (best decile),—,—,empirical Bayes; main basis,97.0%,33
+75th,—,—,empirical Bayes; Annexure 1.2 (registered),95.8%,31
+50th (median),—,—,empirical Bayes; Annexure 1.2 (registered),92.7%,31
+90th (best decile),—,—,empirical Bayes; Annexure 1.2 (registered),97.8%,31
+Linkage benchmark c3_b (75th percentile of units' initiation share),,,,,
+75th,2019,—,—,57.9%,33
+75th,2021,—,—,75.8%,33
+75th,2022,—,—,76.7%,33
+75th,2023,—,—,77.4%,33

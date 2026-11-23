@@ -27,6 +27,12 @@ tables and references included, which check_docx_tie must catch.
 
 Prints a table of the results; exits 1 if any mutation is not applied or not caught. Prints
 "SKIPPED" and exits 0 when DIR/ or DIR/submission/ is absent.
+
+An IJTLD folder (section_phrases.json "journal": "ijtld"; manuscript/v2) runs MUTATIONS_IJTLD
+instead: numbers, table cells, citations and references, every IJTLD hard limit (title, running
+head, keywords, abstract words and abbreviations, main-text words, references, display items),
+"pre-registered", stigmatising and process words, the online material, the layout (line numbers,
+spacing, justification), the figures and the file set.
 """
 from __future__ import annotations
 
@@ -305,13 +311,181 @@ MUTATIONS: list[Mutation] = [
 
 
 # --------------------------------------------------------------------------------------
+# The IJTLD set (manuscript/v2)
+# --------------------------------------------------------------------------------------
+I_COVER, I_MS, I_DECL = (S + n for n in ("01_cover_letter.docx", "02_manuscript.docx", "03_declarations.docx"))
+I_FIG1, I_FIG2 = S + "Figure_1.tif", S + "Figure_2.tif"
+TP = cmn.TITLE_PAGE
+
+
+def both(mid: str) -> Callable[[Path], None]:
+    """The anchor pair [old, new] replaced in manuscript.md and in title_page_src.md (the title)."""
+    def fn(d: Path) -> None:
+        a = anchor(d, mid)
+        edit_text(d / MS, a[0], a[1])
+        edit_text(d / TP, a[0], a[1])
+    return fn
+
+
+def ijtld_long_main(d: Path) -> None:
+    a = anchor(d, "i12")
+    edit_text(d / MS, a, a + " " + " ".join(["filler"] * 150))
+
+
+def ijtld_many_refs(d: Path) -> None:
+    """Four more references (33-36), cited in the Discussion: more than 35."""
+    a = anchor(d, "i19")
+    edit_text(d / MS, a, a + "^33–36^")
+    extra = "".join(f"\n\n{k}\\. Author A. A title. J Test 2020; {k}: 1–2." for k in range(33, 37))
+    s = (d / MS).read_text(encoding="utf-8")
+    i = s.index("\n\n## Figure legends")
+    replace_bytes(d / MS, (s[:i] + extra + s[i:]).encode("utf-8"))
+
+
+def ijtld_low_dpi(d: Path) -> None:
+    try:
+        from PIL import Image
+    except ImportError:
+        raise NotApplied("Pillow not installed") from None
+    p = d / I_FIG1
+    p.unlink()
+    Image.new("L", (100, 100), 255).save(p, format="TIFF", dpi=(300, 300))
+
+
+def ijtld_other_tiff(d: Path) -> None:
+    replace_bytes(d / I_FIG1, (d / I_FIG2).read_bytes())
+
+
+def ijtld_extra_file(d: Path) -> None:
+    (d / S / "tableS1.csv").write_text("online material in the upload folder", encoding="utf-8")
+
+
+def ijtld_drop_cover(d: Path) -> None:
+    (d / I_COVER).unlink()
+
+
+def ijtld_stale_counts(d: Path) -> None:
+    p = d / "word_counts_word.json"
+    w = json.loads(p.read_text(encoding="utf-8"))
+    w["abstract"] = 201
+    replace_bytes(p, (json.dumps(w, indent=1) + "\n").encode("utf-8"))
+
+
+def ijtld_no_line_numbers(d: Path) -> None:
+    rewrite_part(d / I_MS, DOC, lambda x: re.sub(r"<w:lnNumType [^>]*/>", "", x))
+
+
+def ijtld_justified(d: Path) -> None:
+    def fn(x: str) -> str:
+        if '<w:jc w:val="left"/>' not in x:
+            raise NotApplied("styles.xml has no left alignment")
+        return x.replace('<w:jc w:val="left"/>', '<w:jc w:val="both"/>', 1)
+    rewrite_part(d / I_MS, "word/styles.xml", fn)
+
+
+def ijtld_single_spaced(d: Path) -> None:
+    def fn(x: str) -> str:
+        m = re.search(r'(<w:style [^>]*w:styleId="Normal"[^>]*>.*?w:line=")480(")', x, re.S)
+        if not m:
+            raise NotApplied("Normal style has no double spacing")
+        return x[:m.start()] + m.group(1) + "240" + m.group(2) + x[m.end():]
+    rewrite_part(d / I_MS, "word/styles.xml", fn)
+
+
+def ijtld_other_image(d: Path) -> None:
+    """02: the embedded Figure 1 replaced by other image bytes."""
+    p = d / I_MS
+    with zipfile.ZipFile(p) as z:
+        media = sorted(n for n in z.namelist() if n.startswith("word/media/"))
+    if not media:
+        raise NotApplied("02 embeds no image")
+    from io import BytesIO
+    try:
+        from PIL import Image
+    except ImportError:
+        raise NotApplied("Pillow not installed") from None
+    buf = BytesIO()
+    Image.new("L", (50, 50), 0).save(buf, format="PNG")
+    tmp = p.with_name(p.name + ".mut")
+    with zipfile.ZipFile(p) as zi, zipfile.ZipFile(tmp, "w", zipfile.ZIP_DEFLATED) as zo:
+        for item in zi.infolist():
+            zo.writestr(item, buf.getvalue() if item.filename == media[0] else zi.read(item.filename))
+    p.unlink()
+    tmp.replace(p)
+
+
+def ijtld_six_keywords(d: Path) -> None:
+    a = anchor(d, "i15")
+    edit_text(d / TP, a, a + "; surveillance")
+
+
+def ijtld_figure_data(d: Path) -> None:
+    p = d / "exhibits" / "figure2_data.csv"
+    s = p.read_text(encoding="utf-8")
+    if ",screening-led," not in s:
+        raise NotApplied("figure2_data.csv has no screening-led row")
+    replace_bytes(p, s.replace(",screening-led,", ",mixed,", 1).encode("utf-8"))
+
+
+MUTATIONS_IJTLD: list[Mutation] = [
+    ("i1a", "number, docx only", "02 Results: the H1 value changed in its last digit", change(edit_docx, I_MS, "i1", bumped)),
+    ("i2a", "number, markdown only", "manuscript.md Abstract: the identification-led count increased by 1", change(edit_text, MS, "i2", bumped)),
+    ("i3a", "number, markdown only", "manuscript.md Results: the number identified in 2023 changed", change(edit_text, MS, "i3", bumped)),
+    ("i4a", "table cell, docx only", "02 Table 1: Bihar's identification ratio changed", change(edit_docx, I_MS, "i4", bumped)),
+    ("i5a", "table cell, markdown only", "tables.md Table 1: a largest-gap flag removed", swap(edit_text, TABLES_MD, "i5")),
+    ("i5b", "figure data, exhibits", "figure2_data.csv: a screening-led unit set to mixed", ijtld_figure_data),
+    ("i6a", "citation order, markdown", "manuscript.md Introduction: a superscript citation changed", swap(edit_text, MS, "i6")),
+    ("i7a", "reference number, docx only", "02 References: entry 2 renumbered 3", swap(edit_docx, I_MS, "i7")),
+    ("i8a", "title limit", "title over 110 characters (manuscript and title page)", both("i8")),
+    ("i9a", "title abbreviation", "title with the abbreviation TB (manuscript and title page)", both("i9")),
+    ("i10a", "abstract abbreviation", "manuscript.md Abstract: 'tuberculosis' written 'TB'", swap(edit_text, MS, "i10")),
+    ("i11a", "abstract limit", "manuscript.md Abstract: twelve words added",
+     insert(edit_text, MS, "i11", lambda d: " This sentence adds exactly twelve more words to the abstract for this test.")),
+    ("i12a", "main-text limit", "manuscript.md Discussion: 150 words added (over 2500)", ijtld_long_main),
+    ("i13a", "running head limit", "title_page_src.md: running head over 45 characters", swap(edit_text, TP, "i13")),
+    ("i14a", "keyword in the title", "title_page_src.md: a keyword that repeats the title", swap(edit_text, TP, "i14")),
+    ("i15a", "keyword count", "title_page_src.md: six keywords", ijtld_six_keywords),
+    ("i16a", "pre-registered", "manuscript.md Methods: 'pre-registered' inserted", swap(edit_text, MS, "i16")),
+    ("i17a", "stigmatising term, markdown", "manuscript.md Results: 'TB patients' inserted", swap(edit_text, MS, "i17")),
+    ("i18a", "stigmatising term, docx only", "02 Discussion: 'defaulters' inserted",
+     insert(edit_docx, I_MS, "i18", lambda d: " Defaulters were excluded.")),
+    ("i19a", "reference limit", "manuscript.md: 36 references", ijtld_many_refs),
+    ("i20a", "display items, docx only", "02: Table 1 duplicated (four display items)", second_table),
+    ("i21a", "display items, markdown", "manuscript.md Results: a Figure 3 cited", swap(edit_text, MS, "i21")),
+    ("i22a", "figure, TIFF", "Figure_1.tif replaced by a 300 dpi image", ijtld_low_dpi),
+    ("i23a", "figure, TIFF", "Figure_1.tif replaced by Figure 2", ijtld_other_tiff),
+    ("i24a", "file set", "online material (tableS1.csv) put in the upload folder", ijtld_extra_file),
+    ("i25a", "file set", "01_cover_letter.docx removed", ijtld_drop_cover),
+    ("i26a", "cover letter", "cover_letter.md: a related manuscript removed", swap(edit_text, cmn.COVER, "i26")),
+    ("i27a", "cover letter", "cover_letter.md: the earlier journal named", swap(edit_text, cmn.COVER, "i27")),
+    ("i28a", "Word's counts", "word_counts_word.json: the abstract count set to 201", ijtld_stale_counts),
+    ("i29a", "Word's counts, docx only", "02 title page: the quoted abstract count changed", change(edit_docx, I_MS, "i29", bumped)),
+    ("i30a", "layout, docx only", "02: line numbers removed", ijtld_no_line_numbers),
+    ("i31a", "layout, docx only", "02: text justified", ijtld_justified),
+    ("i32a", "layout, docx only", "02: body text single spaced", ijtld_single_spaced),
+    ("i33a", "figure, docx only", "02: the embedded Figure 1 replaced", ijtld_other_image),
+    ("i34a", "caveat, markdown", "manuscript.md Results: the built-in split caveat removed", swap(edit_text, MS, "i34")),
+    ("i35a", "label, markdown", "manuscript.md Results: H1 'supported' -> 'not established'", swap(edit_text, MS, "i35")),
+    ("i36a", "online material", "manuscript.md: a Table S16 cited (it does not exist)", swap(edit_text, MS, "i36")),
+    ("i37a", "online material", "manuscript.md: the online-material link changed", swap(edit_text, MS, "i37")),
+    ("i38a", "citation style", "manuscript.md: a bracketed citation [3]", swap(edit_text, MS, "i38")),
+    ("i39a", "reference style", "manuscript.md: four authors listed before the title", swap(edit_text, MS, "i39")),
+    ("i40a", "wording", "manuscript.md Discussion: a causal claim inserted",
+     insert(edit_text, MS, "i40", lambda d: " The programme caused these gaps.")),
+    ("i41a", "spelling", "manuscript.md Discussion: 'programme' written 'program'", swap(edit_text, MS, "i41")),
+    ("i42a", "process word", "title_page_src.md: a drafting-process word", swap(edit_text, TP, "i42")),
+    ("i43a", "declarations, docx only", "03: the funding statement changed", swap(edit_docx, I_DECL, "i43")),
+]
+
+
+# --------------------------------------------------------------------------------------
 # Running the checks on a copy
 # --------------------------------------------------------------------------------------
 def copy_manuscript(src: Path, dst: Path) -> Path:
     """A copy of the folder, without the render output, the PNG previews and the mutation work
     folder; the large binary files of submission/ are hard-linked."""
     def ignore(d: str, names: list[str]) -> set[str]:
-        return {n for n in names if n in ("_render", "__pycache__", WORK) or n.endswith(".png")}
+        return {n for n in names if n in ("_render", "_render_qa", "__pycache__", WORK) or n.endswith(".png")}
 
     def copy_fn(s: str, t: str) -> None:
         if s.endswith(LINKED) and "submission" in Path(s).parts:
@@ -398,7 +572,7 @@ def md_token_spans(text: str) -> list[tuple[int, int]]:
 def sweep_md(ms: Path) -> tuple[int, int, list[str]]:
     text = (ms / cmn.MS_NAME).read_text(encoding="utf-8")
     gold, required = cmn.load_gold(ms), cmn.section_phrases(ms)
-    hl = (ms / cmn.HIGHLIGHTS).read_text(encoding="utf-8")
+    hl = cmn.read_opt(ms, cmn.HIGHLIGHTS)
     caught, escaped = 0, []
     spans = md_token_spans(text)
     for a, b in spans:
@@ -442,7 +616,8 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
     if not ms.is_dir() or not (ms / "submission").is_dir():
         print(f"SKIPPED: {name}/ or {name}/submission/ not present (kept private, not in this repository)")
         return 0
-    rows = run_named(ms)
+    ijtld_set = cmn.journal_of(ms) == "ijtld"
+    rows = run_named(ms, MUTATIONS_IJTLD if ijtld_set else None)
     bad = 0
     print("| # | Kind | Mutation | Caught by | First problem reported |")
     print("|---|------|----------|-----------|------------------------|")
@@ -457,7 +632,9 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
         for x in e:
             print("  UNCAUGHT", x)
         p = ms / M02
-        c2, t2, e2 = sweep_docx(p, tie.expected(ms, p.name))
+        if ijtld_set:
+            p = ms / I_MS
+        c2, t2, e2 = sweep_docx(p, tie.expected(ms, p.name, tie.spec_ijtld() if ijtld_set else None))
         print(f"sweep, {p.name} number tokens (check_docx_tie): caught {c2} of {t2}")
         for x in e2:
             print("  UNCAUGHT", x)
