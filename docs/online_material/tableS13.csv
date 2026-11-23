@@ -1,34 +1,21 @@
-Unit,E1 tier,E2 tier,Total tier,Below the benchmark (H3),Class
-Andaman and Nicobar Islands,lower priority (100%),lower priority (100%),lower priority (100%),no (100%),screening-led (99%)
-Andhra Pradesh,lower priority (100%),lower priority (92%),lower priority (98%),yes (100%),identification-led (99%)
-Arunachal Pradesh,lower priority (100%),lower priority (100%),lower priority (100%),yes (100%),identification-led (99%)
-Assam,lower priority (100%),lower priority (100%),lower priority (100%),yes (100%),identification-led (99%)
-Bihar,act now (100%),act now (95%),act now (100%),yes (100%),identification-led (100%)
-Chandigarh,lower priority (100%),lower priority (100%),lower priority (100%),yes (96%),identification-led (51%)
-Chhattisgarh,lower priority (100%),lower priority (100%),lower priority (100%),no (80%),screening-led (90%)
-Delhi,act now (100%),lower priority (100%),lower priority (100%),yes (100%),identification-led (51%)
-Goa,lower priority (100%),lower priority (100%),lower priority (100%),no (98%),screening-led (90%)
-Gujarat,lower priority (100%),act now (100%),act now (99%),yes (100%),identification-led (100%)
-Haryana,lower priority (100%),lower priority (100%),lower priority (100%),yes (100%),identification-led (100%)
-Himachal Pradesh,lower priority (100%),lower priority (100%),lower priority (100%),yes (100%),identification-led (100%)
-Jammu and Kashmir,lower priority (100%),lower priority (100%),lower priority (100%),no (95%),screening-led (86%)
-Jharkhand,lower priority (100%),lower priority (100%),lower priority (100%),yes (100%),identification-led (100%)
-Karnataka,lower priority (100%),lower priority (100%),lower priority (100%),no (94%),screening-led (99%)
-Kerala,lower priority (100%),lower priority (100%),lower priority (100%),no (100%),screening-led (100%)
-Madhya Pradesh,act now (98%),lower priority (73%),lower priority (61%),yes (100%),identification-led (100%)
-Maharashtra,lower priority (86%),act now (97%),act now (96%),yes (100%),identification-led (100%)
-Manipur,lower priority (100%),lower priority (100%),lower priority (100%),no (100%),screening-led (100%)
-Meghalaya,lower priority (100%),lower priority (100%),lower priority (100%),yes (100%),identification-led (100%)
-Mizoram,lower priority (100%),lower priority (100%),lower priority (100%),yes (100%),identification-led (100%)
-Nagaland,lower priority (100%),lower priority (100%),lower priority (100%),yes (100%),identification-led (100%)
-Odisha,lower priority (100%),lower priority (100%),lower priority (100%),yes (100%),identification-led (100%)
-Puducherry,lower priority (100%),lower priority (100%),lower priority (100%),no (100%),screening-led (100%)
-Punjab,lower priority (100%),lower priority (100%),lower priority (100%),yes (69%),mixed (15%)
-Rajasthan,lower priority (77%),act now (51%),act now (50%),yes (100%),identification-led (100%)
-Sikkim,lower priority (100%),lower priority (100%),lower priority (100%),yes (91%),identification-led (83%)
-Tamil Nadu,lower priority (100%),lower priority (100%),lower priority (100%),no (100%),screening-led (100%)
-Telangana,lower priority (100%),lower priority (79%),lower priority (89%),yes (100%),identification-led (100%)
-Tripura,lower priority (100%),lower priority (100%),lower priority (100%),yes (63%),mixed (59%)
-Uttar Pradesh,act now (100%),act now (100%),act now (100%),yes (100%),identification-led (100%)
-Uttarakhand,lower priority (100%),lower priority (100%),lower priority (100%),yes (98%),identification-led (96%)
-West Bengal,act now (66%),lower priority (98%),lower priority (96%),yes (97%),identification-led (75%)
+Unit,"Screened, K","Identified, D",Expected,z,Position
+2023: expected from the 2023 alone regression; φ 318.0; limits ±35.0 (95%) and ±55.1 (99.8%) on the z scale,,,,,
+Chhattisgarh,"35,425","3,013","1,407",43.7,between the 95% and 99.8% limits (above)
+Gujarat,"136,233","7,062","14,086",−62.5,below the 99.8% limit
+Karnataka,"75,958","10,870","6,534",56.1,above the 99.8% limit
+Tamil Nadu,"97,022","25,260","17,076",69.0,above the 99.8% limit
+Telangana,"69,431","4,014","7,412",−41.8,between the 95% and 99.8% limits (below)
+2021: expected from the main H1 fit (2019 and 2021); φ 222.1; limits ±29.2 (95%) and ±46.0 (99.8%) on the z scale,,,,,
+Bihar,"104,223","5,904","9,177",−35.8,between the 95% and 99.8% limits (below)
+Chhattisgarh,"28,791","2,420","1,271",33.0,between the 95% and 99.8% limits (above)
+Gujarat,"136,877","7,538","14,629",−62.0,below the 99.8% limit
+Karnataka,"67,424","10,155","6,078",54.8,above the 99.8% limit
+Tamil Nadu,"80,541","21,836","14,097",71.8,above the 99.8% limit
+Telangana,"57,456","3,732","6,325",−34.6,between the 95% and 99.8% limits (below)
+2019: expected from the main H1 fit (2019 and 2021); φ 199.0; limits ±27.6 (95%) and ±43.6 (99.8%) on the z scale,,,,,
+Andhra Pradesh,"83,094","8,043","11,733",−36.8,between the 95% and 99.8% limits (below)
+Bihar,"64,870","2,823","4,804",−29.7,between the 95% and 99.8% limits (below)
+Chhattisgarh,"35,152","2,407","1,295",31.5,between the 95% and 99.8% limits (above)
+Gujarat,"135,082","7,283","12,183",−46.5,below the 99.8% limit
+Karnataka,"71,171","8,251","5,398",40.4,between the 95% and 99.8% limits (above)
+Tamil Nadu,"79,696","16,605","11,913",46.6,above the 99.8% limit

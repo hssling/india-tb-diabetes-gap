@@ -117,7 +117,26 @@ k_b is the stated percentile across units of the posterior-mean yield (empirical
 
 Sums over the units with non-NA cells. C1 = K/N with the Wilson 95% interval; y = D/K, diabetes identified (newly diagnosed or known) among those screened; C3 = I/D, started on anti-diabetic treatment among those identified (2018: linked to an NCD clinic, not compared with later years). y and C3 do not depend on the denominator basis. No national identification ratio is formed, because p_u is a State reference.
 
-## Table S5. The State TB–diabetes cascade, data year 2023
+## Table S5. Headline estimates: the registered hypothesis H1, the registered descriptive results H2 and H3, and the national scenario
+
+| Estimate | What it measures | Value (95% interval) | n | Label |
+|---|---|---|---|---|
+| H1 | Slope on logit(p_u) of the quasi-binomial regression of diabetes identified among people with TB screened, data years 2019 and 2021 | 1.70 (1.01 to 2.18) | 33 units (66 unit-years) | supported (12 of 12 grid entries agree in sign) |
+| H1, model-based interval | As H1, with the Wald interval scaled by the Pearson dispersion | 1.70 (1.42 to 1.98) | 33 units | none (descriptive) |
+| H1, Spearman sensitivity | Rank correlation of p_u with the pooled 2019 and 2021 yield (Fisher-z interval, Fieller–Hartley–Pearson variance) | 0.80 (0.62 to 0.90) | 33 units | none (descriptive) |
+| H1, leave-one-out | Each unit left out in turn (lowest without Tamil Nadu; highest without Andhra Pradesh) | 1.41 to 1.83 | 33 units | none (descriptive) |
+| H2 | National screening coverage, 2022 (91.5%) minus 2018 (28.8%) | 62.72 (62.65 to 62.79) percentage points | 33 units each year | none (descriptive) |
+| H2, without 2018 | National screening coverage, 2022 minus 2019 (63.8%) | 27.66 (27.59 to 27.73) percentage points | 33 units each year | none (descriptive) |
+| H3 | Units with identification below the benchmark in 2023 (P(C2 < 1) at least 0.95) | 24 of 33 | 33 units | none (descriptive) |
+| H3, by construction | Units whose pooled 2021 and 2022 identification lies below k_b (the 75th percentile) | 24 of 33 | 33 units | none (descriptive) |
+| Fixed rule at k = 1 | Units with "likely under-detection" (97.5th percentile of R at k = 1 below 1), 2023 and 2022 | 27 and 28 of 33 | 33 units | none (descriptive) |
+| Scenario | Additional people with TB and diabetes identified per year if every unit reached the benchmark coverage (96.3%) and yield (k_b p_u), 2023; an illustration, not a forecast | 108,647 (107,967 to 109,333) | 33 units | none (descriptive) |
+| Scenario, five units | Share contributed by Bihar, Gujarat, Maharashtra, Rajasthan and Uttar Pradesh | 64.2% (63.9% to 64.5%) | 5 units | none (descriptive) |
+| Scenario, other benchmarks | As the scenario, at k = 1 and at the median benchmark | 162,003 (161,283 to 162,735); 35,506 (34,933 to 36,083) | 33 units | none (descriptive) |
+
+Main specification: data year 2023; main denominator basis; p_u sex-weighted; k_b = 0.822. Intervals: H1, cluster bootstrap over units (10,000 draws); H2, Newcombe; the scenario, binomial uncertainty in coverage and yield only. Only H1 carries a label: "supported" if its interval excludes 0 and at least 80% of the 12 grid entries agree in sign. H3 is close to mechanical (k_b is the 75th percentile). "Likely under-detection" (fixed rule at k = 1) may reflect the NFHS-5 random blood sugar threshold rather than missed diabetes.
+
+## Table S6. The State TB–diabetes cascade, data year 2023
 
 | Unit | Notified, N | C1 screened | y identified | p_u | C2 (95% interval) | P(C2 < 1) | R at k = 1 | C3 initiated | Flags |
 |---|---|---|---|---|---|---|---|---|---|
@@ -157,7 +176,37 @@ Sums over the units with non-NA cells. C1 = K/N with the Wilson 95% interval; y 
 
 Data year 2023, main basis; Jeffreys intervals. C2 = y/(k_b p_u), k_b = 0.822; R at k = 1 = y/p_u. Flags: B, below the benchmark (P(C2 < 1) at least 0.95); U, "likely under-detection" (97.5th percentile of R at k = 1 below 1; may reflect the NFHS-5 threshold); L, linkage below the benchmark. A low C2 may reflect a truly lower prevalence, the testing method or recording.
 
-## Table S6. Linkage to anti-diabetic treatment (C3) by year, and the linkage gap E3 in 2023
+## Table S7. H1: the specification grid, the Spearman sensitivity and leave-one-out
+
+| Reference or analysis | Data years | Weights | Unit-years | Estimate | Interval | Agrees in sign |
+|---|---|---|---|---|---|---|
+| **The 12-entry grid (β1 point estimates; the bootstrap interval is computed for the main entry only)** |  |  |  |  |  |  |
+| sex-weighted | 2019 and 2021 | tested | 66 | 1.70 | 1.42 to 1.98 | main entry |
+| sex-weighted | 2019 and 2021 | unweighted | 66 | 1.89 | 1.59 to 2.19 | yes |
+| sex-weighted | 2021 to 2023 | tested | 99 | 1.78 | 1.54 to 2.01 | yes |
+| sex-weighted | 2021 to 2023 | unweighted | 99 | 1.92 | 1.66 to 2.18 | yes |
+| sex-weighted | 2023 alone | tested | 33 | 1.83 | 1.42 to 2.24 | yes |
+| sex-weighted | 2023 alone | unweighted | 33 | 1.96 | 1.49 to 2.43 | yes |
+| simple | 2019 and 2021 | tested | 66 | 1.72 | 1.44 to 1.99 | yes |
+| simple | 2019 and 2021 | unweighted | 66 | 1.89 | 1.59 to 2.18 | yes |
+| simple | 2021 to 2023 | tested | 99 | 1.79 | 1.56 to 2.03 | yes |
+| simple | 2021 to 2023 | unweighted | 99 | 1.92 | 1.67 to 2.18 | yes |
+| simple | 2023 alone | tested | 33 | 1.85 | 1.44 to 2.25 | yes |
+| simple | 2023 alone | unweighted | 33 | 1.97 | 1.51 to 2.43 | yes |
+| **Sensitivities and diagnostics of the main entry** |  |  |  |  |  |  |
+| Spearman ρ, sex-weighted | 2019 and 2021 | — | 33 units | 0.80 | 0.62 to 0.90 | — |
+| Spearman ρ, simple | 2019 and 2021 | — | 33 units | 0.79 | 0.61 to 0.90 | — |
+| Spearman ρ, sex-weighted | 2021 and 2022 (fixed H1 years) | — | 33 units | 0.74 | 0.52 to 0.87 | — |
+| p_u × 0.8 | 2019 and 2021 | tested | — | 1.76 | — | — |
+| p_u × 1.2 | 2019 and 2021 | tested | — | 1.64 | — | — |
+| Leave-one-out, lowest | without Tamil Nadu | tested | — | 1.41 | — | — |
+| Leave-one-out, highest | without Andhra Pradesh | tested | — | 1.83 | — | — |
+| Spearman leave-one-out, lowest | without Kerala | — | — | 0.78 | — | — |
+| Spearman leave-one-out, highest | without Gujarat | — | — | 0.84 | — | — |
+
+Quasi-binomial regression of D/K on logit(p_u) with year indicators, fitted by iteratively reweighted least squares; prior weights K (tested) or 1 (unweighted). Main entry: Pearson dispersion 501.5; Kish effective number of clusters 12.9; 0 of 10,000 bootstrap draws discarded. Wald interval: model-based, scaled by the dispersion, descriptive only. A common scaling of p_u changes β1 only through the logit. β > 0 is partly expected, because both the TB count and NFHS-5 include treated diabetes. The model is ecological.
+
+## Table S8. Linkage to anti-diabetic treatment (C3) by year, and the linkage gap E3 in 2023
 
 | Unit | 2018 (NCD clinic) | 2019 | 2021 | 2022 | 2023 | E3, 2023 (95% interval) | P(top-5) (tier) | Linkage below benchmark |
 |---|---|---|---|---|---|---|---|---|
@@ -197,7 +246,7 @@ Data year 2023, main basis; Jeffreys intervals. C2 = y/(k_b p_u), k_b = 0.822; R
 
 C3: people with TB and diabetes initiated on anti-diabetic treatment among those identified (2018: linked to an NCD clinic, a different definition). E3, the linkage gap = D − I (identified, not initiated), mean and 95% interval of 10,000 Jeffreys draws of C3; P(top-5), the probability of being among the five units with the largest E3, with its tier (act now at least 0.80). Linkage below the benchmark: P(C3 < c3_b) at least 0.95, with c3_b = 77.4% in 2023 (the 75th percentile of units). E3 is not added to the screening and identification gaps.
 
-## Table S7. Screening gap (E1), identification gap (E2) and total shortfall, with tiers, 2023
+## Table S9. Screening gap (E1), identification gap (E2) and total shortfall, with tiers, 2023
 
 | Unit | E1 (95% interval) | E1 P(top-5) (tier) | E2 (95% interval) | E2 P(top-5) (tier) | Total (95% interval) | Total P(top-5) (tier) | Total per 100,000 notified |
 |---|---|---|---|---|---|---|---|
@@ -237,7 +286,7 @@ C3: people with TB and diabetes initiated on anti-diabetic treatment among those
 
 Main specification, 2023 (k_b = 0.822; 10,000 draws). E1 = N(1 − c)k_b p_u; E2 = K max(0, k_b p_u − y); total = E1 + E2; mean and 95% interval. Tier from P(top-5): act now at least 0.80, lower priority below 0.20. Sums of the means: E1 21,124; E2 97,518; total 118,642.
 
-## Table S8. Where the shortfall lies: screening-led, identification-led or mixed, 2023 (and the class in 2022 and 2021)
+## Table S10. Where the shortfall lies: screening-led, identification-led or mixed, 2023 (and the class in 2022 and 2021)
 
 | Unit | Share at screening, S (95% interval) | P(S > 0.5) | P(S < 0.5) | Class, 2023 | Total per 100,000 notified | Class, 2022 | Class, 2021 |
 |---|---|---|---|---|---|---|---|
@@ -277,7 +326,7 @@ Main specification, 2023 (k_b = 0.822; 10,000 draws). E1 = N(1 − c)k_b p_u; E2
 
 Share S = E1/(E1 + E2), the part of the unit's total shortfall at the screening step, mean and 95% interval of 10,000 draws. Screening-led: P(S > 0.5) at least 0.95; identification-led: P(S < 0.5) at least 0.95; otherwise mixed. Small total shortfall: total per 100,000 notified below the median of units (4,062 in 2023). Main specification; the class at k = 1, 1.5 and 2 and on the Annexure 1.2 basis is in the repository's decomposition output.
 
-## Table S9. Sensitivity of H3, the act-now sets and the scenario to the multiplier, the reference, shrinkage and the denominator basis, 2023
+## Table S11. Sensitivity of H3, the act-now sets and the scenario to the multiplier, the reference, shrinkage and the denominator basis, 2023
 
 | Specification | k | Units below 1 | E1 act now | E2 act now | Scenario, people per year (95% interval) |
 |---|---|---|---|---|---|
@@ -296,104 +345,7 @@ Share S = E1/(E1 + E2), the part of the unit's total shortfall at the screening 
 
 Data year 2023; 33 units (31 on the Annexure 1.2 basis, where Himachal Pradesh and Tripura have more people with a known status than notified). Units below 1: the number of units with P(R < 1) at least 0.95, then the number whose 97.5th percentile of R lies below 1 (at k = 1 the latter is the "likely under-detection" count). A common scaling of p_u cancels under k_b, so it is shown at k = 1 only. The scenario is an illustration, not a forecast; at a fixed k the benchmark coverage is unchanged. The denominator basis does not change C2, so H3 is not repeated for it. —, not computed for that specification (plan sections 6.4 and 8.11).
 
-## Table S10. H1: the specification grid, the Spearman sensitivity and leave-one-out
-
-| Reference or analysis | Data years | Weights | Unit-years | Estimate | Interval | Agrees in sign |
-|---|---|---|---|---|---|---|
-| **The 12-entry grid (β1 point estimates; the bootstrap interval is computed for the main entry only)** |  |  |  |  |  |  |
-| sex-weighted | 2019 and 2021 | tested | 66 | 1.70 | 1.42 to 1.98 | main entry |
-| sex-weighted | 2019 and 2021 | unweighted | 66 | 1.89 | 1.59 to 2.19 | yes |
-| sex-weighted | 2021 to 2023 | tested | 99 | 1.78 | 1.54 to 2.01 | yes |
-| sex-weighted | 2021 to 2023 | unweighted | 99 | 1.92 | 1.66 to 2.18 | yes |
-| sex-weighted | 2023 alone | tested | 33 | 1.83 | 1.42 to 2.24 | yes |
-| sex-weighted | 2023 alone | unweighted | 33 | 1.96 | 1.49 to 2.43 | yes |
-| simple | 2019 and 2021 | tested | 66 | 1.72 | 1.44 to 1.99 | yes |
-| simple | 2019 and 2021 | unweighted | 66 | 1.89 | 1.59 to 2.18 | yes |
-| simple | 2021 to 2023 | tested | 99 | 1.79 | 1.56 to 2.03 | yes |
-| simple | 2021 to 2023 | unweighted | 99 | 1.92 | 1.67 to 2.18 | yes |
-| simple | 2023 alone | tested | 33 | 1.85 | 1.44 to 2.25 | yes |
-| simple | 2023 alone | unweighted | 33 | 1.97 | 1.51 to 2.43 | yes |
-| **Sensitivities and diagnostics of the main entry** |  |  |  |  |  |  |
-| Spearman ρ, sex-weighted | 2019 and 2021 | — | 33 units | 0.80 | 0.62 to 0.90 | — |
-| Spearman ρ, simple | 2019 and 2021 | — | 33 units | 0.79 | 0.61 to 0.90 | — |
-| Spearman ρ, sex-weighted | 2021 and 2022 (fixed H1 years) | — | 33 units | 0.74 | 0.52 to 0.87 | — |
-| p_u × 0.8 | 2019 and 2021 | tested | — | 1.76 | — | — |
-| p_u × 1.2 | 2019 and 2021 | tested | — | 1.64 | — | — |
-| Leave-one-out, lowest | without Tamil Nadu | tested | — | 1.41 | — | — |
-| Leave-one-out, highest | without Andhra Pradesh | tested | — | 1.83 | — | — |
-| Spearman leave-one-out, lowest | without Kerala | — | — | 0.78 | — | — |
-| Spearman leave-one-out, highest | without Gujarat | — | — | 0.84 | — | — |
-
-Quasi-binomial regression of D/K on logit(p_u) with year indicators, fitted by iteratively reweighted least squares; prior weights K (tested) or 1 (unweighted). Main entry: Pearson dispersion 501.5; Kish effective number of clusters 12.9; 0 of 10,000 bootstrap draws discarded. Wald interval: model-based, scaled by the dispersion, descriptive only. A common scaling of p_u changes β1 only through the logit. β > 0 is partly expected, because both the TB count and NFHS-5 include treated diabetes. The model is ecological.
-
-## Table S11. Overdispersed funnel of diabetes identified against the across-unit relationship with p_u
-
-| Unit | Screened, K | Identified, D | Expected | z | Position |
-|---|---|---|---|---|---|
-| **2023: expected from the 2023 alone regression; φ 318.0; limits ±35.0 (95%) and ±55.1 (99.8%) on the z scale** |  |  |  |  |  |
-| Chhattisgarh | 35,425 | 3,013 | 1,407 | 43.7 | between the 95% and 99.8% limits (above) |
-| Gujarat | 136,233 | 7,062 | 14,086 | −62.5 | below the 99.8% limit |
-| Karnataka | 75,958 | 10,870 | 6,534 | 56.1 | above the 99.8% limit |
-| Tamil Nadu | 97,022 | 25,260 | 17,076 | 69.0 | above the 99.8% limit |
-| Telangana | 69,431 | 4,014 | 7,412 | −41.8 | between the 95% and 99.8% limits (below) |
-| **2021: expected from the main H1 fit (2019 and 2021); φ 222.1; limits ±29.2 (95%) and ±46.0 (99.8%) on the z scale** |  |  |  |  |  |
-| Bihar | 104,223 | 5,904 | 9,177 | −35.8 | between the 95% and 99.8% limits (below) |
-| Chhattisgarh | 28,791 | 2,420 | 1,271 | 33.0 | between the 95% and 99.8% limits (above) |
-| Gujarat | 136,877 | 7,538 | 14,629 | −62.0 | below the 99.8% limit |
-| Karnataka | 67,424 | 10,155 | 6,078 | 54.8 | above the 99.8% limit |
-| Tamil Nadu | 80,541 | 21,836 | 14,097 | 71.8 | above the 99.8% limit |
-| Telangana | 57,456 | 3,732 | 6,325 | −34.6 | between the 95% and 99.8% limits (below) |
-| **2019: expected from the main H1 fit (2019 and 2021); φ 199.0; limits ±27.6 (95%) and ±43.6 (99.8%) on the z scale** |  |  |  |  |  |
-| Andhra Pradesh | 83,094 | 8,043 | 11,733 | −36.8 | between the 95% and 99.8% limits (below) |
-| Bihar | 64,870 | 2,823 | 4,804 | −29.7 | between the 95% and 99.8% limits (below) |
-| Chhattisgarh | 35,152 | 2,407 | 1,295 | 31.5 | between the 95% and 99.8% limits (above) |
-| Gujarat | 135,082 | 7,283 | 12,183 | −46.5 | below the 99.8% limit |
-| Karnataka | 71,171 | 8,251 | 5,398 | 40.4 | between the 95% and 99.8% limits (above) |
-| Tamil Nadu | 79,696 | 16,605 | 11,913 | 46.6 | above the 99.8% limit |
-
-Units outside the 95% limits only (28, 27 and 27 units lie within them in 2023, 2021 and 2019). z = (D − K μ)/√(K μ(1 − μ)), with μ from the regression of identification on p_u; limits ±1.96 and ±3.09 widened by √φ from 10%-winsorised z-scores. Below the 99.8% limit: identification well below what the across-unit relationship with p_u predicts; this may reflect testing, recording or the reference prevalence as much as missed diabetes.
-
-## Table S12. Trend in screening coverage by unit, 2018 to 2023
-
-| Unit | Data years | Slope, main (95% interval) | Slope without 2018 (95% interval) | Falling coverage |
-|---|---|---|---|---|
-| Andaman and Nicobar Islands | 2018, 2019, 2021, 2022, 2023 | 0.60 (−3.00 to 4.19) | 0.48 (−1.25 to 2.20) | no |
-| Andhra Pradesh | 2018, 2019, 2021, 2022, 2023 | 0.81 (0.27 to 1.34) | 0.68 (0.41 to 0.96) | no |
-| Arunachal Pradesh | 2018, 2019, 2021, 2022, 2023 | 0.49 (−0.91 to 1.90) | 0.33 (−0.28 to 0.94) | no |
-| Assam | 2018, 2019, 2021, 2022, 2023 | 0.68 (0.28 to 1.07) | 0.53 (0.36 to 0.71) | no |
-| Bihar | 2018, 2019, 2021, 2022, 2023 | 0.43 (0.21 to 0.65) | 0.31 (0.22 to 0.40) | no |
-| Chandigarh | 2018, 2019, 2021, 2022, 2023 | 0.40 (−0.87 to 1.66) | −0.13 (−0.99 to 0.73) | no |
-| Chhattisgarh | 2018, 2019, 2021, 2022, 2023 | 0.50 (0.07 to 0.92) | 0.25 (0.02 to 0.47) | no |
-| Delhi | 2018, 2019, 2021, 2022, 2023 | 0.49 (0.25 to 0.73) | 0.40 (0.29 to 0.52) | no |
-| Goa | 2018, 2019, 2021, 2022, 2023 | 0.69 (−1.41 to 2.78) | 0.49 (−0.55 to 1.53) | no |
-| Gujarat | 2018, 2019, 2021, 2022, 2023 | 0.66 (0.36 to 0.96) | 0.40 (0.24 to 0.56) | no |
-| Haryana | 2018, 2019, 2021, 2022, 2023 | 0.71 (0.32 to 1.11) | 0.60 (0.40 to 0.80) | no |
-| Himachal Pradesh | 2018, 2019, 2021, 2022, 2023 | 1.07 (−0.42 to 2.56) | 0.31 (−0.57 to 1.20) | no |
-| Jammu and Kashmir | 2018, 2019, 2021, 2022, 2023 | 0.87 (−0.12 to 1.85) | 0.63 (0.16 to 1.10) | no |
-| Jharkhand | 2018, 2019, 2021, 2022, 2023 | 0.75 (0.36 to 1.13) | 0.59 (0.42 to 0.77) | no |
-| Karnataka | 2018, 2019, 2021, 2022, 2023 | 0.61 (0.25 to 0.97) | 0.43 (0.24 to 0.61) | no |
-| Kerala | 2018, 2019, 2021, 2022, 2023 | 0.79 (0.08 to 1.50) | 0.40 (0.03 to 0.77) | no |
-| Madhya Pradesh | 2018, 2019, 2021, 2022, 2023 | 0.65 (0.45 to 0.86) | 0.46 (0.36 to 0.55) | no |
-| Maharashtra | 2018, 2019, 2021, 2022, 2023 | 0.84 (0.60 to 1.08) | 0.53 (0.41 to 0.64) | no |
-| Manipur | 2018, 2019, 2021, 2022, 2023 | 0.64 (−1.01 to 2.29) | 0.52 (−0.17 to 1.21) | no |
-| Meghalaya | 2018, 2019, 2021, 2022, 2023 | 0.54 (−0.57 to 1.65) | 0.37 (−0.14 to 0.88) | no |
-| Mizoram | 2018, 2019, 2021, 2022, 2023 | 0.87 (−1.79 to 3.53) | 0.84 (−0.42 to 2.09) | no |
-| Nagaland | 2018, 2019, 2021, 2022, 2023 | 0.82 (−0.58 to 2.22) | 0.73 (0.15 to 1.31) | no |
-| Odisha | 2018, 2019, 2021, 2022, 2023 | 0.79 (0.28 to 1.30) | 0.36 (0.07 to 0.64) | no |
-| Puducherry | 2018, 2019, 2021, 2022, 2023 | 0.55 (−3.66 to 4.75) | 0.04 (−2.77 to 2.85) | no |
-| Punjab | 2018, 2019, 2021, 2022, 2023 | 0.49 (0.13 to 0.85) | 0.08 (−0.13 to 0.30) | no |
-| Rajasthan | 2018, 2019, 2021, 2022, 2023 | 0.63 (0.43 to 0.84) | 0.43 (0.33 to 0.53) | no |
-| Sikkim | 2018, 2019, 2021, 2022, 2023 | 0.54 (−2.45 to 3.52) | 0.29 (−1.34 to 1.91) | no |
-| Tamil Nadu | 2018, 2019, 2021, 2022, 2023 | 0.96 (0.57 to 1.35) | 0.69 (0.51 to 0.87) | no |
-| Telangana | 2018, 2019, 2021, 2022, 2023 | 0.77 (0.41 to 1.13) | 0.76 (0.60 to 0.93) | no |
-| Tripura | 2018, 2019, 2021, 2022, 2023 | 0.93 (−1.02 to 2.88) | 0.84 (−0.04 to 1.72) | no |
-| Uttar Pradesh | 2018, 2019, 2021, 2022, 2023 | 1.02 (0.86 to 1.17) | 0.90 (0.83 to 0.97) | no |
-| Uttarakhand | 2018, 2019, 2021, 2022, 2023 | 1.15 (0.36 to 1.94) | 1.09 (0.75 to 1.42) | no |
-| West Bengal | 2018, 2019, 2021, 2022, 2023 | 0.41 (0.13 to 0.69) | 0.30 (0.15 to 0.44) | no |
-
-Slope of the empirical logit of screening coverage per year (weighted least squares with a 2021 indicator), with the 95% interval widened by the pooled dispersion φ (3985 in the main model; 569 without 2018). Falling coverage: the interval wholly below 0. Units with a falling flag: 0 (main), 0 (without 2018), 0 (without the 2021 indicator) and 0 (Annexure 1.2 basis). Coverage rose steeply from 2018, partly with the change of denominator basis; the model without 2018 is the practice-relevant view of recent change.
-
-## Table S13. Robustness of the 2023 tiers, H3 membership and class to State-specific error in p_u
+## Table S12. Robustness of the 2023 tiers, H3 membership and class to State-specific error in p_u
 
 | Unit | E1 tier | E2 tier | Total tier | Below the benchmark (H3) | Class |
 |---|---|---|---|---|---|
@@ -433,6 +385,33 @@ Slope of the empirical logit of screening coverage per year (weighted least squa
 
 Each unit's p_u multiplied by an independent exp(N(0, 0.10²)) in 1,000 replicates, with k_b, E1, E2, H3 and the decomposition recomputed on the same draws (k_b 0.735 to 0.894 across replicates). Cells: the main result and, in brackets, the share of replicates in which it is unchanged. Leave-one-out (2023, each unit removed and the whole chain recomputed): at most 1 unit changes in the E1 act-now set and at most 1 in the E2 set.
 
+## Table S13. Overdispersed funnel of diabetes identified against the across-unit relationship with p_u
+
+| Unit | Screened, K | Identified, D | Expected | z | Position |
+|---|---|---|---|---|---|
+| **2023: expected from the 2023 alone regression; φ 318.0; limits ±35.0 (95%) and ±55.1 (99.8%) on the z scale** |  |  |  |  |  |
+| Chhattisgarh | 35,425 | 3,013 | 1,407 | 43.7 | between the 95% and 99.8% limits (above) |
+| Gujarat | 136,233 | 7,062 | 14,086 | −62.5 | below the 99.8% limit |
+| Karnataka | 75,958 | 10,870 | 6,534 | 56.1 | above the 99.8% limit |
+| Tamil Nadu | 97,022 | 25,260 | 17,076 | 69.0 | above the 99.8% limit |
+| Telangana | 69,431 | 4,014 | 7,412 | −41.8 | between the 95% and 99.8% limits (below) |
+| **2021: expected from the main H1 fit (2019 and 2021); φ 222.1; limits ±29.2 (95%) and ±46.0 (99.8%) on the z scale** |  |  |  |  |  |
+| Bihar | 104,223 | 5,904 | 9,177 | −35.8 | between the 95% and 99.8% limits (below) |
+| Chhattisgarh | 28,791 | 2,420 | 1,271 | 33.0 | between the 95% and 99.8% limits (above) |
+| Gujarat | 136,877 | 7,538 | 14,629 | −62.0 | below the 99.8% limit |
+| Karnataka | 67,424 | 10,155 | 6,078 | 54.8 | above the 99.8% limit |
+| Tamil Nadu | 80,541 | 21,836 | 14,097 | 71.8 | above the 99.8% limit |
+| Telangana | 57,456 | 3,732 | 6,325 | −34.6 | between the 95% and 99.8% limits (below) |
+| **2019: expected from the main H1 fit (2019 and 2021); φ 199.0; limits ±27.6 (95%) and ±43.6 (99.8%) on the z scale** |  |  |  |  |  |
+| Andhra Pradesh | 83,094 | 8,043 | 11,733 | −36.8 | between the 95% and 99.8% limits (below) |
+| Bihar | 64,870 | 2,823 | 4,804 | −29.7 | between the 95% and 99.8% limits (below) |
+| Chhattisgarh | 35,152 | 2,407 | 1,295 | 31.5 | between the 95% and 99.8% limits (above) |
+| Gujarat | 135,082 | 7,283 | 12,183 | −46.5 | below the 99.8% limit |
+| Karnataka | 71,171 | 8,251 | 5,398 | 40.4 | between the 95% and 99.8% limits (above) |
+| Tamil Nadu | 79,696 | 16,605 | 11,913 | 46.6 | above the 99.8% limit |
+
+Units outside the 95% limits only (28, 27 and 27 units lie within them in 2023, 2021 and 2019). z = (D − K μ)/√(K μ(1 − μ)), with μ from the regression of identification on p_u; limits ±1.96 and ±3.09 widened by √φ from 10%-winsorised z-scores. Below the 99.8% limit: identification well below what the across-unit relationship with p_u predicts; this may reflect testing, recording or the reference prevalence as much as missed diabetes.
+
 ## Table S14. Guidance by unit: the decomposition class, the 2023 tiers and the step to strengthen first
 
 | Unit | Class | E1 tier | E2 tier | E3 tier | C3 below 50% | Step to strengthen first | Then |
@@ -471,23 +450,44 @@ Each unit's p_u multiplied by an independent exp(N(0, 0.10²)) in 1,000 replicat
 | Uttarakhand | identification-led | lower priority | lower priority | lower priority | yes (40.8%) | linkage: start treatment for those identified | identification: check the test, confirmation and recording |
 | West Bengal | identification-led | act now | lower priority | lower priority | no (75.1%) | identification: check the test, confirmation and recording | — |
 
-Data year 2023, main specification; every column is read from the outputs of Tables S5 to S8, and nothing is estimated here. Rule: where fewer than half of those identified were started on treatment (C3 below 50%), linkage comes first and the decomposition class second; otherwise the class names the step. The tiers show where the gap is largest in people. A low identification may reflect a truly lower prevalence, the testing method or recording; the steps are options for the programme, not tested interventions.
+Data year 2023, main specification; every column is read from the outputs of Tables S6, S8, S9 and S10, and nothing is estimated here. Rule: where fewer than half of those identified were started on treatment (C3 below 50%), linkage comes first and the decomposition class second; otherwise the class names the step. The tiers show where the gap is largest in people. A low identification may reflect a truly lower prevalence, the testing method or recording; the steps are options for the programme, not tested interventions.
 
-## Table S15. Headline estimates: the registered hypothesis H1, the registered descriptive results H2 and H3, and the national scenario
+## Table S15. Trend in screening coverage by unit, 2018 to 2023
 
-| Estimate | What it measures | Value (95% interval) | n | Label |
+| Unit | Data years | Slope, main (95% interval) | Slope without 2018 (95% interval) | Falling coverage |
 |---|---|---|---|---|
-| H1 | Slope on logit(p_u) of the quasi-binomial regression of diabetes identified among people with TB screened, data years 2019 and 2021 | 1.70 (1.01 to 2.18) | 33 units (66 unit-years) | supported (12 of 12 grid entries agree in sign) |
-| H1, model-based interval | As H1, with the Wald interval scaled by the Pearson dispersion | 1.70 (1.42 to 1.98) | 33 units | none (descriptive) |
-| H1, Spearman sensitivity | Rank correlation of p_u with the pooled 2019 and 2021 yield (Fisher-z interval, Fieller–Hartley–Pearson variance) | 0.80 (0.62 to 0.90) | 33 units | none (descriptive) |
-| H1, leave-one-out | Each unit left out in turn (lowest without Tamil Nadu; highest without Andhra Pradesh) | 1.41 to 1.83 | 33 units | none (descriptive) |
-| H2 | National screening coverage, 2022 (91.5%) minus 2018 (28.8%) | 62.72 (62.65 to 62.79) percentage points | 33 units each year | none (descriptive) |
-| H2, without 2018 | National screening coverage, 2022 minus 2019 (63.8%) | 27.66 (27.59 to 27.73) percentage points | 33 units each year | none (descriptive) |
-| H3 | Units with identification below the benchmark in 2023 (P(C2 < 1) at least 0.95) | 24 of 33 | 33 units | none (descriptive) |
-| H3, by construction | Units whose pooled 2021 and 2022 identification lies below k_b (the 75th percentile) | 24 of 33 | 33 units | none (descriptive) |
-| Fixed rule at k = 1 | Units with "likely under-detection" (97.5th percentile of R at k = 1 below 1), 2023 and 2022 | 27 and 28 of 33 | 33 units | none (descriptive) |
-| Scenario | Additional people with TB and diabetes identified per year if every unit reached the benchmark coverage (96.3%) and yield (k_b p_u), 2023; an illustration, not a forecast | 108,647 (107,967 to 109,333) | 33 units | none (descriptive) |
-| Scenario, five units | Share contributed by Bihar, Gujarat, Maharashtra, Rajasthan and Uttar Pradesh | 64.2% (63.9% to 64.5%) | 5 units | none (descriptive) |
-| Scenario, other benchmarks | As the scenario, at k = 1 and at the median benchmark | 162,003 (161,283 to 162,735); 35,506 (34,933 to 36,083) | 33 units | none (descriptive) |
+| Andaman and Nicobar Islands | 2018, 2019, 2021, 2022, 2023 | 0.60 (−3.00 to 4.19) | 0.48 (−1.25 to 2.20) | no |
+| Andhra Pradesh | 2018, 2019, 2021, 2022, 2023 | 0.81 (0.27 to 1.34) | 0.68 (0.41 to 0.96) | no |
+| Arunachal Pradesh | 2018, 2019, 2021, 2022, 2023 | 0.49 (−0.91 to 1.90) | 0.33 (−0.28 to 0.94) | no |
+| Assam | 2018, 2019, 2021, 2022, 2023 | 0.68 (0.28 to 1.07) | 0.53 (0.36 to 0.71) | no |
+| Bihar | 2018, 2019, 2021, 2022, 2023 | 0.43 (0.21 to 0.65) | 0.31 (0.22 to 0.40) | no |
+| Chandigarh | 2018, 2019, 2021, 2022, 2023 | 0.40 (−0.87 to 1.66) | −0.13 (−0.99 to 0.73) | no |
+| Chhattisgarh | 2018, 2019, 2021, 2022, 2023 | 0.50 (0.07 to 0.92) | 0.25 (0.02 to 0.47) | no |
+| Delhi | 2018, 2019, 2021, 2022, 2023 | 0.49 (0.25 to 0.73) | 0.40 (0.29 to 0.52) | no |
+| Goa | 2018, 2019, 2021, 2022, 2023 | 0.69 (−1.41 to 2.78) | 0.49 (−0.55 to 1.53) | no |
+| Gujarat | 2018, 2019, 2021, 2022, 2023 | 0.66 (0.36 to 0.96) | 0.40 (0.24 to 0.56) | no |
+| Haryana | 2018, 2019, 2021, 2022, 2023 | 0.71 (0.32 to 1.11) | 0.60 (0.40 to 0.80) | no |
+| Himachal Pradesh | 2018, 2019, 2021, 2022, 2023 | 1.07 (−0.42 to 2.56) | 0.31 (−0.57 to 1.20) | no |
+| Jammu and Kashmir | 2018, 2019, 2021, 2022, 2023 | 0.87 (−0.12 to 1.85) | 0.63 (0.16 to 1.10) | no |
+| Jharkhand | 2018, 2019, 2021, 2022, 2023 | 0.75 (0.36 to 1.13) | 0.59 (0.42 to 0.77) | no |
+| Karnataka | 2018, 2019, 2021, 2022, 2023 | 0.61 (0.25 to 0.97) | 0.43 (0.24 to 0.61) | no |
+| Kerala | 2018, 2019, 2021, 2022, 2023 | 0.79 (0.08 to 1.50) | 0.40 (0.03 to 0.77) | no |
+| Madhya Pradesh | 2018, 2019, 2021, 2022, 2023 | 0.65 (0.45 to 0.86) | 0.46 (0.36 to 0.55) | no |
+| Maharashtra | 2018, 2019, 2021, 2022, 2023 | 0.84 (0.60 to 1.08) | 0.53 (0.41 to 0.64) | no |
+| Manipur | 2018, 2019, 2021, 2022, 2023 | 0.64 (−1.01 to 2.29) | 0.52 (−0.17 to 1.21) | no |
+| Meghalaya | 2018, 2019, 2021, 2022, 2023 | 0.54 (−0.57 to 1.65) | 0.37 (−0.14 to 0.88) | no |
+| Mizoram | 2018, 2019, 2021, 2022, 2023 | 0.87 (−1.79 to 3.53) | 0.84 (−0.42 to 2.09) | no |
+| Nagaland | 2018, 2019, 2021, 2022, 2023 | 0.82 (−0.58 to 2.22) | 0.73 (0.15 to 1.31) | no |
+| Odisha | 2018, 2019, 2021, 2022, 2023 | 0.79 (0.28 to 1.30) | 0.36 (0.07 to 0.64) | no |
+| Puducherry | 2018, 2019, 2021, 2022, 2023 | 0.55 (−3.66 to 4.75) | 0.04 (−2.77 to 2.85) | no |
+| Punjab | 2018, 2019, 2021, 2022, 2023 | 0.49 (0.13 to 0.85) | 0.08 (−0.13 to 0.30) | no |
+| Rajasthan | 2018, 2019, 2021, 2022, 2023 | 0.63 (0.43 to 0.84) | 0.43 (0.33 to 0.53) | no |
+| Sikkim | 2018, 2019, 2021, 2022, 2023 | 0.54 (−2.45 to 3.52) | 0.29 (−1.34 to 1.91) | no |
+| Tamil Nadu | 2018, 2019, 2021, 2022, 2023 | 0.96 (0.57 to 1.35) | 0.69 (0.51 to 0.87) | no |
+| Telangana | 2018, 2019, 2021, 2022, 2023 | 0.77 (0.41 to 1.13) | 0.76 (0.60 to 0.93) | no |
+| Tripura | 2018, 2019, 2021, 2022, 2023 | 0.93 (−1.02 to 2.88) | 0.84 (−0.04 to 1.72) | no |
+| Uttar Pradesh | 2018, 2019, 2021, 2022, 2023 | 1.02 (0.86 to 1.17) | 0.90 (0.83 to 0.97) | no |
+| Uttarakhand | 2018, 2019, 2021, 2022, 2023 | 1.15 (0.36 to 1.94) | 1.09 (0.75 to 1.42) | no |
+| West Bengal | 2018, 2019, 2021, 2022, 2023 | 0.41 (0.13 to 0.69) | 0.30 (0.15 to 0.44) | no |
 
-Main specification: data year 2023; main denominator basis; p_u sex-weighted; k_b = 0.822. Intervals: H1, cluster bootstrap over units (10,000 draws); H2, Newcombe; the scenario, binomial uncertainty in coverage and yield only. Only H1 carries a label: "supported" if its interval excludes 0 and at least 80% of the 12 grid entries agree in sign. H3 is close to mechanical (k_b is the 75th percentile). "Likely under-detection" (fixed rule at k = 1) may reflect the NFHS-5 random blood sugar threshold rather than missed diabetes.
+Slope of the empirical logit of screening coverage per year (weighted least squares with a 2021 indicator), with the 95% interval widened by the pooled dispersion φ (3985 in the main model; 569 without 2018). Falling coverage: the interval wholly below 0. Units with a falling flag: 0 (main), 0 (without 2018), 0 (without the 2021 indicator) and 0 (Annexure 1.2 basis). Coverage rose steeply from 2018, partly with the change of denominator basis; the model without 2018 is the practice-relevant view of recent change.

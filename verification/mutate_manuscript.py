@@ -475,6 +475,9 @@ MUTATIONS_IJTLD: list[Mutation] = [
     ("i41a", "spelling", "manuscript.md Discussion: 'programme' written 'program'", swap(edit_text, MS, "i41")),
     ("i42a", "process word", "title_page_src.md: a drafting-process word", swap(edit_text, TP, "i42")),
     ("i43a", "declarations, docx only", "03: the funding statement changed", swap(edit_docx, I_DECL, "i43")),
+    ("i44a", "online citation order", "manuscript.md Methods: the first online citation changed from Table S1 to S2",
+     swap(edit_text, MS, "i44")),
+    ("i45a", "online citation missing", "manuscript.md Results: the only citation of Table S4 removed", swap(edit_text, MS, "i45")),
 ]
 
 

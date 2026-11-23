@@ -268,3 +268,20 @@ def test_ijtld_introduction_heading_and_build_profile(tmp_path):
 def test_ijtld_mutations_are_named_uniquely():
     ids = [m[0] for m in mutate_manuscript.MUTATIONS_IJTLD]
     assert len(set(ids)) == len(ids) and all(re.fullmatch(r"i\d+[a-z]", i) for i in ids)
+
+
+def test_online_citation_order_and_coverage():
+    from exhibits import make_online_material as mo
+    labels = [t.label.split()[1] for t in mo.tables(ROOT)]
+    assert labels == [f"S{k}" for k in range(1, 16)]
+    body = " ".join(f"(Table {x})" for x in labels) + " (Figure S1) (Figure S2)"
+    assert cmn.online_order_problems(body, "", "", ROOT) == []
+    swapped = body.replace("(Table S1) (Table S2)", "(Table S2) (Table S1)", 1)
+    assert "out of order" in " ".join(cmn.online_order_problems(swapped, "", "", ROOT))
+    assert "never cited: ['S1']" in " ".join(cmn.online_order_problems(body.replace("(Table S1)", "(Table S2)", 1),
+                                                                       "", "", ROOT))
+    found = " ".join(cmn.online_order_problems(body.replace("(Table S4)", ""), "", "", ROOT))
+    assert "never cited: ['S4']" in found
+    assert "does not exist" in " ".join(cmn.online_order_problems(body + " (Table S16)", "", "", ROOT))
+    assert cmn.online_citations("Tables S2–S4 and Figure S1") == [("Table", "S2"), ("Table", "S3"), ("Table", "S4"),
+                                                                  ("Figure", "S1")]

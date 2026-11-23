@@ -12,17 +12,17 @@ All tables are in [`tables.md`](tables.md); each is also a CSV file.
 | Table S2 | Reference prevalence of raised or treated blood sugar by unit (NFHS-5) | [`tableS2.csv`](tableS2.csv) |
 | Table S3 | Benchmarks: the multiplier k_b, the benchmark coverage and the linkage benchmark | [`tableS3.csv`](tableS3.csv) |
 | Table S4 | National TB–diabetes cascade by data year and denominator basis | [`tableS4.csv`](tableS4.csv) |
-| Table S5 | The State TB–diabetes cascade, data year 2023 | [`tableS5.csv`](tableS5.csv) |
-| Table S6 | Linkage to anti-diabetic treatment (C3) by year, and the linkage gap E3 in 2023 | [`tableS6.csv`](tableS6.csv) |
-| Table S7 | Screening gap (E1), identification gap (E2) and total shortfall, with tiers, 2023 | [`tableS7.csv`](tableS7.csv) |
-| Table S8 | Where the shortfall lies: screening-led, identification-led or mixed, 2023 (and the class in 2022 and 2021) | [`tableS8.csv`](tableS8.csv) |
-| Table S9 | Sensitivity of H3, the act-now sets and the scenario to the multiplier, the reference, shrinkage and the denominator basis, 2023 | [`tableS9.csv`](tableS9.csv) |
-| Table S10 | H1: the specification grid, the Spearman sensitivity and leave-one-out | [`tableS10.csv`](tableS10.csv) |
-| Table S11 | Overdispersed funnel of diabetes identified against the across-unit relationship with p_u | [`tableS11.csv`](tableS11.csv) |
-| Table S12 | Trend in screening coverage by unit, 2018 to 2023 | [`tableS12.csv`](tableS12.csv) |
-| Table S13 | Robustness of the 2023 tiers, H3 membership and class to State-specific error in p_u | [`tableS13.csv`](tableS13.csv) |
+| Table S5 | Headline estimates: the registered hypothesis H1, the registered descriptive results H2 and H3, and the national scenario | [`tableS5.csv`](tableS5.csv) |
+| Table S6 | The State TB–diabetes cascade, data year 2023 | [`tableS6.csv`](tableS6.csv) |
+| Table S7 | H1: the specification grid, the Spearman sensitivity and leave-one-out | [`tableS7.csv`](tableS7.csv) |
+| Table S8 | Linkage to anti-diabetic treatment (C3) by year, and the linkage gap E3 in 2023 | [`tableS8.csv`](tableS8.csv) |
+| Table S9 | Screening gap (E1), identification gap (E2) and total shortfall, with tiers, 2023 | [`tableS9.csv`](tableS9.csv) |
+| Table S10 | Where the shortfall lies: screening-led, identification-led or mixed, 2023 (and the class in 2022 and 2021) | [`tableS10.csv`](tableS10.csv) |
+| Table S11 | Sensitivity of H3, the act-now sets and the scenario to the multiplier, the reference, shrinkage and the denominator basis, 2023 | [`tableS11.csv`](tableS11.csv) |
+| Table S12 | Robustness of the 2023 tiers, H3 membership and class to State-specific error in p_u | [`tableS12.csv`](tableS12.csv) |
+| Table S13 | Overdispersed funnel of diabetes identified against the across-unit relationship with p_u | [`tableS13.csv`](tableS13.csv) |
 | Table S14 | Guidance by unit: the decomposition class, the 2023 tiers and the step to strengthen first | [`tableS14.csv`](tableS14.csv) |
-| Table S15 | Headline estimates: the registered hypothesis H1, the registered descriptive results H2 and H3, and the national scenario | [`tableS15.csv`](tableS15.csv) |
+| Table S15 | Trend in screening coverage by unit, 2018 to 2023 | [`tableS15.csv`](tableS15.csv) |
 
 ## Figures
 

@@ -1,24 +1,34 @@
-Reference or analysis,Data years,Weights,Unit-years,Estimate,Interval,Agrees in sign
-The 12-entry grid (β1 point estimates; the bootstrap interval is computed for the main entry only),,,,,,
-sex-weighted,2019 and 2021,tested,66,1.70,1.42 to 1.98,main entry
-sex-weighted,2019 and 2021,unweighted,66,1.89,1.59 to 2.19,yes
-sex-weighted,2021 to 2023,tested,99,1.78,1.54 to 2.01,yes
-sex-weighted,2021 to 2023,unweighted,99,1.92,1.66 to 2.18,yes
-sex-weighted,2023 alone,tested,33,1.83,1.42 to 2.24,yes
-sex-weighted,2023 alone,unweighted,33,1.96,1.49 to 2.43,yes
-simple,2019 and 2021,tested,66,1.72,1.44 to 1.99,yes
-simple,2019 and 2021,unweighted,66,1.89,1.59 to 2.18,yes
-simple,2021 to 2023,tested,99,1.79,1.56 to 2.03,yes
-simple,2021 to 2023,unweighted,99,1.92,1.67 to 2.18,yes
-simple,2023 alone,tested,33,1.85,1.44 to 2.25,yes
-simple,2023 alone,unweighted,33,1.97,1.51 to 2.43,yes
-Sensitivities and diagnostics of the main entry,,,,,,
-"Spearman ρ, sex-weighted",2019 and 2021,—,33 units,0.80,0.62 to 0.90,—
-"Spearman ρ, simple",2019 and 2021,—,33 units,0.79,0.61 to 0.90,—
-"Spearman ρ, sex-weighted",2021 and 2022 (fixed H1 years),—,33 units,0.74,0.52 to 0.87,—
-p_u × 0.8,2019 and 2021,tested,—,1.76,—,—
-p_u × 1.2,2019 and 2021,tested,—,1.64,—,—
-"Leave-one-out, lowest",without Tamil Nadu,tested,—,1.41,—,—
-"Leave-one-out, highest",without Andhra Pradesh,tested,—,1.83,—,—
-"Spearman leave-one-out, lowest",without Kerala,—,—,0.78,—,—
-"Spearman leave-one-out, highest",without Gujarat,—,—,0.84,—,—
+Unit,"Share at screening, S (95% interval)",P(S > 0.5),P(S < 0.5),"Class, 2023","Total per 100,000 notified","Class, 2022","Class, 2021"
+Andaman and Nicobar Islands,100% (100% to 100%),1,0,screening-led (small total shortfall),"1,590",screening-led,screening-led
+Andhra Pradesh,7% (6% to 7%),0,1,identification-led,"4,962",identification-led,identification-led
+Arunachal Pradesh,41% (38% to 45%),<0.001,>0.999,identification-led,"6,537",identification-led,identification-led
+Assam,27% (26% to 28%),0,1,identification-led,"5,106",identification-led,mixed
+Bihar,37% (36% to 37%),0,1,identification-led,"7,635",identification-led,identification-led
+Chandigarh,41% (35% to 49%),0.01,0.99,identification-led,"5,274",identification-led,identification-led
+Chhattisgarh,99% (88% to 100%),1,0,screening-led (small total shortfall),768,screening-led,screening-led
+Delhi,47% (46% to 49%),0.004,0.997,identification-led,"4,429",mixed,screening-led
+Goa,100% (100% to 100%),>0.999,<0.001,screening-led (small total shortfall),"1,193",screening-led,screening-led
+Gujarat,6% (6% to 6%),0,1,identification-led,"8,560",identification-led,identification-led
+Haryana,10% (9% to 10%),0,1,identification-led (small total shortfall),"3,927",identification-led,identification-led
+Himachal Pradesh,4% (3% to 5%),0,1,identification-led (small total shortfall),"3,436",identification-led,identification-led
+Jammu and Kashmir,100% (100% to 100%),1,0,screening-led (small total shortfall),331,mixed,screening-led
+Jharkhand,16% (16% to 17%),0,1,identification-led,"5,148",identification-led,mixed
+Karnataka,100% (100% to 100%),1,0,screening-led (small total shortfall),675,screening-led,screening-led
+Kerala,100% (100% to 100%),1,0,screening-led (small total shortfall),781,screening-led,screening-led
+Madhya Pradesh,23% (23% to 24%),0,1,identification-led (small total shortfall),"3,785",identification-led,identification-led
+Maharashtra,11% (10% to 11%),0,1,identification-led,"5,028",identification-led,identification-led
+Manipur,100% (100% to 100%),1,0,screening-led (small total shortfall),"2,635",screening-led,screening-led
+Meghalaya,23% (21% to 26%),0,1,identification-led,"6,215",identification-led,identification-led
+Mizoram,7% (5% to 8%),0,1,identification-led,"6,786",identification-led,identification-led
+Nagaland,25% (22% to 29%),0,1,identification-led,"4,869",identification-led,identification-led
+Odisha,7% (6% to 7%),0,1,identification-led,"5,561",identification-led,identification-led
+Puducherry,100% (100% to 100%),1,0,screening-led (small total shortfall),353,screening-led,screening-led
+Punjab,51% (46% to 58%),0.62,0.38,mixed (small total shortfall),"1,990",mixed,screening-led
+Rajasthan,16% (16% to 17%),0,1,identification-led,"4,549",identification-led,identification-led
+Sikkim,17% (11% to 29%),0.002,0.998,identification-led (small total shortfall),"3,433",identification-led,identification-led
+Tamil Nadu,100% (100% to 100%),1,0,screening-led (small total shortfall),608,screening-led,screening-led
+Telangana,12% (12% to 13%),0,1,identification-led,"8,426",identification-led,identification-led
+Tripura,37% (21% to 76%),0.12,0.88,mixed (small total shortfall),"2,034",mixed,screening-led
+Uttar Pradesh,7% (7% to 7%),0,1,identification-led,"4,530",identification-led,identification-led
+Uttarakhand,15% (13% to 17%),0,1,identification-led (small total shortfall),"3,007",identification-led,identification-led
+West Bengal,33% (31% to 34%),0,1,identification-led,"4,062",identification-led,identification-led

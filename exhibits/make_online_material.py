@@ -10,8 +10,9 @@ nothing is typed in by hand, and no individual-level data exist in this study.
 
 Writes docs/online_material/:
   README.md            the index, the notation and how the files were made
-  tables.md            Tables S1-S15 (S1-S14 from exhibits/make_tables.py; S15, the headline
-                       estimates H1, H2 and H3 with the national scenario)
+  tables.md            Tables S1-S15, numbered in the order of their first citation in the
+                       manuscript (ORDER below): the supplementary tables of exhibits/make_tables.py
+                       and the headline estimates H1, H2 and H3 with the national scenario
   tableS1.csv ...      one CSV per table, the same rows
   figureS1.pdf/.png    the 2023 screening, identification and linkage gaps by unit, with tiers
   figureS2.pdf/.png    the overdispersed funnel of identification (2023, 2021 and 2019)
@@ -68,12 +69,53 @@ def reword(t: Table) -> Table:
                  [[person_first(c) for c in r] for r in t.rows], [person_first(n) for n in t.notes])
 
 
+# The online tables in the order of their first citation in the manuscript (verification checks
+# that order): each entry is the source table of exhibits/make_tables.py ("Table 1" there is the
+# headline-estimates table; "Table Sk" its supplementary tables). Position n is online Table Sn.
+ORDER = ["Table S1",   # sources and definitions (Methods, Data)
+         "Table S2",   # reference prevalence (Methods, Data)
+         "Table S3",   # benchmarks (Methods, the benchmark)
+         "Table S4",   # the national cascade by year and basis (Results, national cascade)
+         "Table 1",    # headline estimates H1, H2, H3 and the scenario (Results, national cascade)
+         "Table S5",   # the 2023 State cascade (Results, State cascade)
+         "Table S10",  # H1 grid, Spearman and leave-one-out (Results, State cascade)
+         "Table S6",   # linkage (Results, linkage)
+         "Table S7",   # gaps and tiers (Results, gaps)
+         "Table S8",   # where the shortfall lies (Results, gaps)
+         "Table S9",   # sensitivity (Results, scenario)
+         "Table S13",  # perturbation (Results, robustness)
+         "Table S11",  # funnel (Results, robustness)
+         "Table S14",  # guidance by unit (Discussion)
+         "Table S12"]  # coverage trend (Discussion, limitations)
+HEADLINE_TITLE = ("Headline estimates: the registered hypothesis H1, the registered descriptive results H2 and H3, "
+                  "and the national scenario")
+
+
+def renumber_refs(s: str, new: dict[str, str]) -> str:
+    """Cross-references between the source tables ("Table S6", "Tables S5 to S8") in the new numbers."""
+    def one_ref(m: re.Match) -> str:
+        a, b = int(m.group(2)), int(m.group(3) or m.group(2))
+        labels = [new[f"Table S{k}"].split()[1] for k in range(a, b + 1)]
+        nums = sorted(labels, key=lambda x: int(x[1:]))
+        if len(nums) == 1:
+            return f"Table {nums[0]}"
+        return "Tables " + ", ".join(nums[:-1]) + " and " + nums[-1]
+    return re.sub(r"\b(Tables?) S(\d+)(?: to S(\d+))?\b", one_ref, s)
+
+
 def tables(root: Path = ROOT) -> list[Table]:
-    built = make_tables.build(root)
-    t1, sup = built[0], built[1:]
-    s15 = Table("Table S15", "Headline estimates: the registered hypothesis H1, the registered descriptive results "
-                "H2 and H3, and the national scenario", t1.header, t1.rows, t1.notes)
-    return [reword(t) for t in sup + [s15]]
+    built = {t.label: t for t in make_tables.build(root)}
+    if sorted(ORDER) != sorted(built):
+        raise ValueError("ORDER must list every table of exhibits/make_tables.py once")
+    new = {old: f"Table S{n}" for n, old in enumerate(ORDER, start=1)}
+    out = []
+    for old in ORDER:
+        t = built[old]
+        title = HEADLINE_TITLE if old == "Table 1" else t.title
+        t = Table(new[old], renumber_refs(title, new), t.header, [[renumber_refs(c, new) for c in r] for r in t.rows],
+                  [renumber_refs(n, new) for n in t.notes])
+        out.append(reword(t))
+    return out
 
 
 def tables_md(root: Path = ROOT) -> str:

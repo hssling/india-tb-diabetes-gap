@@ -1,21 +1,13 @@
-Unit,"Screened, K","Identified, D",Expected,z,Position
-2023: expected from the 2023 alone regression; φ 318.0; limits ±35.0 (95%) and ±55.1 (99.8%) on the z scale,,,,,
-Chhattisgarh,"35,425","3,013","1,407",43.7,between the 95% and 99.8% limits (above)
-Gujarat,"136,233","7,062","14,086",−62.5,below the 99.8% limit
-Karnataka,"75,958","10,870","6,534",56.1,above the 99.8% limit
-Tamil Nadu,"97,022","25,260","17,076",69.0,above the 99.8% limit
-Telangana,"69,431","4,014","7,412",−41.8,between the 95% and 99.8% limits (below)
-2021: expected from the main H1 fit (2019 and 2021); φ 222.1; limits ±29.2 (95%) and ±46.0 (99.8%) on the z scale,,,,,
-Bihar,"104,223","5,904","9,177",−35.8,between the 95% and 99.8% limits (below)
-Chhattisgarh,"28,791","2,420","1,271",33.0,between the 95% and 99.8% limits (above)
-Gujarat,"136,877","7,538","14,629",−62.0,below the 99.8% limit
-Karnataka,"67,424","10,155","6,078",54.8,above the 99.8% limit
-Tamil Nadu,"80,541","21,836","14,097",71.8,above the 99.8% limit
-Telangana,"57,456","3,732","6,325",−34.6,between the 95% and 99.8% limits (below)
-2019: expected from the main H1 fit (2019 and 2021); φ 199.0; limits ±27.6 (95%) and ±43.6 (99.8%) on the z scale,,,,,
-Andhra Pradesh,"83,094","8,043","11,733",−36.8,between the 95% and 99.8% limits (below)
-Bihar,"64,870","2,823","4,804",−29.7,between the 95% and 99.8% limits (below)
-Chhattisgarh,"35,152","2,407","1,295",31.5,between the 95% and 99.8% limits (above)
-Gujarat,"135,082","7,283","12,183",−46.5,below the 99.8% limit
-Karnataka,"71,171","8,251","5,398",40.4,between the 95% and 99.8% limits (above)
-Tamil Nadu,"79,696","16,605","11,913",46.6,above the 99.8% limit
+Specification,k,Units below 1,E1 act now,E2 act now,"Scenario, people per year (95% interval)"
+"Main: k_b, 75th percentile",0.822,24; 24,"Bihar, Delhi, Madhya Pradesh, Uttar Pradesh, West Bengal","Bihar, Gujarat, Maharashtra, Rajasthan, Uttar Pradesh","108,647 (107,967 to 109,333)"
+k = 1,1.000,28; 27,"Bihar, Delhi, Madhya Pradesh, Uttar Pradesh, West Bengal","Bihar, Gujarat, Madhya Pradesh, Maharashtra, Uttar Pradesh","162,003 (161,283 to 162,735)"
+k = 1.5,1.500,32; 32,"Bihar, Delhi, Madhya Pradesh, Uttar Pradesh, West Bengal","Bihar, Gujarat, Madhya Pradesh, Maharashtra, Uttar Pradesh","324,510 (323,734 to 325,287)"
+k = 2,2.000,33; 33,"Bihar, Delhi, Madhya Pradesh, Uttar Pradesh, West Bengal","Bihar, Gujarat, Madhya Pradesh, Maharashtra, Uttar Pradesh","493,011 (492,235 to 493,790)"
+"k_b, median",0.564,15; 15,"Bihar, Delhi, Madhya Pradesh, Uttar Pradesh, West Bengal","Bihar, Gujarat, Maharashtra, Rajasthan, Uttar Pradesh","35,506 (34,933 to 36,083)"
+"k_b, 90th percentile",1.084,28; 28,"Bihar, Delhi, Madhya Pradesh, Uttar Pradesh, West Bengal","Bihar, Gujarat, Madhya Pradesh, Maharashtra, Uttar Pradesh","190,465 (189,740 to 191,194)"
+"k_b, 2019 and 2021 pool",0.745,22; 22,"Bihar, Delhi, Madhya Pradesh, Uttar Pradesh, West Bengal","Bihar, Gujarat, Maharashtra, Rajasthan, Uttar Pradesh",—
+Simple reference p_u,0.839,24; 24,"Bihar, Delhi, Madhya Pradesh, Uttar Pradesh, West Bengal","Bihar, Gujarat, Maharashtra, Rajasthan, Uttar Pradesh",—
+Shrinkage off (Jeffreys),0.823,24; 24,"Bihar, Delhi, Madhya Pradesh, Uttar Pradesh, West Bengal","Bihar, Gujarat, Maharashtra, Rajasthan, Uttar Pradesh",—
+Annexure 1.2 basis (registered),0.822,—,"Bihar, Delhi, Gujarat, Madhya Pradesh, Maharashtra","Bihar, Gujarat, Maharashtra, Rajasthan, Uttar Pradesh","109,270 (108,570 to 109,962)"
+"p_u × 0.8, k = 1",1.000,23; 23,"Bihar, Delhi, Madhya Pradesh, Uttar Pradesh, West Bengal","Bihar, Gujarat, Maharashtra, Rajasthan, Uttar Pradesh",—
+"p_u × 1.2, k = 1",1.000,29; 29,"Bihar, Delhi, Madhya Pradesh, Uttar Pradesh, West Bengal","Bihar, Gujarat, Madhya Pradesh, Maharashtra, Uttar Pradesh",—

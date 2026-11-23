@@ -873,7 +873,45 @@ def online_text(text: str) -> str:
     return text.replace(ijtld.ONLINE_URL, "<online material>")
 
 
-def exhibit_problems_ijtld(text: str, root: Path) -> list[str]:
+ONLINE_CITE = re.compile(r"\b(Tables?|Figures?) (S\d{1,2}(?:(?:,| and|–) ?S\d{1,2})*)")
+
+
+def online_citations(text: str) -> list[tuple[str, str]]:
+    """("Table" or "Figure", "Sn") for every online-material citation, in reading order."""
+    out = []
+    for m in ONLINE_CITE.finditer(text):
+        parts = re.findall(r"S(\d{1,2})", m.group(2))
+        if "–" in m.group(2) and len(parts) == 2:
+            parts = [str(k) for k in range(int(parts[0]), int(parts[1]) + 1)]
+        kind = "Table" if m.group(1).startswith("Table") else "Figure"
+        out += [(kind, f"S{p}") for p in parts]
+    return out
+
+
+def online_order_problems(body: str, table_notes: str, legends: str, root: Path) -> list[str]:
+    """Online Tables Sn and Figures Sn: each cited, first cited in the order of their numbers (the
+    text, then the Table 1 notes, then the figure legends), and present in docs/online_material."""
+    d = root / "docs" / "online_material"
+    tm = d / "tables.md"
+    have = {"Table": re.findall(r"(?m)^## Table (S\d+)\.", tm.read_text(encoding="utf-8")) if tm.exists() else [],
+            "Figure": sorted((f"S{k}" for k in range(1, 10) if (d / f"figureS{k}.pdf").exists()), key=lambda x: int(x[1:]))}
+    allowed = {"Table": ijtld.ONLINE_TABLES, "Figure": ijtld.ONLINE_FIGURES}
+    cites = online_citations(body) + online_citations(table_notes) + online_citations(legends)
+    out = []
+    for kind in ("Table", "Figure"):
+        first = list(dict.fromkeys(x for k, x in cites if k == kind))
+        for x in first:
+            if x not in allowed[kind] or x not in have[kind]:
+                out.append(f"EXHIBITS: online {kind} {x} does not exist in docs/online_material")
+        if first != sorted(first, key=lambda x: int(x[1:])):
+            out.append(f"EXHIBITS: online {kind}s first cited out of order: {first}")
+        never = [x for x in have[kind] if x not in first]
+        if never:
+            out.append(f"EXHIBITS: online {kind}s never cited: {never}")
+    return out
+
+
+def exhibit_problems_ijtld(text: str, root: Path, table_notes: str = "") -> list[str]:
     secs = sections(text)
     body = " ".join(v for k, v in secs.items() if k not in ("Title", "Abstract", "Figure legends"))
     out = []
@@ -896,18 +934,7 @@ def exhibit_problems_ijtld(text: str, root: Path) -> list[str]:
             out.append(f"EXHIBITS: no legend for Figure {n}")
     if re.search(r"\bFigure [3-9]\b|\bTable [2-9]\b", body + " " + leg):
         out.append("EXHIBITS: a display item beyond Table 1 and Figures 1 and 2 is cited")
-    online = (root / "docs" / "online_material" / "tables.md")
-    have = set(re.findall(r"(?m)^## Table (S\d+)\.", online.read_text(encoding="utf-8"))) if online.exists() else set()
-    have |= {f"S{k}" for k in range(1, 10) if (root / "docs" / "online_material" / f"figureS{k}.pdf").exists()}
-    for m in re.finditer(r"\b(Tables?|Figures?) (S\d{1,2}(?:(?:,| and|–) ?S\d{1,2})*)", body):
-        parts = re.findall(r"S(\d{1,2})", m.group(2))
-        if "–" in m.group(2) and len(parts) == 2:
-            parts = [str(k) for k in range(int(parts[0]), int(parts[1]) + 1)]
-        kind = "Table" if m.group(1).startswith("Table") else "Figure"
-        allowed = ijtld.ONLINE_TABLES if kind == "Table" else ijtld.ONLINE_FIGURES
-        for p in parts:
-            if f"S{p}" not in allowed or (kind == "Table" and f"S{p}" not in have):
-                out.append(f"EXHIBITS: online {kind} S{p} does not exist in docs/online_material")
+    out += online_order_problems(body, table_notes, leg, root)
     if ijtld.ONLINE_URL not in text:
         out.append(f"EXHIBITS: the text does not link the online material ({ijtld.ONLINE_URL})")
     if not re.search(r"online material", body):
@@ -1067,7 +1094,7 @@ def problems_ijtld(root: Path, ms_dir: Path, text: str, gold: dict | None, requi
     now, out = skeleton_ijtld(text, root, required)
     out += skeleton_problems_ijtld(now, gold, root)
     out += claims(root)
-    out += exhibit_problems_ijtld(text, root)
+    out += exhibit_problems_ijtld(text, root, read_opt(ms_dir, "exhibits/tables.md") or "")
     if exhibits:
         out += regenerated_problems_ijtld(ms_dir, root)
     caveats = pf.get("caveats", {})

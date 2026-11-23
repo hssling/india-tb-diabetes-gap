@@ -1,13 +1,34 @@
-Estimate,What it measures,Value (95% interval),n,Label
-H1,"Slope on logit(p_u) of the quasi-binomial regression of diabetes identified among people with TB screened, data years 2019 and 2021",1.70 (1.01 to 2.18),33 units (66 unit-years),supported (12 of 12 grid entries agree in sign)
-"H1, model-based interval","As H1, with the Wald interval scaled by the Pearson dispersion",1.70 (1.42 to 1.98),33 units,none (descriptive)
-"H1, Spearman sensitivity","Rank correlation of p_u with the pooled 2019 and 2021 yield (Fisher-z interval, Fieller–Hartley–Pearson variance)",0.80 (0.62 to 0.90),33 units,none (descriptive)
-"H1, leave-one-out",Each unit left out in turn (lowest without Tamil Nadu; highest without Andhra Pradesh),1.41 to 1.83,33 units,none (descriptive)
-H2,"National screening coverage, 2022 (91.5%) minus 2018 (28.8%)",62.72 (62.65 to 62.79) percentage points,33 units each year,none (descriptive)
-"H2, without 2018","National screening coverage, 2022 minus 2019 (63.8%)",27.66 (27.59 to 27.73) percentage points,33 units each year,none (descriptive)
-H3,Units with identification below the benchmark in 2023 (P(C2 < 1) at least 0.95),24 of 33,33 units,none (descriptive)
-"H3, by construction",Units whose pooled 2021 and 2022 identification lies below k_b (the 75th percentile),24 of 33,33 units,none (descriptive)
-Fixed rule at k = 1,"Units with ""likely under-detection"" (97.5th percentile of R at k = 1 below 1), 2023 and 2022",27 and 28 of 33,33 units,none (descriptive)
-Scenario,"Additional people with TB and diabetes identified per year if every unit reached the benchmark coverage (96.3%) and yield (k_b p_u), 2023; an illustration, not a forecast","108,647 (107,967 to 109,333)",33 units,none (descriptive)
-"Scenario, five units","Share contributed by Bihar, Gujarat, Maharashtra, Rajasthan and Uttar Pradesh",64.2% (63.9% to 64.5%),5 units,none (descriptive)
-"Scenario, other benchmarks","As the scenario, at k = 1 and at the median benchmark","162,003 (161,283 to 162,735); 35,506 (34,933 to 36,083)",33 units,none (descriptive)
+Unit,Data years,"Slope, main (95% interval)",Slope without 2018 (95% interval),Falling coverage
+Andaman and Nicobar Islands,"2018, 2019, 2021, 2022, 2023",0.60 (−3.00 to 4.19),0.48 (−1.25 to 2.20),no
+Andhra Pradesh,"2018, 2019, 2021, 2022, 2023",0.81 (0.27 to 1.34),0.68 (0.41 to 0.96),no
+Arunachal Pradesh,"2018, 2019, 2021, 2022, 2023",0.49 (−0.91 to 1.90),0.33 (−0.28 to 0.94),no
+Assam,"2018, 2019, 2021, 2022, 2023",0.68 (0.28 to 1.07),0.53 (0.36 to 0.71),no
+Bihar,"2018, 2019, 2021, 2022, 2023",0.43 (0.21 to 0.65),0.31 (0.22 to 0.40),no
+Chandigarh,"2018, 2019, 2021, 2022, 2023",0.40 (−0.87 to 1.66),−0.13 (−0.99 to 0.73),no
+Chhattisgarh,"2018, 2019, 2021, 2022, 2023",0.50 (0.07 to 0.92),0.25 (0.02 to 0.47),no
+Delhi,"2018, 2019, 2021, 2022, 2023",0.49 (0.25 to 0.73),0.40 (0.29 to 0.52),no
+Goa,"2018, 2019, 2021, 2022, 2023",0.69 (−1.41 to 2.78),0.49 (−0.55 to 1.53),no
+Gujarat,"2018, 2019, 2021, 2022, 2023",0.66 (0.36 to 0.96),0.40 (0.24 to 0.56),no
+Haryana,"2018, 2019, 2021, 2022, 2023",0.71 (0.32 to 1.11),0.60 (0.40 to 0.80),no
+Himachal Pradesh,"2018, 2019, 2021, 2022, 2023",1.07 (−0.42 to 2.56),0.31 (−0.57 to 1.20),no
+Jammu and Kashmir,"2018, 2019, 2021, 2022, 2023",0.87 (−0.12 to 1.85),0.63 (0.16 to 1.10),no
+Jharkhand,"2018, 2019, 2021, 2022, 2023",0.75 (0.36 to 1.13),0.59 (0.42 to 0.77),no
+Karnataka,"2018, 2019, 2021, 2022, 2023",0.61 (0.25 to 0.97),0.43 (0.24 to 0.61),no
+Kerala,"2018, 2019, 2021, 2022, 2023",0.79 (0.08 to 1.50),0.40 (0.03 to 0.77),no
+Madhya Pradesh,"2018, 2019, 2021, 2022, 2023",0.65 (0.45 to 0.86),0.46 (0.36 to 0.55),no
+Maharashtra,"2018, 2019, 2021, 2022, 2023",0.84 (0.60 to 1.08),0.53 (0.41 to 0.64),no
+Manipur,"2018, 2019, 2021, 2022, 2023",0.64 (−1.01 to 2.29),0.52 (−0.17 to 1.21),no
+Meghalaya,"2018, 2019, 2021, 2022, 2023",0.54 (−0.57 to 1.65),0.37 (−0.14 to 0.88),no
+Mizoram,"2018, 2019, 2021, 2022, 2023",0.87 (−1.79 to 3.53),0.84 (−0.42 to 2.09),no
+Nagaland,"2018, 2019, 2021, 2022, 2023",0.82 (−0.58 to 2.22),0.73 (0.15 to 1.31),no
+Odisha,"2018, 2019, 2021, 2022, 2023",0.79 (0.28 to 1.30),0.36 (0.07 to 0.64),no
+Puducherry,"2018, 2019, 2021, 2022, 2023",0.55 (−3.66 to 4.75),0.04 (−2.77 to 2.85),no
+Punjab,"2018, 2019, 2021, 2022, 2023",0.49 (0.13 to 0.85),0.08 (−0.13 to 0.30),no
+Rajasthan,"2018, 2019, 2021, 2022, 2023",0.63 (0.43 to 0.84),0.43 (0.33 to 0.53),no
+Sikkim,"2018, 2019, 2021, 2022, 2023",0.54 (−2.45 to 3.52),0.29 (−1.34 to 1.91),no
+Tamil Nadu,"2018, 2019, 2021, 2022, 2023",0.96 (0.57 to 1.35),0.69 (0.51 to 0.87),no
+Telangana,"2018, 2019, 2021, 2022, 2023",0.77 (0.41 to 1.13),0.76 (0.60 to 0.93),no
+Tripura,"2018, 2019, 2021, 2022, 2023",0.93 (−1.02 to 2.88),0.84 (−0.04 to 1.72),no
+Uttar Pradesh,"2018, 2019, 2021, 2022, 2023",1.02 (0.86 to 1.17),0.90 (0.83 to 0.97),no
+Uttarakhand,"2018, 2019, 2021, 2022, 2023",1.15 (0.36 to 1.94),1.09 (0.75 to 1.42),no
+West Bengal,"2018, 2019, 2021, 2022, 2023",0.41 (0.13 to 0.69),0.30 (0.15 to 0.44),no
