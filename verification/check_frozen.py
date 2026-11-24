@@ -10,7 +10,8 @@ have edited a file in Word before uploading (as with both cover letters); this c
 instead that each submitted file is still byte for byte what was sent, and that nothing has been
 added to the set. Word's lock files (~$*) and the _render folder are ignored.
 
-The folders: manuscript/ (Primary Care Diabetes) and manuscript/v2/ (IJTLD). The manuscript
+The folders: manuscript/ (Primary Care Diabetes), manuscript/v2/ (IJTLD) and manuscript/v3/
+(Diabetes & Metabolic Syndrome: Clinical Research & Reviews). The manuscript
 folders are private and git-ignored: "SKIPPED" when none is present. Exit 1 on any problem.
 """
 from __future__ import annotations
@@ -21,7 +22,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-FOLDERS = ("manuscript", "manuscript/v2")
+FOLDERS = ("manuscript", "manuscript/v2", "manuscript/v3")
 LINE = re.compile(r"(?m)^([0-9a-f]{64}) +\*?(\S.*?)\s*$")
 
 
