@@ -103,13 +103,18 @@ def renumber_refs(s: str, new: dict[str, str]) -> str:
     return re.sub(r"\b(Tables?) S(\d+)(?: to S(\d+))?\b", one_ref, s)
 
 
-def tables(root: Path = ROOT) -> list[Table]:
+def tables(root: Path = ROOT, order: list[str] | None = None) -> list[Table]:
+    """The online tables in ORDER (or in `order`, a subset of the source tables in another
+    manuscript's order of first citation: exhibits/make_dmscrr.py), renumbered S1, S2, ..."""
     built = {t.label: t for t in make_tables.build(root)}
-    if sorted(ORDER) != sorted(built):
+    order = ORDER if order is None else order
+    if order is ORDER and sorted(ORDER) != sorted(built):
         raise ValueError("ORDER must list every table of exhibits/make_tables.py once")
-    new = {old: f"Table S{n}" for n, old in enumerate(ORDER, start=1)}
+    if len(set(order)) != len(order) or not set(order) <= set(built):
+        raise ValueError("the order must name source tables of exhibits/make_tables.py, each once")
+    new = {old: f"Table S{n}" for n, old in enumerate(order, start=1)}
     out = []
-    for old in ORDER:
+    for old in order:
         t = built[old]
         title = HEADLINE_TITLE if old == "Table 1" else t.title
         t = Table(new[old], renumber_refs(title, new), t.header, [[renumber_refs(c, new) for c in r] for r in t.rows],

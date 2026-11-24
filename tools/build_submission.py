@@ -5,10 +5,11 @@
 # the four figures, the supplement, the cover letter, the declaration of interest and the optional
 # graphical abstract complete the set; --doi fills the Zenodo DOI everywhere; the build refuses to
 # write into a submitted (SUBMITTED_*) folder and rejects unknown options. Added: --profile ijtld,
-# the International Journal of Tuberculosis and Lung Disease set of manuscript/v2 (see below).
+# the International Journal of Tuberculosis and Lung Disease set of manuscript/v2, and --profile
+# dmscrr, the Diabetes & Metabolic Syndrome: Clinical Research & Reviews set of manuscript/v3 (see below).
 """Build the submission set into <manuscript folder>/submission/.
 
-Run as: python -I tools/build_submission.py [--manuscript-dir DIR] [--profile pcd|ijtld]
+Run as: python -I tools/build_submission.py [--manuscript-dir DIR] [--profile pcd|ijtld|dmscrr]
                                             [--doi 10.5281/zenodo.NNNNNNN] [--no-word]
 
 --profile pcd (the default) builds the Primary Care Diabetes set described below. --profile ijtld
@@ -25,6 +26,25 @@ profile must match the folder) into <folder>/submission/:
 
 and records in <folder>/build_record.json the SHA-256 of each figure PDF, TIFF and embedded image,
 which verification/check_docx_tie.py checks. Exhibits come from exhibits/make_ijtld.py.
+
+--profile dmscrr builds the Diabetes & Metabolic Syndrome: Clinical Research & Reviews set of a
+DMSCRR folder ("journal": "dmscrr", manuscript/v3) into <folder>/submission/, numbered in upload
+order (the PCD path, single anonymized; file names in verification/dmscrr.py):
+
+  01_title_page.docx            title page; Word's counts fill its [[...]] placeholders
+  02_manuscript.docx            title-page block, structured abstract and keywords, text,
+                                declarations, generative-AI section, Acknowledgements, references,
+                                Table 1 and the figure legends; line numbers
+  03_highlights.docx            the journal's highlights structure
+  04_Figure_1.tif/.pdf ... 06_Figure_3.tif/.pdf   colour TIFF (LZW, 1000 dpi, line art) and the PDF
+  07_supplementary_material.docx   Tables S1-S14 and Figure S1 (embedded), landscape
+  08_cover_letter.docx          the cover letter; Word's counts fill its placeholders
+  09_declaration_of_interest.docx  the prefilled declaration of competing interests
+
+02 is built first and counted in Word (abstract; main text with subsection headings; Table 1 cells,
+title and notes; figure legends: the journal's 5,000-word basis); the counts go to
+<folder>/word_counts_word.json and fill the title page and the cover letter. Exhibits come from
+exhibits/make_dmscrr.py; <folder>/build_record.json records the figure and embedded-image hashes.
 
 The manuscript folder is DIR (default manuscript/; git-ignored and private); a relative DIR is taken
 from the repository root. Unknown options are rejected (argparse, no abbreviations). The build
@@ -108,7 +128,7 @@ PANDOC_FROM = ("markdown+pipe_tables+superscript+fenced_divs+raw_attribute-smart
                "-tex_math_dollars-raw_html-auto_identifiers-implicit_figures-link_attributes")
 
 
-PROFILES = ("pcd", "ijtld")
+PROFILES = ("pcd", "ijtld", "dmscrr")
 
 
 def folder_journal(ms_dir: Path) -> str | None:
@@ -365,6 +385,152 @@ def ijtld_build(doi: str | None, no_word: bool) -> int:
               f"{w['main_with_headings']}) (limits {ijtld.LIMITS['abstract']} and {ijtld.LIMITS['main']})")
     print("built into", OUT)
     return 0
+
+
+# --------------------------------------------------------------------------------------
+# The DMSCRR set (manuscript/v3; verification/dmscrr.py holds the file names and rules)
+# --------------------------------------------------------------------------------------
+def dmscrr_manuscript_md() -> str:
+    """The title-page block, then the abstract and text to the end of the declarations, the
+    references, Table 1 and the figure legends, each starting a new page."""
+    ms = read("manuscript.md")
+    front = between(ms, "# ", "## Abstract")
+    body = between(ms, "## Abstract", "## References")
+    refs = between(ms, "## References", "## Figure legends")
+    legends = between(ms, "## Figure legends", None)
+    parts = [front.rstrip(), PAGEBREAK, body.rstrip(), PAGEBREAK, escape_dataset(refs).rstrip()]
+    for t in tables("## Table 1.", None):
+        parts += [PAGEBREAK, t]
+    parts += [PAGEBREAK, legends]
+    return "".join(parts)
+
+
+def dmscrr_supplement_md(png: Path) -> str:
+    """Supplementary material: the title, the builder's note, Tables S1-S14 and Figure S1 (the
+    image, then its legend)."""
+    from verification import dmscrr
+    title = read("manuscript.md").splitlines()[0]
+    if not title.startswith("# "):
+        raise SystemExit("manuscript.md must start with its '# ' title")
+    md = read("exhibits/supplement.md")
+    parts = ["# Supplementary material\n\n", title[2:].strip(), "\n\n", dmscrr.SUPP_NOTE, "\n\n",
+             between(md, "## Notation", "## Table S1.").rstrip(), "\n"]
+    part = between(md, "## Table S1.", "## Figure S1")
+    for b in re.split(r"(?m)^(?=## )", part):
+        if b.startswith("## Table "):
+            parts += [PAGEBREAK, table_block(b)]
+    legend = between(md, "## Figure S1", None).split("\n", 1)[1].strip()
+    parts += [PAGEBREAK, f"![]({png.as_posix()}){{width={dmscrr.SUPP_FIGURE_WIDTH_CM}cm}}\n\n", legend, "\n"]
+    return "".join(parts)
+
+
+def dmscrr_declaration_md() -> str:
+    from verification import dmscrr
+    tp = title_page_md()
+    keep = []
+    for key in ("**Title:**", "**Author:**", "**Declaration of competing interest:**"):
+        hit = [ln for ln in tp.splitlines() if ln.startswith(key)]
+        if len(hit) != 1:
+            raise SystemExit(f"title_page_src.md: expected one line starting {key}")
+        keep.append(hit[0])
+    return "# Declaration of interest\n\n" + "\n\n".join(keep) + "\n\n" + dmscrr.COMPETING + "\n"
+
+
+def render_png_rgb(pdf: Path, png: Path, dpi: int) -> None:
+    import fitz  # PyMuPDF
+    fitz.open(str(pdf))[0].get_pixmap(dpi=dpi, alpha=False, colorspace=fitz.csRGB).save(str(png))
+
+
+def dmscrr_word_counts(path02: Path) -> dict:
+    """Word's counts of 02 (tools/word_count_word.ps1) and the DMSCRR total: the main text with its
+    subsection headings, plus Table 1 (cells, title and notes) and the figure legends."""
+    w = word_counts(path02)
+    w["display_words"] = w["table_cells"] + w["table_text"] + w["legends"]
+    w["dmscrr_total"] = w["main_with_headings"] + w["display_words"]
+    w["counted_by"] += ("; DMSCRR: dmscrr_total = main_with_headings + display_words (table_cells + table_text + "
+                        "legends), the journal's 5,000-word basis (the abstract and references are not counted)")
+    (MS / "word_counts_word.json").write_text(json.dumps(w, indent=1) + "\n", encoding="utf-8", newline="\n")
+    return w
+
+
+def dmscrr_build(doi: str | None, no_word: bool) -> int:
+    from verification import dmscrr
+    hl = not doi
+    record: dict = {"figures": {}}
+    names = set(dmscrr.DOCX) | {f for pair in dmscrr.FIGURE_FILES.values() for f in pair}
+    with tempfile.TemporaryDirectory() as td:
+        tmp = Path(td)
+        ref = tmp / "reference.docx"
+        make_reference(ref)
+        out02 = OUT / dmscrr.MANUSCRIPT
+        run_pandoc(with_doi(dmscrr_manuscript_md(), doi), out02, ref, tmp)
+        postprocess(out02, line_numbers=True, placeholder=hl, table_pt=9)
+        print("built", dmscrr.MANUSCRIPT)
+        if not no_word:
+            w = dmscrr_word_counts(out02)
+            print(f"Word counts: abstract {w['abstract']}, main text with headings {w['main_with_headings']}, Table 1 and "
+                  f"legends {w['display_words']}, total {w['dmscrr_total']} (limits {dmscrr.LIMITS['abstract']} and "
+                  f"{dmscrr.LIMITS['total']})")
+        png = tmp / "figureS1_embed.png"
+        render_png_rgb(EX / "figureS1.pdf", png, EMBED_DPI)
+        record["supplement_figure"] = {"pdf": "exhibits/figureS1.pdf", "pdf_sha256": sha256(EX / "figureS1.pdf"),
+                                       "embedded_sha256": sha256(png)}
+        fill = lambda md: dmscrr.fill_counts(md, MS)  # noqa: E731
+        jobs = [
+            (dmscrr.TITLE_PAGE, fill(title_page_md()), dict(placeholder=hl), False),
+            (dmscrr.HIGHLIGHTS, read("highlights.md"), {}, False),
+            (dmscrr.SUPPLEMENT, dmscrr_supplement_md(png), dict(landscape=True, table_pt=8.5), True),
+            (dmscrr.COVER, fill(letter_md("cover_letter.md")), {}, False),
+            (dmscrr.DECLARATION, dmscrr_declaration_md(), {}, False),
+        ]
+        for name, md, kw, links in jobs:
+            out = OUT / name
+            run_pandoc(with_doi(md, doi), out, ref, tmp, links=links)
+            postprocess(out, **kw)
+            if name == dmscrr.SUPPLEMENT:
+                resize_images(out, dmscrr.SUPP_FIGURE_WIDTH_CM)
+            print("built", name)
+    for k, (tif, pdf_name) in dmscrr.FIGURE_FILES.items():
+        pdf = EX / f"figure{k}.pdf"
+        shutil.copyfile(pdf, OUT / pdf_name)
+        print(render_tiff(pdf, OUT / tif, dmscrr.TIFF_DPI))
+        record["figures"][str(k)] = {"pdf": f"exhibits/figure{k}.pdf", "pdf_sha256": sha256(pdf), "tif": tif,
+                                     "tif_sha256": sha256(OUT / tif)}
+    record["files"] = {n: sha256(OUT / n) for n in sorted(names)}
+    (MS / dmscrr.BUILD_RECORD).write_text(json.dumps(record, indent=1) + "\n", encoding="utf-8", newline="\n")
+    for f in sorted(OUT.iterdir()):
+        if f.is_file() and f.name not in names and not SUBMITTED.match(f.name):
+            print(f"note: {f.name} is not part of this set (left from an earlier build?); remove it")
+    left = [n for n in (dmscrr.TITLE_PAGE, dmscrr.COVER) if "[[" in docx_text(OUT / n)]
+    if left:
+        print(f"note: word-count placeholders left in {', '.join(left)} (build without --no-word to fill them)")
+    print("built into", OUT)
+    return 0
+
+
+def resize_images(path: Path, width_cm: float) -> None:
+    """Every inline image set to width_cm (pandoc caps images at the portrait text width of the
+    reference document, before the landscape pages are set)."""
+    cx_new = int(width_cm * 360000)
+
+    def fn(xml: str) -> str:
+        def one(m: re.Match) -> str:
+            cx, cy = int(m.group(2)), int(m.group(4))
+            return f"{m.group(1)}{cx_new}{m.group(3)}{round(cy * cx_new / cx)}{m.group(5)}"
+        return re.sub(r'(<(?:wp:extent|a:ext) cx=")(\d+)(" cy=")(\d+)(")', one, xml)
+    tmp = path.with_suffix(".resize")
+    with zipfile.ZipFile(path) as zi, zipfile.ZipFile(tmp, "w", zipfile.ZIP_DEFLATED) as zo:
+        for item in zi.infolist():
+            data = zi.read(item.filename)
+            if item.filename == "word/document.xml":
+                data = fn(data.decode("utf-8")).encode("utf-8")
+            zo.writestr(item, data)
+    tmp.replace(path)
+
+
+def docx_text(path: Path) -> str:
+    with zipfile.ZipFile(path) as z:
+        return re.sub(r"<[^>]+>", "", z.read("word/document.xml").decode("utf-8"))
 
 
 def with_doi(md: str, doi: str | None) -> str:
@@ -842,7 +1008,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--no-word", action="store_true", help="skip Word's word counts")
     ap.add_argument("--manuscript-dir", default=DEFAULT_MS_DIR, help="the manuscript folder (default manuscript)")
     ap.add_argument("--profile", choices=PROFILES, default="pcd",
-                    help="the journal set to build: pcd (default) or ijtld (manuscript/v2)")
+                    help="the journal set to build: pcd (default), ijtld (manuscript/v2) or dmscrr (manuscript/v3)")
     a = ap.parse_args(argv)  # an unknown option stops the build (argparse exits with status 2)
     if a.doi and not DOI_RE.match(a.doi):
         raise SystemExit(f"--doi must look like 10.5281/zenodo.NNNNNNN, not {a.doi!r}")
@@ -861,6 +1027,8 @@ def main(argv: list[str] | None = None) -> int:
     OUT.mkdir(exist_ok=True)
     if a.profile == "ijtld":
         return ijtld_build(a.doi, a.no_word)
+    if a.profile == "dmscrr":
+        return dmscrr_build(a.doi, a.no_word)
     hl = not a.doi
     with tempfile.TemporaryDirectory() as td:
         tmp = Path(td)

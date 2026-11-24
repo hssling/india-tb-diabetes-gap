@@ -24,6 +24,12 @@ Run as: python -I tools/audit_references.py [--manuscript-dir DIR]   (default: m
   data/source_manifest.csv, whose SHA-256 is re-verified when data_raw/ holds the file.
 Nothing is downloaded except Crossref's JSON records. Exit 1 if any reference fails.
 
+A DMSCRR folder ("journal": "dmscrr"; manuscript/v3) prints DOIs ("n\\. Authors. Title. Journal Year;
+Volume: pages. https://doi.org/DOI"): the printed DOI must equal reference_dois.json and Crossref's
+record, and the authors follow the guide (all when six or fewer; otherwise the first six and "et
+al."). Web references are checked as for the IJTLD folder; the study's [dataset] may hold the release
+placeholder.
+
 An IJTLD folder (section_phrases.json "journal": "ijtld"; manuscript/v2) prints no DOIs: entries
 are "n\\. Authors. Title. Journal Year; Volume: pages." and each article's DOI is kept in
 <folder>/reference_dois.json. The same Crossref checks apply, and the authors follow the journal's
@@ -319,6 +325,89 @@ def ijtld_audit(ms_dir: Path) -> tuple[list[str], int]:
     return rows, bad
 
 
+# --------------------------------------------------------------------------------------
+# DMSCRR style (Vancouver, the guide's punctuation, DOIs printed)
+# --------------------------------------------------------------------------------------
+def dmscrr_doi_check(n: int, entry: str, doi: str) -> tuple[str, bool]:
+    sys.path.insert(0, str(ROOT))
+    from verification import dmscrr
+    m = crossref(doi)
+    title = (m.get("title") or [""])[0]
+    container = (m.get("container-title") or [""])[0]
+    short = m.get("short-container-title") or []
+    t_ok = compact(title) in compact(entry)
+    e = dmscrr.ARTICLE.search(entry)
+    cj = e.group("journal") if e else ""
+    y_ok = bool(e) and int(e.group("year")) in years(m)
+    j_ok = bool(e) and (norm(cj) == norm(container) or abbrev_ok(cj, container) or any(abbrev_ok(cj, x) for x in short))
+    d_ok = bool(e) and e.group("doi").lower() == doi.lower() == (m.get("DOI") or "").lower()
+    if e:
+        first = e.group("pages").split("–")[0]
+        if e.group("supp") and first.startswith("S"):
+            first = first[1:]
+        cr_first = (m.get("page") or "").split("-")[0].lstrip("S") or (m.get("article-number") or "")
+        v_ok = (not m.get("volume") or e.group("vol") == m["volume"]) and (not cr_first or first == cr_first)
+    else:
+        v_ok = False
+    people = [a for a in (m.get("author") or []) if a.get("family")]
+    fams = [a["family"] for a in people]
+    head = entry.split(". ", 1)[0]
+    if head.endswith(", et al"):
+        a_ok = len(people) > 6 and all(norm(f) in norm(head) for f in fams[:6])
+        rule = f"first six and et al. ({len(people)} authors in Crossref)"
+    else:
+        a_ok = len(people) <= 6 and all(norm(f) in norm(head) for f in fams)
+        rule = f"all {len(people)} listed" if people else "group or no personal author"
+    ok = t_ok and y_ok and j_ok and v_ok and a_ok and d_ok
+    meta = "; ".join(x for x in [html.unescape(container), "/".join(str(y) for y in sorted(years(m))),
+                                 f"vol {m['volume']}" if m.get("volume") else "", f"pp {m['page']}" if m.get("page") else "",
+                                 f"art {m['article-number']}" if m.get("article-number") else "",
+                                 f"authors {', '.join(fams[:6])}{' ...' if len(fams) > 6 else ''}" if fams else ""] if x)
+    flags = (f"title {'yes' if t_ok else 'NO'}, year {'yes' if y_ok else 'NO'}, journal '{cj}' {'yes' if j_ok else 'NO'}, "
+             f"volume/page {'yes' if v_ok else 'NO'}, authors {rule} {'yes' if a_ok else 'NO'}, DOI resolves and "
+             f"matches {'yes' if d_ok else 'NO'}")
+    clean = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", html.unescape(title))).strip()
+    return f"| {n} | {doi} (Crossref) | {clean} | {meta} | {flags} | {'yes' if ok else 'NO'} |", ok
+
+
+def dmscrr_zenodo_check(n: int, entry: str) -> tuple[str, bool]:
+    sys.path.insert(0, str(ROOT))
+    from verification import dmscrr
+    z = dmscrr.ZENODO.search(entry)
+    doi, ver = z.group("doi"), z.group("ver")
+    if "XXXXXXX" in doi:
+        ok = entry.startswith("[dataset] ")
+        state = f"[dataset] release placeholder (filled with --doi at the v{ver} release)"
+    else:
+        ok = doi.split(".")[-1].isdigit()
+        state = "Zenodo version DOI of released software"
+    return f"| {n} | {doi} | version {ver} | {state}; DataCite, not looked up | — | {'yes' if ok else 'NO'} |", ok
+
+
+def dmscrr_audit(ms_dir: Path) -> tuple[list[str], int]:
+    sys.path.insert(0, str(ROOT))
+    from verification import dmscrr
+    ms = (ms_dir / MS_NAME).read_text(encoding="utf-8")
+    refs = ms.split("\n## References", 1)[1].split("\n## ", 1)[0]
+    entries = {int(m.group(1)): m.group(2).strip() for m in dmscrr.REF_LINE.finditer(refs)}
+    dois = json.loads((ms_dir / "reference_dois.json").read_text(encoding="utf-8"))
+    rows, bad = [], 0
+    for n, entry in sorted(entries.items()):
+        kind = dmscrr.entry_kind(entry)
+        if kind == "article" and str(n) in dois:
+            line, ok = dmscrr_doi_check(n, entry, dois[str(n)])
+            time.sleep(1)
+        elif kind == "zenodo":
+            line, ok = dmscrr_zenodo_check(n, entry)
+        elif kind == "web":
+            line, ok = ijtld_web_check(n, entry, ms_dir, ROOT)
+        else:
+            line, ok = f"| {n} | none | {entry[:70]} | not in the journal's style, or an article without a DOI | — | NO |", False
+        rows.append(line)
+        bad += not ok
+    return rows, bad
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0], allow_abbrev=False)
     ap.add_argument("--manuscript-dir", default="manuscript")
@@ -326,9 +415,11 @@ def main(argv: list[str] | None = None) -> int:
     ms_dir = Path(a.manuscript_dir)
     ms_dir = ms_dir if ms_dir.is_absolute() else ROOT / ms_dir
     rows, bad = [], 0
-    ijtld_style = journal(ms_dir) == "ijtld"
-    if ijtld_style:
+    ijtld_style = journal(ms_dir) in ("ijtld", "dmscrr")
+    if journal(ms_dir) == "ijtld":
         rows, bad = ijtld_audit(ms_dir)
+    elif journal(ms_dir) == "dmscrr":
+        rows, bad = dmscrr_audit(ms_dir)
     for n, entry in ([] if ijtld_style else sorted(cited(ms_dir).items())):
         d = re.search(r"https://doi\.org/(\S+?)\.?$", entry)
         if d and d.group(1).startswith("10.5281/zenodo."):
@@ -345,7 +436,11 @@ def main(argv: list[str] | None = None) -> int:
            "(api.crossref.org/works/<doi>; generic User-Agent, no e-mail); Zenodo (DataCite) DOIs not looked up; "
            "non-DOI sources checked against data/source_manifest.csv" + (
                ", or against official pages read once, read-only, and recorded in official_pages.json; IJTLD style "
-               "(DOIs kept in reference_dois.json, not printed)" if ijtld_style else "") +
+               "(DOIs kept in reference_dois.json, not printed)" if journal(ms_dir) == "ijtld" else
+               ", or against official pages read once, read-only, and recorded in official_pages.json; DMSCRR style "
+               "(Vancouver as in the guide; each printed DOI equals reference_dois.json and resolves in Crossref; "
+               "authors: all when six or fewer, otherwise the first six and et al.)" if journal(ms_dir) == "dmscrr"
+               else "") +
            ". Nothing else was downloaded.", "",
            "| Ref | DOI | Crossref title (or source) | Crossref metadata (or verification) | Checks | Pass |",
            "|---|---|---|---|---|---|", *rows, "", f"Problems: {bad}."]
