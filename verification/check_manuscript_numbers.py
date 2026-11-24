@@ -272,13 +272,20 @@ def catalogue(root: Path) -> dict[str, tuple[str, str]]:
         put(f"{g}.big", f"{and_list([r['unit'] for r in top])} ({and_list([count(r['per_100k_notified']) for r in top])} "
             f"per 100,000 notified)", f"outputs/priority.csv: main 2023 {g}, five largest means, per_100k_notified")
     put("E3.top_n", f"{big['unit']} alone had {count(big['mean'])}", "outputs/priority.csv: main 2023 largest E3 mean")
+
+    # ---- values written only in the DMSCRR manuscript (manuscript/v3) ---------------------------
+    for y, r in nat.items():
+        if r["C3"]:
+            put(f"nat.C3.{y}", pct(r["C3"]), f"outputs/cascade.csv: national {y} C3")
+    mgdl = float(plan_has(root, ">140 mg/dl", "§4.2").lstrip(">").split()[0])
+    put("plan.mmol", f"{num(mgdl / 18.016, 1)} mmol/l", "docs/analysis_plan.md §4.2: 140 mg/dl in SI units (÷ 18.016)")
     return c
 
 
 def catalogue_for(root: Path, journal: str = "pcd") -> dict[str, tuple[str, str]]:
     """The catalogue as printed in the journal's style (IJTLD: no-break-space thousands, en-dash ranges)."""
     cat = catalogue_cached(root)
-    if journal != "ijtld":
+    if journal not in ("ijtld", "dmscrr"):
         return cat
     return {k: (ijtld_style(v), src) for k, (v, src) in cat.items()}
 
@@ -362,6 +369,11 @@ def claims(root: Path) -> list[str]:
     need(float(one(sc, "k=1.5", spec="k=1.5", row="national")["mean"]) > float(one(sc, "main", spec="main", row="national")["mean"]),
          "the scenario grows at the literature ratio 1.5")
     need(float(one(b, "c_b", kind="c_b", is_main="True")["value"]) > 0.95, "the benchmark coverage is above 95%")
+    e1 = sum(float(r["mean"]) for r in pr if r["gap"] == "E1")
+    e2 = sum(float(r["mean"]) for r in pr if r["gap"] == "E2")
+    n23 = one(ca, "national 2023", unit=NATIONAL, spec="main", year=YEAR)
+    need(e2 > e1 and int(n23["y_x"]) - int(n23["C3_x"]) > e1,
+         "the identification gap and the number not started on treatment each exceed the screening gap (2023)")
     return out
 
 
@@ -1124,6 +1136,322 @@ def problems_ijtld(root: Path, ms_dir: Path, text: str, gold: dict | None, requi
 
 
 # --------------------------------------------------------------------------------------
+# The DMSCRR profile (manuscript/v3; verification/dmscrr.py holds the journal's rules)
+# --------------------------------------------------------------------------------------
+FIXED_DMSCRR: list[tuple[str, str]] = [
+    ("reference", r"\^\d+(?:[,–]\d+)*\^"),
+    ("supplement", r"\b(?:Tables?|Figures?) S\d{1,2}(?:(?:,| and|–) ?S\d{1,2})*\b"),
+    ("exhibit", r"\bTable 1\b|\bFigures? [1-3](?:(?:, | and )[1-3])*\b"),
+    ("name", r"\bH[1-3]\b|\bNFHS-5\b|\bHbA1c\b|\bper 100" + NB + r"000\b"),
+    ("ci_level", r"\b95%"),
+    ("plan_section", r"\bplan section 12\.\d\b"),
+    ("formula", r"\b(?:below|above|of) 1\b|\bexcluded 0\b|\b0 or 1\b"),
+    ("date", r"\b\d{1,2} (?:" + "|".join(MONTHS) + r") 20\d\d\b"),
+    ("years", r"\b20(?:1[7-9]|2[0-6])–(?:20)?(?:1[7-9]|2[0-6])\b"),
+    ("year", r"(?<![\d.,])20(?:1[7-9]|2[0-6])(?![\d]|[.,]\d)"),
+    ("doi", r"10\.5281/zenodo\.(?:\d+|X+)"),
+]
+
+
+def skeleton_dmscrr(text: str, highlights: str | None, root: Path,
+                    required: dict[str, list[str]]) -> tuple[dict[str, list[dict]], list[str]]:
+    cat = catalogue_for(root, "dmscrr")
+    secs = all_sections(text, highlights)
+    out, probs = {}, []
+    for name in required:
+        if name not in secs:
+            probs.append(f"MISSING section {name!r}")
+    for name, body in secs.items():
+        entries, p = assign(name, body, cat, required.get(name, []), FIXED_DMSCRR)
+        out[name] = entries
+        probs += p
+    return out, probs
+
+
+def supplement_have(ms_dir: Path) -> dict[str, list[str]]:
+    """The supplementary tables and figures that exhibits/supplement.md holds."""
+    p = ms_dir / "exhibits" / "supplement.md"
+    md = p.read_text(encoding="utf-8") if p.exists() else ""
+    return {"Table": re.findall(r"(?m)^## Table (S\d+)\.", md), "Figure": re.findall(r"(?m)^## Figure (S\d+)\b", md)}
+
+
+def exhibit_problems_dmscrr(text: str, ms_dir: Path) -> list[str]:
+    from verification import dmscrr
+    secs = sections(text)
+    body = " ".join(v for k, v in secs.items() if k not in ("Title", "Abstract", "Figure legends"))
+    leg = secs.get("Figure legends", "")
+    out = []
+    for kind, want, pat in (("Table", dmscrr.TABLES, r"\bTables? ([1-9](?:(?:, | and )[1-9])*)\b(?! ?S)"),
+                            ("Figure", dmscrr.FIGURES, r"\bFigures? ([1-9](?:(?:, | and )[1-9])*)\b")):
+        seen = []
+        for m in re.finditer(pat, body):
+            seen += [int(n) for n in re.findall(r"[1-9]", m.group(1))]
+        first = list(dict.fromkeys(seen))
+        if sorted(first) != want:
+            out.append(f"EXHIBITS: {kind}s cited {first}, expected each of {want}")
+        elif first != want:
+            out.append(f"EXHIBITS: first citations of {kind}s out of order: {first}")
+    n_disp = len(dmscrr.TABLES) + len(dmscrr.FIGURES)
+    if n_disp > dmscrr.LIMITS["display_items"]:
+        out.append(f"EXHIBITS: {n_disp} display items, more than {dmscrr.LIMITS['display_items']}")
+    for n in dmscrr.FIGURES:
+        if f"**Figure {n}.**" not in text.split("\n## Figure legends", 1)[-1]:
+            out.append(f"EXHIBITS: no legend for Figure {n}")
+    if re.search(r"\bFigure [4-9]\b|\bTable [2-9]\b", body + " " + leg):
+        out.append("EXHIBITS: a display item beyond Table 1 and Figures 1 to 3 is cited")
+    have = supplement_have(ms_dir)
+    cites = online_citations(body) + online_citations(leg)
+    for kind in ("Table", "Figure"):
+        first = list(dict.fromkeys(x for k, x in cites if k == kind))
+        for x in first:
+            if x not in have[kind]:
+                out.append(f"EXHIBITS: supplementary {kind} {x} is cited but not in the supplementary material")
+        if first != sorted(first, key=lambda x: int(x[1:])):
+            out.append(f"EXHIBITS: supplementary {kind}s first cited out of order: {first}")
+        elif first != [f"S{k}" for k in range(1, len(first) + 1)]:
+            out.append(f"EXHIBITS: supplementary {kind}s not numbered S1, S2, ... by first citation: {first}")
+        never = [x for x in have[kind] if x not in first]
+        if never:
+            out.append(f"EXHIBITS: supplementary {kind}s never cited: {never}")
+    if "online material" in body:
+        out.append("EXHIBITS: the text cites 'online material' (this journal's supplement is the supplementary material)")
+    return out
+
+
+def regenerated_problems_dmscrr(ms_dir: Path, root: Path) -> list[str]:
+    from exhibits import make_dmscrr, make_figures
+    out = []
+    ex = ms_dir / "exhibits"
+    p = ex / "tables.md"
+    if not p.exists() or p.read_text(encoding="utf-8") != make_dmscrr.render(root):
+        out.append("EXHIBITS: exhibits/tables.md differs from Table 1 regenerated from outputs/ "
+                   "(python -I exhibits/make_dmscrr.py)")
+    p = ex / "supplement.md"
+    if not p.exists() or p.read_text(encoding="utf-8") != make_dmscrr.supplement_md(root):
+        out.append("EXHIBITS: exhibits/supplement.md differs from the supplement regenerated from outputs/")
+    for k, fn in make_dmscrr.FIGURES.items():
+        q = ex / f"figure{k}_data.csv"
+        if not q.exists() or q.read_bytes() != make_figures.data_csv(fn(root)):
+            out.append(f"EXHIBITS: exhibits/figure{k}_data.csv differs from the data regenerated from outputs/")
+    return out
+
+
+def reference_problems_dmscrr(text: str, ms_dir: Path) -> list[str]:
+    from verification import dmscrr
+    refs = ref_list_ijtld(text)
+    if not refs:
+        return ["REFERENCES: no '## References' section with entries 'n\\. ...'"]
+    n = len(refs)
+    out = []
+    if n > dmscrr.LIMITS["references"]:
+        out.append(f"REFERENCES: {n} references, more than {dmscrr.LIMITS['references']}")
+    if [k for k, _ in refs] != list(range(1, n + 1)):
+        out.append("REFERENCES: list not numbered 1..n")
+    order = citations_ijtld(text)
+    for k in sorted(set(order)):
+        if not 1 <= k <= n:
+            out.append(f"REFERENCES: citation {k} outside 1..{n}")
+    first = list(dict.fromkeys(order))
+    if first != sorted(first):
+        out.append(f"REFERENCES: not numbered in order of first citation: {first}")
+    never = sorted(set(range(1, n + 1)) - set(order))
+    if never:
+        out.append(f"REFERENCES: never cited: {never}")
+    if re.search(r"\[\d+(?:[,–]\d+)*\]", text.split("\n## References", 1)[0]):
+        out.append("REFERENCES: a bracketed citation [n] (the journal uses superscript numbers)")
+    out += dmscrr.reference_problems(refs, ms_dir)
+    return out
+
+
+def md_display_words(text: str, ms_dir: Path) -> int:
+    """Table 1 (title, cells and notes) and the figure legends, counted from the Markdown."""
+    t = read_opt(ms_dir, "exhibits/tables.md") or ""
+    t = t.split("\n## Table 1.", 1)[-1]
+    cells = " ".join(c for ln in t.splitlines() if ln.startswith("|") and not re.fullmatch(r"\|(?:-+\|)+", ln)
+                     for c in ln.strip("|").split("|"))
+    notes = " ".join(ln for ln in t.splitlines() if not ln.startswith("|"))
+    leg = text.split("\n## Figure legends", 1)[-1] if "\n## Figure legends" in text else ""
+    return words(cells) + words("Table 1. " + notes) + words(leg)
+
+
+def main_text_dmscrr(text: str) -> str:
+    """Introduction to Discussion with the subsection headings (the journal's count)."""
+    from verification import dmscrr
+    out, keep = [], False
+    for ln in text.splitlines():
+        if ln.startswith("## "):
+            keep = ln[3:].strip() in dmscrr.MAIN_SECTIONS
+            continue
+        if keep:
+            out.append(ln.lstrip("#"))
+    return "\n".join(out)
+
+
+def abstract_dmscrr(text: str) -> tuple[str, list[str]]:
+    from verification import dmscrr
+    ab = sections(text).get("Abstract", "")
+    kw = re.search(r"\*\*Keywords:\*\* (.+)$", ab)
+    return (ab[:kw.start()].strip() if kw else ab), (dmscrr.split_keywords(kw.group(1)) if kw else [])
+
+
+def length_problems_dmscrr(text: str, ms_dir: Path) -> list[str]:
+    from verification import dmscrr
+    out = []
+    ab, kws = abstract_dmscrr(text)
+    if words(ab) > dmscrr.LIMITS["abstract"]:
+        out.append(f"LENGTH: abstract {words(ab)} words, limit {dmscrr.LIMITS['abstract']}")
+    heads = dmscrr.abstract_heads(ab)
+    if heads != list(dmscrr.ABSTRACT_PARTS):
+        out.append(f"LENGTH: abstract headings {heads}, expected {list(dmscrr.ABSTRACT_PARTS)}")
+    if re.search(r"\^\d|\[\d", ab):
+        out.append("LENGTH: the abstract cites a reference")
+    und = dmscrr.undefined_abbreviations(ab)
+    if und:
+        out.append(f"ABSTRACT: abbreviations {und} not defined in the abstract")
+    if not kws:
+        out.append("KEYWORDS: no '**Keywords:**' line at the end of the Abstract")
+    out += dmscrr.keyword_problems(kws)
+    total = words(main_text_dmscrr(text)) + md_display_words(text, ms_dir)
+    if total > dmscrr.LIMITS["total"]:
+        out.append(f"LENGTH: {total} words (main text with subsection headings, Table 1 and figure legends), limit "
+                   f"{dmscrr.LIMITS['total']}")
+    title = text.splitlines()[0][2:].strip() if text.startswith("# ") else ""
+    out += dmscrr.title_problems(title)
+    return out
+
+
+def structure_problems_dmscrr(text: str) -> list[str]:
+    from verification import dmscrr
+    out = []
+    heads = [ln[3:].strip() for ln in text.splitlines() if ln.startswith("## ")]
+    if heads != dmscrr.SECTION_ORDER:
+        out.append(f"STRUCTURE: sections {heads}, the journal's order is {dmscrr.SECTION_ORDER}")
+    secs = sections(text)
+    if secs.get("Funding", "") != dmscrr.FUNDING:
+        out.append("DECLARATION: the Funding section is not the journal's no-funding sentence")
+    if secs.get(dmscrr.AI_HEADING, "") != dmscrr.GENAI:
+        out.append("DECLARATION: the generative-AI declaration is not the required wording")
+    if secs.get("Declaration of competing interest", "") != dmscrr.COMPETING:
+        out.append("DECLARATION: the declaration of competing interest is missing or changed")
+    i_ai, i_ref = text.find("\n## " + dmscrr.AI_HEADING), text.find("\n## References")
+    if not (0 <= i_ai < i_ref):
+        out.append("DECLARATION: the generative-AI declaration is not a section before the References")
+    if "References" in heads and (heads.index("References") == 0
+                                  or heads[heads.index("References") - 1] != "Acknowledgements"):
+        out.append("STRUCTURE: Acknowledgements must come directly before the References")
+    if "Claude" in secs.get("Subjects, Materials and Methods", ""):
+        out.append("DECLARATION: the AI use belongs in its declaration section, not in the Methods")
+    return out
+
+
+DMSCRR_TP_FIELDS = ("Title", "Author", "Corresponding author", "Article type", "Keywords",
+                    "Word counts (Microsoft Word, manuscript file)", "Funding", "Declaration of competing interest",
+                    "Ethics", "Data availability", "CRediT authorship contribution statement")
+
+
+def title_page_problems_dmscrr(text: str, title_page: str) -> list[str]:
+    from verification import dmscrr
+    out = []
+    for f in DMSCRR_TP_FIELDS + (dmscrr.AI_HEADING,):
+        if ijtld.field(title_page, f) is None:
+            out.append(f"TITLE PAGE: no single '**{f}:**' line in {TITLE_PAGE}")
+    title = text.splitlines()[0][2:].strip() if text.startswith("# ") else ""
+    if not title or title != (ijtld.field(title_page, "Title") or ""):
+        out.append("TITLE PAGE: the manuscript's title differs from title_page_src.md")
+    head = text.split("\n## Abstract", 1)[0]
+    for key in ("**Author:**", "**Corresponding author:**"):
+        a, b = front_line(head, key), front_line(title_page, key)
+        if a is None or a != b:
+            out.append(f"TITLE PAGE: the manuscript's {key.strip('*:')} line is missing or differs from title_page_src.md")
+    if not re.search(r"(?m)^\^a\^ .+, India$", head) or "^a^" not in (front_line(head, "**Author:**") or ""):
+        out.append("TITLE PAGE: the affiliation needs a lowercase superscript letter and a full postal address")
+    corr = ijtld.field(title_page, "Corresponding author") or ""
+    if not re.search(r"[\w.+-]+@[\w-]+\.[\w.]+", corr) or "India" not in corr or not re.search(r"\b\d{6}\b", corr):
+        out.append("TITLE PAGE: the corresponding author needs a full address (with postcode) and an e-mail")
+    if not re.search(r"\d{4}-\d{4}-\d{4}-\d{3}[\dX]", corr):
+        out.append("TITLE PAGE: the corresponding author has no ORCID")
+    _, kws = abstract_dmscrr(text)
+    if dmscrr.split_keywords(ijtld.field(title_page, "Keywords") or "") != kws:
+        out.append("TITLE PAGE: the keywords differ from the manuscript's")
+    if (ijtld.field(title_page, "Funding") or "") != dmscrr.FUNDING:
+        out.append("TITLE PAGE: the funding statement is not the journal's sentence")
+    if (ijtld.field(title_page, dmscrr.AI_HEADING) or "") != dmscrr.GENAI:
+        out.append("TITLE PAGE: the generative-AI declaration differs from the required wording")
+    if "10.5281/zenodo." not in (ijtld.field(title_page, "Data availability") or ""):
+        out.append("TITLE PAGE: the data availability statement has no Zenodo DOI (or its placeholder)")
+    wc = ijtld.field(title_page, "Word counts (Microsoft Word, manuscript file)") or ""
+    for ph in ("[[abstract]]", "[[main]]", "[[display]]", "[[total]]", "[[references]]"):
+        if ph not in wc:
+            out.append(f"TITLE PAGE: the word-count line lacks the placeholder {ph} (filled by the build)")
+    for want in (f"tables {len(dmscrr.TABLES)}", f"figures {len(dmscrr.FIGURES)}"):
+        if want not in wc:
+            out.append(f"TITLE PAGE: the word-count line does not state {want!r}")
+    return out
+
+
+def highlight_problems_dmscrr(highlights: str | None) -> list[str]:
+    from verification import dmscrr
+    if highlights is None:
+        return [f"MISSING: {HIGHLIGHTS}"]
+    return dmscrr.highlight_structure(dmscrr.highlight_lines_md(highlights))[1]
+
+
+def wording_problems_dmscrr(name: str, text: str) -> list[str]:
+    from verification import dmscrr
+    body = text.split("\n## References", 1)[0]
+    if name.startswith("exhibits/"):
+        body = "\n".join(ln for ln in body.splitlines() if not ln.startswith("# "))
+    out = wording_problems(name, body)
+    if name == COVER:
+        out = [p for p in out if "file path" not in p]
+    out += [f"WORDING in {name}: {h}" for h in dmscrr.wording_hits(body)]
+    return out
+
+
+def problems_dmscrr(root: Path, ms_dir: Path, text: str, gold: dict | None, required: dict,
+                    highlights: str | None, exhibits: bool = True) -> list[str]:
+    pf = load_phrase_file(ms_dir)
+    now, out = skeleton_dmscrr(text, highlights, root, required)
+    out += skeleton_problems(now, gold, root, catalogue_for(root, "dmscrr"))
+    out += claims(root)
+    out += exhibit_problems_dmscrr(text, ms_dir)
+    if exhibits:
+        out += regenerated_problems_dmscrr(ms_dir, root)
+    caveats = pf.get("caveats", {})
+    if not caveats:
+        out.append(f"CAVEAT: no caveats listed in {PHRASES}")
+    out += caveat_problems(text, caveats)
+    out += reference_problems_dmscrr(text, ms_dir)
+    out += length_problems_dmscrr(text, ms_dir)
+    out += structure_problems_dmscrr(text)
+    out += label_problems(text, root)
+    out += highlight_problems_dmscrr(highlights)
+    for name, t in ((MS_NAME, text), (HIGHLIGHTS, highlights),
+                    ("exhibits/tables.md", read_opt(ms_dir, "exhibits/tables.md")),
+                    ("exhibits/supplement.md", read_opt(ms_dir, "exhibits/supplement.md"))):
+        if t is not None:
+            out += wording_problems_dmscrr(name, t)
+    tp = read_opt(ms_dir, TITLE_PAGE)
+    if tp is None:
+        out.append(f"MISSING: {TITLE_PAGE}")
+    else:
+        out += wording_problems_dmscrr(TITLE_PAGE, tp)
+        out += title_page_problems_dmscrr(text, tp)
+    cover = read_opt(ms_dir, COVER)
+    out += cover_problems(cover, pf.get("cover_letter", []))
+    if cover is not None:
+        out += wording_problems_dmscrr(COVER, cover)
+        for ph in ("[[total]]", "[[abstract]]"):
+            if ph not in cover:
+                out.append(f"COVER LETTER: no word-count placeholder {ph} (filled by the build)")
+        if "not been published and is not under consideration elsewhere" not in cover:
+            out.append("COVER LETTER: does not state that the work is not published or under consideration elsewhere")
+    if not pf.get("cover_letter"):
+        out.append(f"COVER LETTER: no related manuscripts listed in {PHRASES} 'cover_letter'")
+    return out
+
+
+# --------------------------------------------------------------------------------------
 # Driver
 # --------------------------------------------------------------------------------------
 def manuscript_dir(root: Path, argv: list[str]) -> tuple[Path, list[str]]:
@@ -1163,6 +1491,8 @@ def problems(root: Path, ms_dir: Path, text: str | None = None, gold: dict | Non
         return [f"PHRASES: no section phrases ({PHRASES} missing or empty)"]
     if journal_of(ms_dir) == "ijtld":
         return problems_ijtld(root, ms_dir, text, gold, required, exhibits)
+    if journal_of(ms_dir) == "dmscrr":
+        return problems_dmscrr(root, ms_dir, text, gold, required, highlights, exhibits)
     pf = load_phrase_file(ms_dir)
     now, out = skeleton(text, highlights, root, required)
     out += skeleton_problems(now, gold, root)
@@ -1204,6 +1534,8 @@ def problems(root: Path, ms_dir: Path, text: str | None = None, gold: dict | Non
 def golden(text: str, highlights: str | None, root: Path, required: dict, journal: str = "pcd") -> dict:
     if journal == "ijtld":
         now, probs = skeleton_ijtld(text, root, required)
+    elif journal == "dmscrr":
+        now, probs = skeleton_dmscrr(text, highlights, root, required)
     else:
         now, probs = skeleton(text, highlights, root, required)
     if probs:
@@ -1261,6 +1593,17 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
               f"{ijtld.LIMITS['references']}, display items {ijtld.LIMITS['display_items']}, title "
               f"{ijtld.LIMITS['title_chars']}, running head {ijtld.LIMITS['running_head_chars']}, keywords 3-5) checked; "
               f"{len(found)} problem(s)")
+        return 1 if found else 0
+    if journal_of(ms_dir) == "dmscrr":
+        from verification import dmscrr
+        print(f"DMSCRR profile: {n_tok} number tokens ({n_traced} traced to a source file, {n_tok - n_traced} fixed "
+              f"labels), {sum(len(v) for v in required.values())} section phrases, {len(catalogue_cached(root))} "
+              f"catalogue values, {len(ref_list_ijtld(text))} references; Table 1, the supplement and the figure data "
+              f"regenerated from outputs/; citation order of references, tables, figures and supplementary items; "
+              f"limits (total {dmscrr.LIMITS['total']}, abstract {dmscrr.LIMITS['abstract']}, references "
+              f"{dmscrr.LIMITS['references']}, display items {dmscrr.LIMITS['display_items']}, title "
+              f"{dmscrr.LIMITS['title_chars']}, keywords 3-12), highlights, section order and declarations "
+              f"checked; {len(found)} problem(s)")
         return 1 if found else 0
     print(f"{n_tok} number tokens ({n_traced} traced to a source file, {n_tok - n_traced} fixed labels), "
           f"{sum(len(v) for v in required.values())} section phrases, {len(catalogue_cached(root))} catalogue "

@@ -16,13 +16,16 @@ Steps, each a `python -I ...` subprocess:
 6. check_outputs             independent standard-library recompute
 7. check_rerun               byte-for-byte rerun of the extraction and of outputs/
 8. check_online_material     the online material regenerated from outputs/ (docs/online_material/)
-9. check_manuscript_numbers  }  the current manuscript, manuscript/v2 (IJTLD profile, with its hard
-10. check_docx_tie           }  limits); SKIP until manuscript/v2/manuscript.md exists (the
-11. mutate_manuscript        }  manuscript is private and git-ignored)
+9. check_manuscript_numbers  }  the current manuscript, manuscript/v3 (DMSCRR profile: Diabetes &
+10. check_docx_tie           }  Metabolic Syndrome: Clinical Research & Reviews, with its limits);
+11. mutate_manuscript        }  SKIP until manuscript/v3/manuscript.md exists (the manuscript is
+                                private and git-ignored)
+12. check_manuscript_numbers (IJTLD, manuscript/v2)  }  the submitted, frozen sets: every number still
+13. check_manuscript_numbers (PCD, manuscript)       }  traced to outputs/ under its own profile
+14. check_frozen             each submitted file byte-equal to the SHA-256 in its SUBMITTED_* record
 
-The submitted Primary Care Diabetes set in manuscript/ is frozen and no longer checked here (its
-cover letter .docx was edited after the build and no longer ties to cover_letter.md); run
-check_manuscript_numbers and check_docx_tie with --manuscript-dir manuscript to check it.
+The frozen sets are not tied .docx to Markdown here: the author edited each cover letter in Word
+after the build, so check_frozen proves instead that the files are exactly those submitted.
 
 Each step prints PASS, FAIL or SKIP. A step that exits 0 and prints only lines beginning
 "SKIPPED" counts as skipped; one that also prints other lines passes, with the number of
@@ -35,8 +38,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PY = [sys.executable, "-I"]
-MANUSCRIPT_DIR = "manuscript/v2"
+MANUSCRIPT_DIR = "manuscript/v3"
 MANUSCRIPT = Path(MANUSCRIPT_DIR) / "manuscript.md"
+FROZEN = {"check_manuscript_numbers (IJTLD, frozen)": "manuscript/v2", "check_manuscript_numbers (PCD, frozen)": "manuscript"}
 
 STEPS = [
     ("pytest -q", PY + ["-m", "pytest", "-q", "-p", "no:cacheprovider"]),
@@ -53,6 +57,8 @@ STEPS = [
                              "--manuscript-dir", MANUSCRIPT_DIR]),
     ("mutate_manuscript", PY + ["verification/mutate_manuscript.py",
                                 "--manuscript-dir", MANUSCRIPT_DIR]),
+    *[(name, PY + ["verification/check_manuscript_numbers.py", "--manuscript-dir", d]) for name, d in FROZEN.items()],
+    ("check_frozen", PY + ["verification/check_frozen.py"]),
 ]
 MANUSCRIPT_STEPS = ("check_manuscript_numbers", "check_docx_tie", "mutate_manuscript")
 
@@ -70,6 +76,8 @@ def skip_reason(name: str) -> str | None:
     """Why a manuscript step is skipped, or None when it must run."""
     if name in MANUSCRIPT_STEPS and not (ROOT / MANUSCRIPT).exists():
         return f"SKIPPED: {MANUSCRIPT.as_posix()} does not exist"
+    if name in FROZEN and not (ROOT / FROZEN[name] / "manuscript.md").exists():
+        return f"SKIPPED: {FROZEN[name]}/manuscript.md does not exist"
     return None
 
 

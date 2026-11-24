@@ -202,10 +202,17 @@ and the k = 1 count, E1 and E2, H1 by its own IRLS, the Spearman sensitivity, H2
 scenario and the label) and `check_rerun` (the extraction and the analysis rerun and
 compared byte for byte), then `check_online_material` (the online material regenerated from
 `outputs/` and compared byte for byte, with its wording checked) and the checks of the current,
-private manuscript (`manuscript/v2`, IJTLD): `check_manuscript_numbers` (every number traced to
-`outputs/`, and the journal's hard limits), `check_docx_tie` (the submission files tied to their
-sources) and `mutate_manuscript` (each check shown to catch deliberate breaks). The manuscript
-checks are skipped until the private manuscript exists. Each check was shown to fail on a deliberate break:
+private manuscript (`manuscript/v3`, Diabetes & Metabolic Syndrome: Clinical Research & Reviews,
+profile `dmscrr`): `check_manuscript_numbers` (every number traced to `outputs/`; the citation
+order of references, tables, figures and supplementary items; the journal's limits, structure,
+highlights and declarations), `check_docx_tie` (the submission files tied to their sources,
+Word's counts, the figures) and `mutate_manuscript` (each check shown to catch deliberate
+breaks). The submitted, frozen sets (`manuscript/`, Primary Care Diabetes; `manuscript/v2`,
+IJTLD) keep their number checks under their own profiles, and `check_frozen` shows that every
+submitted file is byte for byte what was sent. The manuscript checks are skipped until the
+private manuscript exists. The DMSCRR display items and supplement are written from `outputs/`
+by `exhibits/make_dmscrr.py`, and the set is built with
+`python -I tools/build_submission.py --manuscript-dir manuscript/v3 --profile dmscrr`. Each check was shown to fail on a deliberate break:
 [`verification/MUTATIONS.md`](verification/MUTATIONS.md). Without `data_raw/`, the
 extraction parts are skipped and everything else runs on the committed extracts.
 

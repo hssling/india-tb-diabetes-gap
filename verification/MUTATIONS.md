@@ -267,6 +267,28 @@ main-text limits and Word's counts; the AI declaration, the declaration of inter
 caveats; a figure PDF, a low-resolution TIFF, an undersized graphical abstract and a sixth
 display item; the cover letter's related manuscripts; and the file set.
 
+## The DMSCRR manuscript (manuscript/v3)
+
+`verification/mutate_manuscript.py --manuscript-dir manuscript/v3` (a `check_all` step) applies
+62 named breaks (`MUTATIONS_DMSCRR`) to copies of the private Diabetes & Metabolic Syndrome:
+Clinical Research & Reviews folder. Each must be reported by `check_manuscript_numbers` or
+`check_docx_tie`, and, for this profile, the problem the break targets must be among those
+reported (`EXPECT_DMSCRR`), so that each new check is shown to fire, not only an earlier one:
+numbers in the Markdown, the .docx and the highlights; Table 1, supplement and figure-data cells;
+the first-citation order of references, figures and supplementary items, a Table 2, a
+supplementary item cited but absent or present but never cited; the 5000-word total (text,
+Table 1 and legends), the abstract (200 words, its four headings, an undefined abbreviation), 3 to
+12 keywords and no "and"/"of" phrases, the title (120 characters, no abbreviation); the
+highlights' structure and 85-character lines; the generative-AI wording and its place before the
+References, Acknowledgements directly before them, the no-funding sentence and the competing-
+interest section; the reference style (seven authors without "et al.", an unshortened page range,
+a DOI that differs from the verified one, 51 references); Word's counts and the totals quoted on
+the title page and in the cover letter; 300-dpi and greyscale TIFFs, a swapped figure PDF and the
+embedded Figure S1; the file set; the cover letter (an earlier journal named, a related manuscript
+missing, a typed word count); "first" and causal claims, American spelling and stigmatising
+words; H1's label, a caveat, the line numbers and a second table. `check_frozen` is tested in
+`tests/test_dmscrr.py` (a changed, added or missing submitted file each fails).
+
 ## The IJTLD manuscript (manuscript/v2)
 
 `verification/mutate_manuscript.py --manuscript-dir manuscript/v2` (also a `check_all` step)

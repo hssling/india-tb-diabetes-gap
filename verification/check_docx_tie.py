@@ -35,6 +35,17 @@ ElementTree (the TIFF checks use Pillow when it is installed).
 
 Prints "SKIPPED" and exits 0 when <folder>/ or <folder>/submission/ is absent. Exit 1 on any problem.
 
+A DMSCRR folder (section_phrases.json "journal": "dmscrr", manuscript/v3) is checked against the
+DMSCRR set instead (dmscrr_problems): the six .docx files tied unit for unit to their Markdown (the
+title page and cover letter with their word-count placeholders filled from word_counts_word.json, as
+the build fills them); Word's counts (abstract at most 200 words; the main text with subsection
+headings plus Table 1 and the legends at most 5000) quoted on the title page and in the cover
+letter; the abstract headings; the section order (the generative-AI declaration before the
+References, Acknowledgements directly before them); at most 50 references; one table and three
+figure files (at most five display items); 3 to 12 keywords; the highlights structure and lengths;
+line numbers and alignment; colour TIFFs at 1000 dpi tied to the build record and to the PDFs; and
+Figure S1 embedded in the supplement as built.
+
 An IJTLD folder (section_phrases.json "journal": "ijtld", manuscript/v2) is checked against the
 IJTLD set instead (ijtld_problems): the cover letter, ONE manuscript file (title page, abstract,
 text without an Introduction heading, references, Table 1, Figures 1 and 2 embedded with their
@@ -241,8 +252,12 @@ def expected(ms_dir: Path, name: str, spec: dict | None = None) -> list[str]:
             out.append(hits[0])
         else:
             text = (ms_dir / part[1]).read_text(encoding="utf-8")
+            flags = part[4].split() if len(part) > 4 else []
+            if "fill" in flags:  # the DMSCRR word-count placeholders, as the build fills them
+                from verification import dmscrr
+                text = dmscrr.fill_counts(text, ms_dir)
             units = md_units(md_slice(text, part[2], part[3]))
-            if len(part) > 4 and part[4] == "drop-first":
+            if "drop-first" in flags:
                 units = units[1:]
             out += units
     return out
@@ -463,6 +478,202 @@ def ijtld_problems(ms_dir: Path, root: Path = ROOT) -> list[str]:
     return out
 
 
+# --------------------------------------------------------------------------------------
+# The DMSCRR set (manuscript/v3; verification/dmscrr.py)
+# --------------------------------------------------------------------------------------
+def spec_dmscrr() -> dict[str, list[tuple]]:
+    from verification import dmscrr
+    return {
+        dmscrr.TITLE_PAGE: [("md", TP, None, None, "fill")],
+        dmscrr.MANUSCRIPT: [
+            ("md", MS, None, "## Figure legends"),
+            ("md", "exhibits/tables.md", "## Table 1.", None),
+            ("md", MS, "## Figure legends", None),
+        ],
+        dmscrr.HIGHLIGHTS: [("md", cmn.HIGHLIGHTS, None, None)],
+        dmscrr.SUPPLEMENT: [
+            ("builder", "Supplementary material"),
+            ("first", MS, "# "),
+            ("builder", dmscrr.SUPP_NOTE),
+            ("md", "exhibits/supplement.md", "## Notation", "## Table S1."),
+            ("md", "exhibits/supplement.md", "## Table S1.", "## Figure S1"),
+            ("md", "exhibits/supplement.md", "## Figure S1", None, "drop-first"),
+        ],
+        dmscrr.COVER: [("md", cmn.COVER, "# Cover letter", None, "drop-first fill")],
+        dmscrr.DECLARATION: [
+            ("builder", "Declaration of interest"),
+            ("first", TP, "**Title:**"),
+            ("first", TP, "**Author:**"),
+            ("first", TP, "**Declaration of competing interest:**"),
+            ("builder", dmscrr.COMPETING),
+        ],
+    }
+
+
+def dmscrr_files() -> set[str]:
+    from verification import dmscrr
+    return set(dmscrr.DOCX) | {f for pair in dmscrr.FIGURE_FILES.values() for f in pair}
+
+
+def dmscrr_word_problems(ms_dir: Path, units01: list[str], units02: list[str], units08: list[str]) -> list[str]:
+    from verification import dmscrr
+    w = dmscrr.counts(ms_dir)
+    if w is None:
+        return ["WORDS: word_counts_word.json missing or without the DMSCRR total (build with Word: "
+                "python -I tools/build_submission.py --manuscript-dir manuscript/v3 --profile dmscrr)"]
+    out = []
+    md5 = hashlib.md5((ms_dir / MS).read_text(encoding="utf-8").encode("utf-8")).hexdigest()
+    if w.get("source_md5") != md5:
+        out.append("WORDS: word_counts_word.json is stale (manuscript.md changed): rebuild")
+    if w["display_words"] != w["table_cells"] + w["table_text"] + w["legends"] or \
+            w["dmscrr_total"] != w["main_with_headings"] + w["display_words"]:
+        out.append("WORDS: word_counts_word.json totals do not add up")
+    if w["abstract"] > dmscrr.LIMITS["abstract"]:
+        out.append(f"WORDS: Word counts {w['abstract']} words in the abstract, over the limit of {dmscrr.LIMITS['abstract']}")
+    if w["dmscrr_total"] > dmscrr.LIMITS["total"]:
+        out.append(f"WORDS: Word counts {w['dmscrr_total']} words (text, Table 1 and legends), over the limit of "
+                   f"{dmscrr.LIMITS['total']}")
+    ab = abstract_of(units02)
+    own = sum(len(u.split()) for u in ab)
+    if own > dmscrr.LIMITS["abstract"]:
+        out.append(f"WORDS: the abstract of 02 has {own} words, over the limit of {dmscrr.LIMITS['abstract']}")
+    heads = [u.split(":", 1)[0] for u in ab]
+    if heads != list(dmscrr.ABSTRACT_PARTS):
+        out.append(f"ABSTRACT: 02's abstract headings are {heads}, expected {list(dmscrr.ABSTRACT_PARTS)}")
+    want01 = f"total counted against the 5,000-word limit {w['dmscrr_total']:,} words"
+    if want01 not in " ".join(units01):
+        out.append(f"WORDS: the title page does not quote Word's total {want01!r}")
+    want08 = f"The manuscript has {w['dmscrr_total']:,} words counted against the journal's limit"
+    if want08 not in " ".join(units08):
+        out.append(f"WORDS: the cover letter does not quote Word's total {want08!r}")
+    return out
+
+
+def dmscrr_order_problems(units02: list[str]) -> list[str]:
+    """Section order in 02: the generative-AI section before the References, and Acknowledgements
+    directly before the References."""
+    from verification import dmscrr
+    out = []
+    pos = {h: units02.index(h) for h in dmscrr.SECTION_ORDER if h in units02}
+    missing = [h for h in dmscrr.SECTION_ORDER if h not in pos]
+    if missing:
+        out.append(f"STRUCTURE: 02 lacks the sections {missing}")
+    seq = [h for h in dmscrr.SECTION_ORDER if h in pos]
+    if [pos[h] for h in seq] != sorted(pos[h] for h in seq):
+        out.append("STRUCTURE: 02's sections are not in the journal's order")
+    ai, ack, ref = (pos.get(h, -1) for h in (dmscrr.AI_HEADING, "Acknowledgements", "References"))
+    if not (0 <= ai < ref):
+        out.append("STRUCTURE: 02's generative-AI declaration is not before the References")
+    if not (0 <= ack < ref) or any(u in dmscrr.SECTION_ORDER for u in units02[ack + 1:ref]):
+        out.append("STRUCTURE: 02's Acknowledgements are not directly before the References")
+    return out
+
+
+def dmscrr_figure_problems(ms_dir: Path) -> list[str]:
+    from verification import dmscrr
+    sub, ex = ms_dir / "submission", ms_dir / "exhibits"
+    rec_p = ms_dir / dmscrr.BUILD_RECORD
+    if not rec_p.exists():
+        return [f"FIGURES: {dmscrr.BUILD_RECORD} missing (rebuild)"]
+    rec = json.loads(rec_p.read_text(encoding="utf-8"))
+    out = []
+    for k, (tif, pdf) in dmscrr.FIGURE_FILES.items():
+        src = ex / f"figure{k}.pdf"
+        r = rec.get("figures", {}).get(str(k), {})
+        if (sub / pdf).exists() and (not src.exists() or (sub / pdf).read_bytes() != src.read_bytes()):
+            out.append(f"FIGURES: {pdf} differs from exhibits/figure{k}.pdf (rebuild)")
+        if not src.exists() or hashlib.sha256(src.read_bytes()).hexdigest() != r.get("pdf_sha256"):
+            out.append(f"FIGURES: exhibits/figure{k}.pdf changed since the build (rebuild)")
+        if (sub / tif).exists():
+            if hashlib.sha256((sub / tif).read_bytes()).hexdigest() != r.get("tif_sha256"):
+                out.append(f"FIGURES: {tif} differs from the TIFF the build rendered from exhibits/figure{k}.pdf")
+            try:
+                from PIL import Image
+            except ImportError:
+                continue
+            Image.MAX_IMAGE_PIXELS = None
+            with Image.open(sub / tif) as im:
+                dpi, mode, size = im.info.get("dpi", (0, 0)), im.mode, im.size
+            if min(float(dpi[0]), float(dpi[1])) < dmscrr.TIFF_DPI:
+                out.append(f"FIGURES: {tif} is {dpi} dpi, below {dmscrr.TIFF_DPI} (line art)")
+            if mode != "RGB":
+                out.append(f"FIGURES: {tif} is {mode}, not colour (RGB)")
+            if size[0] > MAX_PX:
+                out.append(f"FIGURES: {tif} is {size[0]} pixels wide, more than {MAX_PX}")
+    s = rec.get("supplement_figure", {})
+    srcS = ex / "figureS1.pdf"
+    if not srcS.exists() or hashlib.sha256(srcS.read_bytes()).hexdigest() != s.get("pdf_sha256"):
+        out.append("FIGURES: exhibits/figureS1.pdf changed since the build (rebuild)")
+    if (sub / dmscrr.SUPPLEMENT).exists():
+        media = docx_media(sub / dmscrr.SUPPLEMENT)
+        if s.get("embedded_sha256") not in media or len(media) != 1:
+            out.append("FIGURES: 07 does not embed Figure S1 as built")
+    return out
+
+
+def dmscrr_problems(ms_dir: Path, root: Path = ROOT) -> list[str]:
+    from verification import dmscrr
+    sub = ms_dir / "submission"
+    spec = spec_dmscrr()
+    out: list[str] = [f"EXTRA: {p.name} is not part of the submission set" for p in sorted(sub.iterdir())
+                      if p.is_file() and p.name not in dmscrr_files() and not SUBMITTED.fullmatch(p.name)]
+    units_of: dict[str, list[str]] = {}
+    for name in spec:
+        path = sub / name
+        if not path.exists():
+            out.append(f"MISSING: {name}")
+            continue
+        got = docx_units(path)
+        units_of[name] = got
+        out += compare(name, got, expected(ms_dir, name, spec))
+        text = "\n".join(got)
+        if name == dmscrr.MANUSCRIPT:
+            text = text.split("\nReferences\n", 1)[0]
+        if name != dmscrr.DECLARATION:
+            for pat, what in cmn.BANNED + cmn.WORDING:
+                if name == dmscrr.COVER and what == "a file path":
+                    continue
+                for m in re.finditer(pat, text, re.I if (pat, what) in cmn.WORDING else 0):
+                    out.append(f"WORDING in {name}: {what}: {m.group()!r}")
+            out += [f"WORDING in {name}: {h}" for h in dmscrr.wording_hits(text)]
+        if "[[" in text:
+            out.append(f"WORDS: {name} still holds a word-count placeholder [[...]]")
+    for pair in dmscrr.FIGURE_FILES.values():
+        for name in pair:
+            if not (sub / name).exists():
+                out.append(f"MISSING: {name}")
+    u01, u02 = units_of.get(dmscrr.TITLE_PAGE), units_of.get(dmscrr.MANUSCRIPT)
+    if u01 is not None and u02 is not None:
+        out += title_page_problems(u02, u01, ms_dir)
+        out += dmscrr_word_problems(ms_dir, u01, u02, units_of.get(dmscrr.COVER, []))
+        title = u02[0] if u02 else ""
+        out += dmscrr.title_problems(title)
+    if u02 is not None:
+        p02 = sub / dmscrr.MANUSCRIPT
+        n_refs = ijtld_reference_count(u02)
+        if n_refs > dmscrr.LIMITS["references"]:
+            out.append(f"REFERENCES: 02 lists {n_refs} references, more than {dmscrr.LIMITS['references']}")
+        n_tab = docx_tables(p02)
+        if n_tab != len(dmscrr.TABLES):
+            out.append(f"DISPLAY: 02 holds {n_tab} tables, the manuscript has {len(dmscrr.TABLES)}")
+        if n_tab + len(dmscrr.FIGURE_FILES) > dmscrr.LIMITS["display_items"]:
+            out.append(f"DISPLAY: {n_tab} tables and {len(dmscrr.FIGURE_FILES)} figures, more than "
+                       f"{dmscrr.LIMITS['display_items']} display items")
+        kw = next((u for u in u02 if u.startswith("Keywords:")), "")
+        out += dmscrr.keyword_problems(dmscrr.split_keywords(kw.removeprefix("Keywords:")))
+        out += dmscrr_order_problems(u02)
+        out += [p.replace("1.5 or double", "double") for p in ijtld_layout_problems(p02)]
+    if dmscrr.HIGHLIGHTS in units_of:
+        out += [f"{p} (03)" for p in dmscrr.highlight_structure(units_of[dmscrr.HIGHLIGHTS])[1]]
+    if dmscrr.SUPPLEMENT in units_of:
+        have = re.findall(r"^Table (S\d+)\.", "\n".join(units_of[dmscrr.SUPPLEMENT]), re.M)
+        want = [f"S{k}" for k in range(1, len(have) + 1)]
+        if have != want:
+            out.append(f"SUPPLEMENT: 07's tables are {have}, expected S1, S2, ... in order")
+    out += dmscrr_figure_problems(ms_dir)
+    return out
+
+
 def compare(name: str, got: list[str], want: list[str], limit: int = 6) -> list[str]:
     if got == want:
         return []
@@ -606,6 +817,8 @@ def problems(ms_dir: Path | None = None, root: Path = ROOT) -> list[str]:
     ms_dir = ms_dir or root / cmn.DEFAULT_MS_DIR
     if cmn.journal_of(ms_dir) == "ijtld":
         return ijtld_problems(ms_dir, root)
+    if cmn.journal_of(ms_dir) == "dmscrr":
+        return dmscrr_problems(ms_dir, root)
     sub = ms_dir / "submission"
     out: list[str] = []
     units_of: dict[str, list[str]] = {}
@@ -640,6 +853,9 @@ def notes(ms_dir: Path) -> list[str]:
     if cmn.journal_of(ms_dir) == "ijtld":
         from verification import ijtld
         names = (ijtld.MANUSCRIPT, ijtld.DECLARATIONS)
+    elif cmn.journal_of(ms_dir) == "dmscrr":
+        from verification import dmscrr
+        names = (dmscrr.TITLE_PAGE, dmscrr.MANUSCRIPT)
     for name in names:
         p = ms_dir / "submission" / name
         if p.exists() and "zenodo.XXXXXXX" in docx_all_text(p):
@@ -673,6 +889,18 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
               f"{ijtld.LIMITS['abstract']} and main text {ijtld.LIMITS['main']}; at most {ijtld.LIMITS['references']} "
               f"references and {ijtld.LIMITS['display_items']} display items; title, running head and keywords; spacing, "
               f"line numbers, alignment; figures tied to the build record; {len(found)} problem(s)")
+        return 1 if found else 0
+    if cmn.journal_of(ms_dir) == "dmscrr":
+        from verification import dmscrr
+        sp = spec_dmscrr()
+        n_units = sum(len(docx_units(ms_dir / "submission" / n)) for n in sp if (ms_dir / "submission" / n).exists())
+        print(f"docx tie (DMSCRR): {len(dmscrr_files())} files; {len(sp)} .docx, {n_units} paragraphs and table rows tied "
+              f"to the Markdown (word counts filled from Word); Word's counts within abstract "
+              f"{dmscrr.LIMITS['abstract']} and total {dmscrr.LIMITS['total']} (text, Table 1, legends); abstract headings; "
+              f"section order with the generative-AI section and Acknowledgements before the References; at most "
+              f"{dmscrr.LIMITS['references']} references and {dmscrr.LIMITS['display_items']} display items; keywords; "
+              f"highlights structure; line numbers and alignment; colour TIFFs at {dmscrr.TIFF_DPI} dpi tied to the build "
+              f"record; Figure S1 embedded as built; {len(found)} problem(s)")
         return 1 if found else 0
     n_units = sum(len(docx_units(ms_dir / "submission" / n)) for n in SPEC if (ms_dir / "submission" / n).exists())
     print(f"docx tie: {len(all_files())} files; {len(SPEC)} .docx, {n_units} paragraphs and table rows tied to the "

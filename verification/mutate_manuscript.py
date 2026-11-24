@@ -28,6 +28,14 @@ tables and references included, which check_docx_tie must catch.
 Prints a table of the results; exits 1 if any mutation is not applied or not caught. Prints
 "SKIPPED" and exits 0 when DIR/ or DIR/submission/ is absent.
 
+A DMSCRR folder (section_phrases.json "journal": "dmscrr"; manuscript/v3) runs MUTATIONS_DMSCRR:
+numbers, table, supplement and figure-data cells, the order of references, tables, figures and
+supplementary items (and items missing or never cited), the total-word, abstract, keyword, title and
+reference limits, the abstract headings and abbreviations, the highlights structure and lengths, the
+generative-AI and funding wording, the section order, the reference style (authors, page ranges,
+DOIs), Word's counts and the totals quoted in 01 and 08, the colour 1000-dpi TIFFs, the figure PDFs,
+the embedded Figure S1, the file set, the cover letter, wording, layout and display items.
+
 An IJTLD folder (section_phrases.json "journal": "ijtld"; manuscript/v2) runs MUTATIONS_IJTLD
 instead: numbers, table cells, citations and references, every IJTLD hard limit (title, running
 head, keywords, abstract words and abbreviations, main-text words, references, display items),
@@ -482,6 +490,270 @@ MUTATIONS_IJTLD: list[Mutation] = [
 
 
 # --------------------------------------------------------------------------------------
+# The DMSCRR set (manuscript/v3; verification/dmscrr.py)
+# --------------------------------------------------------------------------------------
+D_TP, D_MS, D_HL, D_SUP, D_COV = (S + n for n in ("01_title_page.docx", "02_manuscript.docx", "03_highlights.docx",
+                                                  "07_supplementary_material.docx", "08_cover_letter.docx"))
+D_FIG1, D_FIG1_PDF = S + "04_Figure_1.tif", S + "04_Figure_1.pdf"
+SUPP_MD = "exhibits/supplement.md"
+
+
+def dm_tiff(mode: str, dpi: int) -> Callable[[Path], None]:
+    def fn(d: Path) -> None:
+        try:
+            from PIL import Image
+        except ImportError:
+            raise NotApplied("Pillow not installed") from None
+        p = d / D_FIG1
+        p.unlink()
+        Image.new(mode, (200, 100), "white" if mode == "RGB" else 255).save(p, format="TIFF", dpi=(dpi, dpi))
+    return fn
+
+
+def dm_other_pdf(d: Path) -> None:
+    replace_bytes(d / D_FIG1_PDF, (d / "exhibits" / "figure2.pdf").read_bytes())
+
+
+def dm_other_supp_image(d: Path) -> None:
+    p = d / D_SUP
+    with zipfile.ZipFile(p) as z:
+        media = sorted(n for n in z.namelist() if n.startswith("word/media/"))
+    if not media:
+        raise NotApplied("07 embeds no image")
+    from io import BytesIO
+    try:
+        from PIL import Image
+    except ImportError:
+        raise NotApplied("Pillow not installed") from None
+    buf = BytesIO()
+    Image.new("RGB", (50, 50), "white").save(buf, format="PNG")
+    tmp = p.with_name(p.name + ".mut")
+    with zipfile.ZipFile(p) as zi, zipfile.ZipFile(tmp, "w", zipfile.ZIP_DEFLATED) as zo:
+        for item in zi.infolist():
+            zo.writestr(item, buf.getvalue() if item.filename == media[0] else zi.read(item.filename))
+    p.unlink()
+    tmp.replace(p)
+
+
+def dm_counts(**delta) -> Callable[[Path], None]:
+    """word_counts_word.json: the given keys increased (Word's counts as if the text were longer)."""
+    def fn(d: Path) -> None:
+        p = d / "word_counts_word.json"
+        w = json.loads(p.read_text(encoding="utf-8"))
+        for k, v in delta.items():
+            w[k] += v
+        replace_bytes(p, (json.dumps(w, indent=1) + "\n").encode("utf-8"))
+    return fn
+
+
+def dm_quoted_total(rel: str, new: Callable[[int], str]) -> Callable[[Path], None]:
+    """The total that a .docx quotes (title page or cover letter) replaced."""
+    def fn(d: Path) -> None:
+        w = json.loads((d / "word_counts_word.json").read_text(encoding="utf-8"))
+        edit_docx(d / rel, f"{w['dmscrr_total']:,} words", f"{new(w['dmscrr_total'])} words")
+    return fn
+
+
+def dm_section_move(heading: str, before: str | None) -> Callable[[Path], None]:
+    """manuscript.md: the '## heading' section moved before '## before' (None: to the end)."""
+    def fn(d: Path) -> None:
+        s = (d / MS).read_text(encoding="utf-8")
+        i = s.find("\n## " + heading + "\n")
+        if i < 0:
+            raise NotApplied(f"no section {heading!r}")
+        j = s.find("\n## ", i + 1)
+        block, rest = s[i:j], s[:i] + s[j:]
+        if before is None:
+            s2 = rest.rstrip("\n") + "\n" + block.rstrip("\n") + "\n"
+        else:
+            k = rest.find("\n## " + before + "\n")
+            if k < 0:
+                raise NotApplied(f"no section {before!r}")
+            s2 = rest[:k] + block + rest[k:]
+        replace_bytes(d / MS, s2.encode("utf-8"))
+    return fn
+
+
+def dm_many_refs(d: Path) -> None:
+    """Six more references (46-51), cited in the Discussion: more than 50."""
+    a = anchor(d, "d36")
+    edit_text(d / MS, a, a + "^46–51^")
+    extra = "".join(f"\n\n{k}\\. Author A. A title. J Test 2020; {k}: 1–2. https://doi.org/10.1000/test.{k}"
+                    for k in range(46, 52))
+    s = (d / MS).read_text(encoding="utf-8")
+    i = s.index("\n\n## Figure legends")
+    replace_bytes(d / MS, (s[:i] + extra + s[i:]).encode("utf-8"))
+
+
+def dm_long_text(d: Path) -> None:
+    a = anchor(d, "d17")
+    edit_text(d / MS, a, a + " " + " ".join(["filler"] * 900))
+
+
+def dm_extra_file(d: Path) -> None:
+    (d / S / "10_notes.txt").write_text("x", encoding="utf-8")
+
+
+def dm_drop_cover(d: Path) -> None:
+    (d / D_COV).unlink()
+
+
+def dm_both(mid: str) -> Callable[[Path], None]:
+    def fn(d: Path) -> None:
+        a = anchor(d, mid)
+        edit_text(d / MS, a[0], a[1])
+        edit_text(d / TP, a[0], a[1])
+    return fn
+
+
+MUTATIONS_DMSCRR: list[Mutation] = [
+    ("d1", "number, docx only", "02 Results: the H1 value changed in its last digit", change(edit_docx, D_MS, "d1", bumped)),
+    ("d2", "number, markdown only", "manuscript.md Abstract: the identification-led count increased by 1",
+     change(edit_text, MS, "d2", bumped)),
+    ("d3", "number, highlights", "highlights.md: the identification-led count increased by 1",
+     change(edit_text, cmn.HIGHLIGHTS, "d3", bumped)),
+    ("d4", "table cell, docx only", "02 Table 1: Bihar's identification ratio changed", change(edit_docx, D_MS, "d4", bumped)),
+    ("d5", "table cell, markdown only", "tables.md Table 1: Bihar's first step changed", swap(edit_text, TABLES_MD, "d5")),
+    ("d6", "figure data", "figure3_data.csv: an act-now unit set to lower priority",
+     edit_csv("figure3_data.csv", ",act now", ",lower priority")),
+    ("d7", "supplement cell, markdown only", "supplement.md Table S2: a prevalence changed", change(edit_text, SUPP_MD, "d7", bumped)),
+    ("d8", "supplement cell, docx only", "07 Table S2: a prevalence changed", change(edit_docx, D_SUP, "d8", bumped)),
+    ("d9", "reference order", "manuscript.md Introduction: first citations 3 and 4 exchanged", swap(edit_text, MS, "d9")),
+    ("d10", "reference number, docx only", "02 References: entry 2 renumbered 3", swap(edit_docx, D_MS, "d10")),
+    ("d11", "table citation", "manuscript.md Results: a Table 2 cited", swap(edit_text, MS, "d11")),
+    ("d12", "figure order", "manuscript.md Results: the first Figure 2 citation made Figure 3 (order 1, 3, 2)", swap(edit_text, MS, "d12")),
+    ("d13", "supplement order", "manuscript.md Methods: the first supplementary citation made Table S2", swap(edit_text, MS, "d13")),
+    ("d14", "supplement missing", "manuscript.md Results: a Table S15 cited (not in the supplement)", swap(edit_text, MS, "d14")),
+    ("d15", "supplement never cited", "manuscript.md Discussion: the only citation of Table S14 removed", swap(edit_text, MS, "d15")),
+    ("d16", "supplement never cited", "manuscript.md Results: the only citation of Figure S1 removed", swap(edit_text, MS, "d16")),
+    ("d17", "total-word limit", "manuscript.md Discussion: 900 words added (over 5000 with Table 1 and legends)", dm_long_text),
+    ("d18", "abstract limit", "manuscript.md Abstract: twelve words added",
+     insert(edit_text, MS, "d18", lambda d: " This sentence adds exactly twelve more words to the abstract for this test.")),
+    ("d19", "abstract headings", "manuscript.md: 'Background and Aims' written 'Background'", swap(edit_text, MS, "d19")),
+    ("d20", "abstract abbreviations", "manuscript.md Abstract: undefined TB and NCD", swap(edit_text, MS, "d20")),
+    ("d21", "keyword count", "manuscript.md: thirteen keywords", insert(edit_text, MS, "d21",
+                                                                     lambda d: "; Glucose; Primary care; Programmes; States; Surveys")),
+    ("d22", "keyword form", "manuscript.md: a keyword joined by 'and'", swap(edit_text, MS, "d22")),
+    ("d23", "title limit", "title over 120 characters (manuscript and title page)", dm_both("d23")),
+    ("d24", "title abbreviation", "title with the abbreviation TB (manuscript and title page)", dm_both("d24")),
+    ("d25", "highlights structure", "highlights.md: a third 'What is known' line", insert(edit_text, cmn.HIGHLIGHTS, "d25",
+                                                                                      lambda d: "\n- Diabetes is common in India")),
+    ("d26", "highlights length", "highlights.md: the impact line over 85 characters",
+     insert(edit_text, cmn.HIGHLIGHTS, "d26", lambda d: " in every State and Union Territory")),
+    ("d27", "highlights structure", "highlights.md: the impact heading removed", swap(edit_text, cmn.HIGHLIGHTS, "d27")),
+    ("d28", "highlights length, docx only", "03: the impact line over 85 characters",
+     insert(edit_docx, D_HL, "d26", lambda d: " in every State and Union Territory")),
+    ("d29", "generative-AI wording", "manuscript.md: the generative-AI declaration shortened", swap(edit_text, MS, "d29")),
+    ("d30", "section order", "manuscript.md: Acknowledgements moved before the generative-AI declaration",
+     dm_section_move("Acknowledgements", "Declaration of generative AI and AI-assisted technologies in the manuscript "
+                                         "preparation process")),
+    ("d31", "section order", "manuscript.md: the generative-AI declaration moved after the References",
+     dm_section_move("Declaration of generative AI and AI-assisted technologies in the manuscript preparation process", None)),
+    ("d32", "funding sentence", "manuscript.md: the no-funding sentence changed", swap(edit_text, MS, "d32")),
+    ("d33", "reference authors", "manuscript.md: seven authors listed without 'et al.'", swap(edit_text, MS, "d33")),
+    ("d34", "reference pages", "manuscript.md: a page range not shortened (783–796)", swap(edit_text, MS, "d34")),
+    ("d35", "reference DOI", "manuscript.md: a printed DOI differs from reference_dois.json", swap(edit_text, MS, "d35")),
+    ("d36", "reference limit", "manuscript.md: 51 references", dm_many_refs),
+    ("d37", "Word's counts", "word_counts_word.json: the abstract count over 200", dm_counts(abstract=10)),
+    ("d38", "Word's counts", "word_counts_word.json: the total over 5000", dm_counts(main_with_headings=800, dmscrr_total=800)),
+    ("d39", "Word's counts, docx only", "01: the quoted total changed", dm_quoted_total(D_TP, lambda t: f"{t - 1:,}")),
+    ("d40", "Word's counts, docx only", "08: the quoted total left as a placeholder", dm_quoted_total(D_COV, lambda t: "[[total]]")),
+    ("d41", "figure, TIFF", "04_Figure_1.tif replaced by a 300 dpi image", dm_tiff("RGB", 300)),
+    ("d42", "figure, TIFF", "04_Figure_1.tif replaced by a greyscale image", dm_tiff("L", 1000)),
+    ("d43", "figure, PDF", "04_Figure_1.pdf replaced by Figure 2", dm_other_pdf),
+    ("d44", "supplement figure, docx only", "07: the embedded Figure S1 replaced", dm_other_supp_image),
+    ("d45", "file set", "an extra file in submission/", dm_extra_file),
+    ("d46", "file set", "08_cover_letter.docx removed", dm_drop_cover),
+    ("d47", "cover letter", "cover_letter.md: an earlier journal named", swap(edit_text, cmn.COVER, "d47")),
+    ("d48", "cover letter", "cover_letter.md: a related manuscript removed", swap(edit_text, cmn.COVER, "d48")),
+    ("d49", "cover letter", "cover_letter.md: the word-count placeholder replaced by a typed number", swap(edit_text, cmn.COVER, "d49")),
+    ("d50", "wording", "manuscript.md Discussion: a 'first study' claim inserted",
+     insert(edit_text, MS, "d50", lambda d: " This is the first study of this cascade.")),
+    ("d51", "wording", "manuscript.md Discussion: a causal claim inserted",
+     insert(edit_text, MS, "d50", lambda d: " The programme caused these gaps.")),
+    ("d52", "spelling", "manuscript.md Discussion: 'programmes' written 'programs'", swap(edit_text, MS, "d52")),
+    ("d53", "person-first wording", "manuscript.md Results: 'TB patients' inserted", swap(edit_text, MS, "d53")),
+    ("d54", "label", "manuscript.md Results: H1 'supported' -> 'not established'", swap(edit_text, MS, "d54")),
+    ("d55", "caveat", "manuscript.md Results: the built-in split caveat removed", swap(edit_text, MS, "d55")),
+    ("d56", "layout, docx only", "02: line numbers removed",
+     lambda d: rewrite_part(d / D_MS, DOC, lambda x: re.sub(r"<w:lnNumType [^>]*/>", "", x))),
+    ("d57", "display items, docx only", "02: Table 1 duplicated", second_table),
+    ("d58", "declarations", "manuscript.md: the competing-interest section removed", swap(edit_text, MS, "d58")),
+    ("d59", "section heading", "manuscript.md: 'Subjects, Materials and Methods' written 'Methods'", swap(edit_text, MS, "d59")),
+    ("d60", "generative-AI wording", "title_page_src.md: the generative-AI declaration shortened", swap(edit_text, TP, "d29")),
+    ("d61", "builder text, docx only", "07: the supplement's note changed", swap(edit_docx, D_SUP, "d61")),
+    ("d62", "supplement numbering, docx only", "07: Table S2 renumbered S3", swap(edit_docx, D_SUP, "d62")),
+]
+
+
+# The problem each DMSCRR mutation must provoke (a substring of one reported problem): proof that the
+# check aimed at the mutation fires, not only some earlier check.
+EXPECT_DMSCRR: dict[str, str] = {
+    'd1': 'TIE 02_manuscript.docx',
+    'd2': 'MISSING in Abstract',
+    'd3': 'MISSING in Highlights',
+    'd4': 'TIE 02_manuscript.docx',
+    'd5': 'tables.md differs',
+    'd6': 'figure3_data.csv differs',
+    'd7': 'supplement.md differs',
+    'd8': 'TIE 07_supplementary_material.docx',
+    'd9': 'not numbered in order of first citation',
+    'd10': 'TIE 02_manuscript.docx',
+    'd11': 'beyond Table 1',
+    'd12': 'first citations of Figures out of order',
+    'd13': "never cited: ['S1']",
+    'd14': 'not in the supplementary material',
+    'd15': "never cited: ['S14']",
+    'd16': 'supplementary Figures never cited',
+    'd17': 'limit 5000',
+    'd18': 'LENGTH: abstract',
+    'd19': 'abstract headings',
+    'd20': 'not defined in the abstract',
+    'd21': '13 keywords',
+    'd22': 'multi-word',
+    'd23': 'limit 120',
+    'd24': 'TITLE: abbreviations',
+    'd25': "3 'known'",
+    'd26': '(limit 85)',
+    'd27': "expected the journal's",
+    'd28': '(03)',
+    'd29': 'not the required wording',
+    'd30': 'directly before the References',
+    'd31': 'not a section before the References',
+    'd32': 'no-funding',
+    'd33': 'lists 7 authors',
+    'd34': 'not shortened',
+    'd35': 'not the verified DOI',
+    'd36': '51 references, more than 50',
+    'd37': 'in the abstract, over the limit',
+    'd38': 'over the limit of 5000',
+    'd39': "does not quote Word's total",
+    'd40': 'placeholder [[...]]',
+    'd41': 'below 1000',
+    'd42': 'not colour',
+    'd43': 'differs from exhibits/figure1.pdf',
+    'd44': 'does not embed Figure S1',
+    'd45': 'EXTRA: 10_notes.txt',
+    'd46': 'MISSING: 08_cover_letter.docx',
+    'd47': 'Primary Care Diabetes',
+    'd48': 'JPH-26-1883',
+    'd49': 'no word-count placeholder',
+    'd50': 'novelty claim',
+    'd51': 'causal language',
+    'd52': 'American form',
+    'd53': 'person-first',
+    'd54': 'LABEL: H1',
+    'd55': 'CAVEAT missing',
+    'd56': 'no continuous line numbering',
+    'd57': 'DISPLAY: 02 holds 2 tables',
+    'd58': 'declaration of competing interest is missing',
+    'd59': 'STRUCTURE: sections',
+    'd60': 'TITLE PAGE: the generative-AI',
+    'd61': 'TIE 07_supplementary_material.docx',
+    'd62': "07's tables are",
+}
+
+# --------------------------------------------------------------------------------------
 # Running the checks on a copy
 # --------------------------------------------------------------------------------------
 def copy_manuscript(src: Path, dst: Path) -> Path:
@@ -512,8 +784,11 @@ def tie_problems(ms_dir: Path) -> list[str]:
     return tie.problems(ms_dir, ROOT)
 
 
-def run_named(src: Path, mutations: list[Mutation] | None = None) -> list[dict]:
+def run_named(src: Path, mutations: list[Mutation] | None = None, expect: dict[str, str] | None = None) -> list[dict]:
+    """Each mutation on a fresh copy; with `expect`, the row also records whether the problem the
+    mutation targets (a substring) is among those reported."""
     mutations = MUTATIONS if mutations is None else mutations
+    expect = expect or {}
     checks = {"check_manuscript_numbers": cmn_problems, "check_docx_tie": tie_problems}
     rows = []
     work = src / WORK
@@ -528,7 +803,8 @@ def run_named(src: Path, mutations: list[Mutation] | None = None) -> list[dict]:
         shutil.rmtree(base, ignore_errors=True)
         for mid, kind, what, fn in mutations:
             d = copy_manuscript(src, work / f"m{mid}")
-            row = {"id": mid, "kind": kind, "what": what, "applied": True, "by": [], "first": ""}
+            row = {"id": mid, "kind": kind, "what": what, "applied": True, "by": [], "first": "", "targeted": None}
+            reported: list[str] = []
             try:
                 fn(d)
             except NotApplied as e:
@@ -544,6 +820,12 @@ def run_named(src: Path, mutations: list[Mutation] | None = None) -> list[dict]:
                 if found:
                     row["by"].append(name)
                     row["first"] = row["first"] or found[0].splitlines()[0]
+                    reported += found
+            if mid in expect:
+                hit = next((p for p in reported if expect[mid] in p), None)
+                row["targeted"] = hit is not None
+                if hit is not None:
+                    row["first"] = hit.splitlines()[0]
             rows.append(row)
             shutil.rmtree(d, ignore_errors=True)
     finally:
@@ -620,15 +902,21 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
         print(f"SKIPPED: {name}/ or {name}/submission/ not present (kept private, not in this repository)")
         return 0
     ijtld_set = cmn.journal_of(ms) == "ijtld"
-    rows = run_named(ms, MUTATIONS_IJTLD if ijtld_set else None)
+    dmscrr_set = cmn.journal_of(ms) == "dmscrr"
+    rows = run_named(ms, MUTATIONS_IJTLD if ijtld_set else MUTATIONS_DMSCRR if dmscrr_set else None,
+                     EXPECT_DMSCRR if dmscrr_set else None)
     bad = 0
     print("| # | Kind | Mutation | Caught by | First problem reported |")
     print("|---|------|----------|-----------|------------------------|")
     for r in rows:
         res = "NOT APPLIED" if not r["applied"] else (" and ".join(r["by"]) if r["by"] else "NOT CAUGHT")
-        bad += res in ("NOT APPLIED", "NOT CAUGHT")
+        if r["applied"] and r["by"] and r.get("targeted") is False:
+            res = "NOT CAUGHT BY THE TARGETED CHECK (" + res + ")"
+        bad += res in ("NOT APPLIED", "NOT CAUGHT") or res.startswith("NOT CAUGHT BY")
         print(f"| {r['id']} | {r['kind']} | {r['what']} | {res} | {r['first'].replace('|', '/')[:110]} |")
-    print(f"named mutations: {len(rows) - bad} of {len(rows)} caught")
+    n_t = sum(r.get("targeted") is True for r in rows)
+    print(f"named mutations: {len(rows) - bad} of {len(rows)} caught" +
+          (f"; {n_t} of {len(rows)} by the check each targets (the problem shown)" if dmscrr_set else ""))
     if "--sweep" in rest:
         c, t, e = sweep_md(ms)
         print(f"sweep, manuscript.md number tokens (check_manuscript_numbers): caught {c} of {t}")
@@ -637,7 +925,8 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
         p = ms / M02
         if ijtld_set:
             p = ms / I_MS
-        c2, t2, e2 = sweep_docx(p, tie.expected(ms, p.name, tie.spec_ijtld() if ijtld_set else None))
+        spec = tie.spec_ijtld() if ijtld_set else tie.spec_dmscrr() if dmscrr_set else None
+        c2, t2, e2 = sweep_docx(p, tie.expected(ms, p.name, spec))
         print(f"sweep, {p.name} number tokens (check_docx_tie): caught {c2} of {t2}")
         for x in e2:
             print("  UNCAUGHT", x)
