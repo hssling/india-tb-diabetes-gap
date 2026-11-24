@@ -13,9 +13,9 @@ abstract: >-
   aggregate India TB Report tables (data years 2018, 2019, 2021, 2022 and 2023) and
   NFHS-5 fact sheets. Observational; no causal estimates.
 type: software
-version: "1.1.1"
-date-released: "2026-11-23"
-doi: "10.5281/zenodo.24475585"
+version: "1.2.0"
+date-released: "2026-11-24"
+doi: "10.5281/zenodo.24425258"
 authors:
   - family-names: "Siddalingaiah"
     given-names: "H S"

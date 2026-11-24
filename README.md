@@ -282,7 +282,7 @@ every row.
 
 ## Citation and licences
 
-Cite as in [`CITATION.cff`](CITATION.cff). Version 1.1.1 (with the online material, numbered by first citation) is archived on Zenodo:
+Cite as in [`CITATION.cff`](CITATION.cff). Version 1.2.0 adds the build and checks of the current manuscript's display items and supplementary material (`exhibits/make_dmscrr.py`, `verification/dmscrr.py`); analysis and outputs are unchanged. Its supplementary material has its own numbering (Tables S1-S14, Figure S1); `docs/online_material/` keeps the numbering of the earlier version. Version 1.1.1 (with the online material, numbered by first citation):
 [10.5281/zenodo.24475585](https://doi.org/10.5281/zenodo.24475585); version 1.1.0: [10.5281/zenodo.24475024](https://doi.org/10.5281/zenodo.24475024); version 1.0.0:
 [10.5281/zenodo.24425259](https://doi.org/10.5281/zenodo.24425259) (all versions:
 [10.5281/zenodo.24425258](https://doi.org/10.5281/zenodo.24425258)). Author: Siddalingaiah H S
